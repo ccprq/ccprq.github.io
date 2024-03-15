@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        h1{
+            color: white;
+        }
+        body{
+            background-color: #171719;
+        }
+        .icerik{
+            background-color: rgba(27, 26, 26, 0.9);
+            width: 550px;
+            height: 1625px;
+            border-radius: 20px;
+            transition: all 0.5s;
+            position: relative;
+        }
+        label{
+            font-family: 'Open Sans', sans-serif;
+            color: #63C963;
+        }
+        .btn{
+            border: solid 1px #63C963;
+            border-radius: 3px;
+            font-family: 'Open Sans', sans-serif;
+            color: #63C963;
+            font-size: 100%;
+            width: 350px;
+            height: 56px;
+            cursor: pointer;
+            transition: border-color 0.3s, color 0.3s;
+            margin-left: 5px;
+            background-color: transparent;
+            transition: scale 0.3s;
+            margin-top: 10px;
+        }
+        .btn:hover{
+
+            scale: 1.1;
+        }
+        .icerik:hover{
+            box-shadow: 2px 2px  20px #63C963;
+        }
+        .icerikbg{
+            background-image: url(bg.png);
+            width: 550px;
+            height: 1625px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 20px;
+        }
+        p{
+            color: white;
+            font-family: 'Open Sans', sans-serif;
+        }
+        h1{
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Süleyman İkinci | JS Ödevleri</title>
+</head>
+<body>
+    <div align = "center">
+        <div class="icerikbg">
+            <div class="icerik">
+                <div>
+                    <h1 align = "center" style="position: relative;top:5px;">Süleyman İkinci <font style="color: #63C963;">11/N</font> 2434</h1>
+                    <h1 align = "center" style="position: relative;top:5px;">JS Ödevleri 16-20</h1>
+                    <div style="background-color: gray;height: 1px;width: auto;"></div>
+                    <p style="margin-left: 5px;"><font style="color: #63C963;font-size: 32px;">Soru 16 : </font>Fizik,kimya,matematik,beden,edebiyat ders isimlerini dersler adında bir diziye sabit olarak kaydedip alt alta ekrana yazdıran programıyazınız.</p>
+                    <center>
+                        <button class="btn" onclick="listele()">Yazdır</button>
+                        <br>
+                        <br>
+                        <div id="sonuc" style="color: white; font-family: 'Open Sans', sans-serif;">
+                        </div>
+                        <button class="btn" onclick="sifirla(1)">Sıfırla</button>
+                        <br>
+                        <br>
+                    </center>
+                    <div style="background-color: gray;height: 1px;width: auto;"></div>
+                    <p style="margin-left: 5px;"><font style="color: #63C963;font-size: 32px;">Soru 17 : </font>Haftanın günlerini “gunler” adli bir diziye atarak sıralanmış hali ve ters yazılmış halini ekrana yazdıran programı yazınız.</p>
+                    <center>
+                        <button class="btn" onclick="tersYazdir()">Yazdır</button>
+                        <br>
+                        <br>
+                        <div id="sonuc2" style="color: white; font-family: 'Open Sans', sans-serif;">
+                        </div>
+                        <div id="sonuc3" style="color: white; font-family: 'Open Sans', sans-serif;">
+                        </div>
+                        <button class="btn" onclick="sifirla(2)">Sıfırla</button>
+                        <br>
+                        <br>
+                    </center>
+                    <div style="background-color: gray;height: 1px;width: auto;"></div>
+                    <p style="margin-left: 5px;"><font style="color: #63C963;font-size: 32px;">Soru 18 : </font>	
+                        Girilen kenar uzunluklarına bağlı olarak :
+                        1 basınca üçgenin alanı
+                        2. basınca ve dikdörtgenin alanı 3.basınca karenin alanını hesaplayan programı fonksiyon yardımı ile yazınız üçgenin kenarları için a,b,c dikdörtgen ve kare için ise a,b kullanılacaktır.</p>
+                    <center>
+                        <label for="t1">Kenar 1 : </label><input type="text" id="t1" style="display: inline-block;width: 50px;">
+                        <label for="t2">Kenar 2 : </label><input type="text" id="t2" style="display: inline-block;width: 50px;">
+                        <div></div>
+                        <button class="btn" style="width: 150px;display: inline-block;" onclick="hesapla(1)">Üçgenin alanını hesapla</button>
+                        <button class="btn" style="width: 150px;display: inline-block;" onclick="hesapla(2)">Dikdörtgenin alanını hesapla</button>
+                        <button class="btn" style="width: 150px;display: inline-block;" onclick="hesapla(2)">Karenin alanını hesapla</button>
+                        <div></div>
+                        <br>
+                        <div id="sonuc4" style="color: white; font-family: 'Open Sans', sans-serif;">
+                        <br>
+                    </center>
+                    <center>
+                        <button class="btn" onclick="sifirla(3)">Sıfırla</button>
+                    </center>
+                    <br>
+                    <div style="background-color: gray;height: 1px;width: auto;"></div>
+                    <p style="margin-left: 5px;"><font style="color: #63C963;font-size: 32px;">Soru 19 : </font>Girilen başlangıç ve bitiş sayısının arasındaki tüm sayıların toplamını bulunuz.</p>
+                    <center>
+                        <label for="b">Baslangic : </label><input type="text" id="b" style="display: inline-block;width: 50px;">
+                        <label for="s">Bitis : </label><input type="text" id="s" style="display: inline-block;width: 50px;">
+                        <div></div>
+                        <div id="sonuc5" style="color: white; font-family: 'Open Sans', sans-serif;">         
+                    </center>
+                    <center>
+                        <button class="btn" onclick="toplambul()">Sayıların arasındaki sayıların toplamını bul</button>
+                        <div></div>
+                        <br>
+                        <button class="btn" onclick="sifirla(4)">Sıfırla</button>
+                    </center>
+                    <br>
+                    <div style="background-color: gray;height: 1px;width: auto;"></div>
+                    <p style="margin-left: 5px;"><font style="color: #63C963;font-size: 32px;">Soru 20 : </font>Girilen 5 nottan 50’nin altında kalanların sayısını bulan programı yazınız.</p>
+                    <center>
+                        <label for="s1">Sayi 1 : </label><input type="text" id="s1" style="display: inline-block;width: 30px;">
+                        <label for="s2">Sayi 2 : </label><input type="text" id="s2" style="display: inline-block;width: 30px;">
+                        <label for="s3">Sayi 3 : </label><input type="text" id="s3" style="display: inline-block;width: 30px;">
+                        <label for="s4">Sayi 4 : </label><input type="text" id="s4" style="display: inline-block;width: 30px;">
+                        <label for="s5">Sayi 5 : </label><input type="text" id="s5" style="display: inline-block;width: 30px;">
+                        <div></div>
+                        <button class="btn" onclick="hesapla(3)">50'nin altında olanları bul</button>
+                        <div></div>
+                        <div id="sonuc6" style="color: white; font-family: 'Open Sans', sans-serif;">
+                    </center>
+                    <center>
+                        <br>
+                        <button class="btn" onclick="sifirla(5)">Sıfırla</button>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toplambul(){
+            const b = Number(document.getElementById("b").value);
+            const s = Number(document.getElementById("s").value);
+            var toplam = 0;
+            for (var i = b; i <= s; i++) {
+                toplam += i;
+            }
+            const sonuc = document.getElementById("sonuc5");
+            sonuc.innerHTML = toplam;
+        }
+        function hesapla(a)
+        {
+            if(a == 1)
+            {
+                const k1 = Number(document.getElementById("t1").value);
+                const k2 = Number(document.getElementById("t2").value);
+                const sonuc = k1 * k2 / 2;
+                const sonuc4 = document.getElementById("sonuc4");
+                sonuc4.innerHTML = sonuc; 
+            }
+            else if(a == 2)
+            {
+                const k1 = Number(document.getElementById("t1").value);
+                const k2 = Number(document.getElementById("t2").value);
+                const sonuc = k1 * k2;
+                const sonuc4 = document.getElementById("sonuc4");
+                sonuc4.innerHTML = sonuc; 
+            }
+            else if(a == 3)
+            {
+                const k1 = Number(document.getElementById("s1").value);
+                const k2 = Number(document.getElementById("s2").value);
+                const k3 = Number(document.getElementById("s3").value);
+                const k4 = Number(document.getElementById("s4").value);
+                const k5 = Number(document.getElementById("s5").value);
+                const sonuc4 = document.getElementById("sonuc6");
+                const notlar = [k1, k2, k3, k4, k5];
+                var sayialte = 0;
+                for (var i = 0; i < notlar.length; i++) {
+                if (notlar[i] < 50) {
+                    sayialte++;
+                }
+                }
+                sonuc4.innerHTML = sayialte;
+            }
+            
+        }
+        function listele() {
+
+            const dersler = ["Fizik", "Kimya", "Matematik", "Beden", "Edebiyat"];
+            const liste = document.getElementById("sonuc");
+            liste.innerHTML = "";
+            for (var i = 0; i < dersler.length; i++) {
+                liste.innerHTML += dersler[i] + "<br>";
+            }
+        }
+        function sifirla(a) {
+            if(a == 1)
+            {
+                const liste = document.getElementById("sonuc");
+                if(liste.innerHTML == "")
+                {
+                    alert("Önce yazdırın.");
+                }
+                else
+                {
+                    liste.innerHTML = "";
+                }
+            }
+            else if(a == 2)
+            {
+                const liste = document.getElementById("sonuc2");
+                const liste2 = document.getElementById("sonuc3");
+                if(liste.innerHTML == "" && liste2.innerHTML == "")
+                {
+                    alert("Önce yazdırın.");
+                }
+                else
+                {
+                    liste.innerHTML = "";
+                    liste2.innerHTML = "";
+                }
+            }
+            else if(a == 3)
+            {
+                const liste = document.getElementById("sonuc4");
+                if(liste.innerHTML == "")
+                {
+                    alert("Önce yazdırın.");
+                }
+                else
+                {
+                    liste.innerHTML = "";
+                }
+            }
+            else if(a == 4)
+            {
+                const liste = document.getElementById("sonuc5");
+                if(liste.innerHTML == "")
+                {
+                    alert("Önce yazdırın.");
+                }
+                else
+                {
+                    liste.innerHTML = "";
+                }
+            }
+            else if(a == 5)
+            {
+                const liste = document.getElementById("sonuc6");
+                if(liste.innerHTML == "")
+                {
+                    alert("Önce yazdırın.");
+                }
+                else
+                {
+                    liste.innerHTML = "";
+                }
+            }
+        }
+        function tersYazdir() {
+            const gunler = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
+            const tersGunler = gunler.slice().reverse();
+            const liste = document.getElementById("sonuc2");
+            liste.innerHTML = "";
+            const liste2 = document.getElementById("sonuc3");
+            liste.innerHTML = "Ters yazım : ";
+            liste2.innerHTML = "Düz yazım : ";
+            for (var i = 0; i < tersGunler.length; i++) {
+                if (i === tersGunler.length - 1) 
+                {
+                    liste.innerHTML += tersGunler[i];
+                }
+                else
+                {
+                    liste.innerHTML += tersGunler[i] + ", ";
+                }
+            }
+            liste2.innerHTML += gunler;
+        }
+
+    </script>
+</body>
+</html>
