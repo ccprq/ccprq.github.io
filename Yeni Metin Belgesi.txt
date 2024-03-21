@@ -1,0 +1,163 @@
+
+Çalışma Soruları Çözümleri
+1. Soru:
+
+(a-2)x³ +(2b+6)x + 5x = 0
+
+Denklem x'e bağlı birinci dereceden bir bilinmeyenli denklemdir.
+
+Çözüm:
+
+Denklemde a-2 katsayısı 0'a eşit olmalıdır.
+
+a-2 = 0
+
+a = 2
+
+b'yi bulmak için denklemi x = 1 için çözebiliriz.
+
+(2-2)x³ +(2b+6)x + 5x = 0
+
+2b+6 + 5 = 0
+
+2b = -11
+
+b = -5.5
+
+Cevap: a+b = 2 - 5.5 = -3.5
+
+2. Soru:
+
+(2a-8)x³+(b+7)x² + 3x = (x-1)(x² + 4x + 4)
+
+Denklem x'e bağlı birinci dereceden bir bilinmeyenli denklemdir.
+
+Çözüm:
+
+Denklemdeki her iki tarafı da çarpanlarına ayıralım.
+
+(2a-8)x³+(b+7)x² + 3x = (x-1)(x + 2)²
+
+(2a-8)x(x² + 4x + 4) + (b+7)x² + 3x = 0
+
+(2a-8)x(x + 2)² + (b+7 + 3)x = 0
+
+(2a-8)x(x + 2)² + bx = 0
+
+Denklemde x = 0 veya x + 2 = 0 için eşitlik sağlanmalıdır.
+
+x = 0 için;
+
+(2a-8)x(x + 2)² + bx = 0
+
+b = 0
+
+x + 2 = 0 için;
+
+(2a-8)x(x + 2)² + bx = 0
+
+2a-8 = 0
+
+a = 4
+
+Cevap: a+b = 4 + 0 = 4
+
+3. Soru:
+
+3(x+4)=2x-2
+
+Çözüm:
+
+Denklemdeki her iki tarafı da açalım.
+
+3x + 12 = 2x - 2
+
+x = 14
+
+Cevap: Çözüm kümesi = {14}
+
+4. Soru:
+
+4(x-2)=3x+1
+
+Çözüm:
+
+Denklemdeki her iki tarafı da açalım.
+
+4x - 8 = 3x + 1
+
+x = 9
+
+Cevap: Çözüm kümesi = {9}
+
+5. Soru:
+
+x/3 + 1/4 = x/2 - 2
+
+Çözüm:
+
+Eşitliğin her iki tarafını da 12 ile çarpalım.
+
+4x + 3 = 6x - 24
+
+2x = 27
+
+x = 13.5
+
+Cevap: x = 13.5
+
+6. Soru:
+
+x/2 - 1/3 = x/4 + 2
+
+Çözüm:
+
+Eşitliğin her iki tarafını da 12 ile çarpalım.
+
+6x - 4 = 3x + 24
+
+3x = 28
+
+x = 9.33
+
+Cevap: x = 9.33
+
+7. Soru:
+
+5x - 3 = 82
+
+Çözüm:
+
+Denklemdeki her iki tarafa da 3 ekleyelim.
+
+5x = 85
+
+x = 17
+
+Cevap: x = 17
+
+8. Soru:
+
+3x - 5 = 82
+
+Çözüm:
+
+Denklemdeki her iki tarafa da 5 ekleyelim.
+
+3x = 87
+
+x = 29
+
+Cevap: x = 29
+
+9. Soru:
+
+Yiğit'in yaşının 3 eksiğinin 4 katı; yaşının 3 katının 9 fazlasına eşitse Yiğit'in yaşı kaçtır?
+
+Çözüm:
+
+4(y-3) = 3y + 9
+
+y = 21
+
+Cevap: Yiğit'in yaşı 2
