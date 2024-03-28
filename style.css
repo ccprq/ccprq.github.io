@@ -1,0 +1,105 @@
+
+*{
+    font-family: 'Open Sans', sans-serif;
+}
+body{
+    background-color: #171719;
+}
+#py{
+    position: relative;
+    top: 17px;
+    color: white;
+}
+ul,li{
+    color: gray;
+}
+p{
+    position: relative;
+    bottom: 16px;
+    font-size: 20px;
+    color: #63C963;
+}
+input[type="text"]{
+    font-family: 'Open Sans', sans-serif;
+    color: #63C963;
+    outline: none;
+    box-shadow: none;
+    border-radius: 8px;
+    border: 0;
+    height: 25px;
+    width: 283px;
+    position: relative;
+    bottom: 18px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+}
+button {
+
+
+    border: solid 1px #63C963;
+    border-radius: 3px;
+    font-family: 'Open Sans', sans-serif;
+    background-color: transparent;
+    color: #63C963;
+    font-size: 100%;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s;
+    margin: 5px;
+}
+  
+button:hover {
+    color: #FD70E1;
+    border-color: #FD70E1;
+    animation: shake 1.5s infinite alternate;
+}
+@keyframes shake {
+    0% { transform: translateY(0); }
+    25%, 75% { transform: translateY(-5px); }
+    50% { transform: translateY(5px); }
+    100% { transform: translateY(0); }
+}
+textarea{
+    width: 350px;
+    background-color: #171F26;
+    height: 190px;
+    max-width: 350px;
+    color: #63C963;
+    max-height: 230px;
+    border: 1px #63C963 solid;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+}
+textarea:focus{
+    outline: none;
+    box-shadow: none;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+}
+.yorumlar{
+
+    width: 350px;
+    position: relative;
+    bottom: 20px;
+    background-color: #171F26;
+}
+.yorum{
+    border: 1px #63C963 solid;
+    padding: 5px;
+    border-radius: 8px;
+    width: 350px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    height: 75px;
+    color: white;
+    background-color: #171F26;
+}
+.yorum2{
+    border: 1px #63C963 solid;
+    background-color: #171F26;
+    padding: 5px;
+    border-radius: 8px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    width: 350px;
+    height: 145px;
+    color: #63C963;
+}
