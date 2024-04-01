@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js">
+    </script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-csharp.min.js">
+    </script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C#</title>
+    <link rel="shortcut icon" href="ico.png" type="image/x-icon">
+
+    <style>
+        ul{
+            list-style-type: none;
+        }
+        h1,h2,h3,h4,h5,p,font,ul,li{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .button{
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 5px;
+            transition: 0.3s;            
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+        }
+        .button:hover{
+            cursor: pointer;
+            background-color: #dddddd;
+            border: 0.5px dashed;
+            scale: 1.1;
+        }
+        .cikti{
+            background-color: black;
+            color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: left;
+        }
+        pre{
+            border-radius: 10px;
+            border: 0.5px dashed black;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+<body>
+    <h1 style="text-align: center;font-family: Arial, Helvetica, sans-serif;">C# Console</h1>
+    <p style="text-align: center;font-family: Arial, Helvetica, sans-serif;color: gray;">Öğrenmek istediğiniz konuya tıklayın</p>
+    <div style="display: flex; justify-content: center;">
+        <a href="degisken.html"><button class="button">Değişkenler</button></a>
+        <a href="ekran.html"><button class="button">Ekrana yazdırma</button></a>
+        <a href="oper.html"><button class="button">Operatörler</button></a>
+        <a href="girdi.html"><button class="button">Kullanıcıdan girdi alma</button></a>
+        <a href="if.html"><button class="button">if, else , else if Karar yapıları</button></a>
+        <a href="swi.html"><button class="button">switch case</button></a>
+        <a href="for.html"><button class="button">for</button></a>
+        <a href="whi.html"><button class="button">while, do while</button></a>
+        <a href="arr.html"><button class="button">Diziler</button></a>
+        <a href="eac.html"><button class="button">Foreach</button></a>
+        <a href="str.html"><button class="button">Yazı (string) işlemleri</button></a>
+
+       
+    </div> 
+    <div style="display: flex; justify-content: center;">
+        <a href="index.html"><button class="button">Ana sayfa</button></a>  
+    </div> 
+      <p style="color: gray;text-align: center;">
+            Bu site üzerinden öğreneceğiniz bilgiler aşırı temel düzeyde bilgilerdir. Bu bilgiler sizi profesyonel yapmaz, bu bilgileri bilerek C# biliyorum diyemezsiniz.
+        </p>
+    </div>
+    <center>
+        <h3>Diziler</h3>
+        <ul>
+            <li>
+                Diziler, aynı türdeki verilerin bir koleksiyonunu saklamak için kullanılan veri yapılarıdır. C#, dizilerin boyutunu ve türünü tanımlamak için kullanılan bir "veri tipi[]" sözdizimine sahiptir.
+            </li>
+            <br>
+            <li>
+                Kullanım şekilleri aşağıda verilmiştir.
+            </li>
+        </ul>
+        <pre style="background-color: whitesmoke;max-width: 900px;font-size: 12px;"><code class="language-csharp">    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] sayilar = new int[5]; // 5 elemanlı bir tam sayı dizisi oluştur
+            sayilar[0] = 10; // Dizinin ilk elemanına 10 değerini atama
+            sayilar[1] = 20; // Dizinin ikinci elemanına 20 değerini atama
+            sayilar[2] = 30; // Dizinin üçüncü elemanına 30 değerini atama
+            sayilar[3] = 40; // Dizinin dördüncü elemanına 40 değerini atama
+            sayilar[4] = 50; // Dizinin beşinci elemanına 50 değerini atama
+            
+            int[] sayilar2 = new int[] { 10, 20, 30, 40, 50 }; // Elemanları direkt olarak tanımlayarak dizi oluşturma
+
+            int uzunluk2 = sayilar.Length; // Dizinin uzunluğunu al
+
+            int ikinciEleman = sayilar2[1]; // Dizinin ikinci elemanını al
+
+            // İki boyutlu diziler
+            // İki boyutlu diziler adındanda anlaşılacağı üzere 2 boyutludur.
+
+            int[,] dizi = new int[3, 3];
+            
+            // Bu dizinin eleman alanı şöyledir ; 
+
+            //       ***
+            //       ***
+            //       ***
+
+            // Yani 3 sütün, 3 satır şeklinde
+
+            dizi[0, 0] = 1; // Sol üst köşesine 1 değerini atama
+            dizi[1, 2] = 5; // İkinci satırının üçüncü sütununa 5 değerini atama
+
+            //       1**
+            //       **5
+            //       ***
+
+            int satirSayisi = dizi.GetLength(0); // Satir sayisini alma
+            int sutunSayisi = dizi.GetLength(1); // Sutun sayisini alma
+            
+            Console.ReadLine();
+        }
+    }
+        </code></pre>
+    </center>
+    
+</body>
+</html>
