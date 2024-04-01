@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js">
+    </script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-csharp.min.js">
+    </script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C#</title>
+    <link rel="shortcut icon" href="ico.png" type="image/x-icon">
+
+    <style>
+        ul{
+            list-style-type: none;
+        }
+        h1,h2,h3,h4,h5,p,font,ul,li{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .button{
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 5px;
+            transition: 0.3s;            
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+        }
+        .button:hover{
+            cursor: pointer;
+            background-color: #dddddd;
+            border: 0.5px dashed;
+            scale: 1.1;
+        }
+        .cikti{
+            background-color: black;
+            color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: left;
+        }
+        pre{
+            border-radius: 10px;
+            border: 0.5px dashed black;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+<body>
+    <h1 style="text-align: center;font-family: Arial, Helvetica, sans-serif;">C# Console</h1>
+    <p style="text-align: center;font-family: Arial, Helvetica, sans-serif;color: gray;">Öğrenmek istediğiniz konuya tıklayın</p>
+    <div style="display: flex; justify-content: center;">
+        <a href="degisken.html"><button class="button">Değişkenler</button></a>
+        <a href="ekran.html"><button class="button">Ekrana yazdırma</button></a>
+        <a href="oper.html"><button class="button">Operatörler</button></a>
+        <a href="girdi.html"><button class="button">Kullanıcıdan girdi alma</button></a>
+        <a href="if.html"><button class="button">if, else , else if Karar yapıları</button></a>
+        <a href="swi.html"><button class="button">switch case</button></a>
+        <a href="for.html"><button class="button">for</button></a>
+        <a href="whi.html"><button class="button">while, do while</button></a>
+        <a href="arr.html"><button class="button">Diziler</button></a>
+        <a href="eac.html"><button class="button">Foreach</button></a>
+        <a href="str.html"><button class="button">Yazı (string) işlemleri</button></a>
+
+       
+    </div>  
+    <div style="display: flex; justify-content: center;">
+        <a href="index.html"><button class="button">Ana sayfa</button></a>  
+    </div>
+      <p style="color: gray;text-align: center;">
+            Bu site üzerinden öğreneceğiniz bilgiler aşırı temel düzeyde bilgilerdir. Bu bilgiler sizi profesyonel yapmaz, bu bilgileri bilerek C# biliyorum diyemezsiniz.
+        </p>
+    </div>
+    <center>
+    <h3>if, else, else if Karar Yapıları</h3>
+    <ul>
+        <li>
+            C# da karar vermek veya karşılaştırma yapmak için : <b>if</b>, <b>else</b>, <b>else if</b> kullanılır.
+            <ul>
+                <br>
+                <li>
+                    <b>if</b> : Eğer anlamına gelir, içine yazıldığı koşul gerçekleşirse çalışır.
+                </li>
+                <br>
+                <li>
+                    <b>else</b> : Başka analıma gelir, <b>if</b> koşulu gerçekleşmezse çalışır.
+                </li>
+                <br>
+                <li>
+                    <b>else if</b> : <b>if</b> koşulu gerçekleşmezse çalışır. <b>else</b> den farkı ise <b>if</b> gibi parantezi vardır ve koşul gerçekleşmezse kendi koşulunu uygular.
+                </li>
+            </ul>
+        </li>
+        <br>
+        <li>
+            Kullanım şekilleri aşağıda verilmiştir.
+        </li>
+    </ul>
+    <pre style="background-color: whitesmoke;max-width: 900px;font-size: 12px;"><code class="language-csharp">    
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Kullanıcıdan 3 tane sayı alalım ve 'if' kullanarak büyükten küçüğe sıralayalım
+        //Convert.ToInt32() methodu kullanıcının girdisini sayı türüne çevirir
+
+        Console.Write("Sayı 1 : ");
+        int sayi1 = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Sayı 2 : ");
+        int sayi2 = Convert.ToInt32(Console.ReadLine());
+        Console.Write("Sayı 3 : ");
+        int sayi3 = Convert.ToInt32(Console.ReadLine());
+
+        if (sayi1 > sayi2 && sayi1 > sayi3 && sayi2 > sayi3)
+        {
+            Console.WriteLine(sayi1.ToString() + ">" + sayi2.ToString() + ">" + sayi3.ToString());
+        }
+        else if (sayi1 > sayi2 && sayi1 > sayi3 && sayi2 < sayi3)
+        {
+            Console.WriteLine(sayi1.ToString() + ">" + sayi3.ToString() + ">" + sayi2.ToString());
+        }
+        else if (sayi1 < sayi2 && sayi2 > sayi3 && sayi1 > sayi3)
+        {
+            Console.WriteLine(sayi2.ToString() + ">" + sayi1.ToString() + ">" + sayi3.ToString());
+        }
+        else if (sayi1 < sayi2 && sayi2 > sayi3 && sayi1 < sayi3)
+        {
+            Console.WriteLine(sayi2.ToString() + ">" + sayi3.ToString() + ">" + sayi1.ToString());
+        }
+        else if (sayi1 < sayi3 && sayi2 < sayi3 && sayi1 < sayi2)
+        {
+            Console.WriteLine(sayi3.ToString() + ">" + sayi2.ToString() + ">" + sayi1.ToString());
+        }
+        else
+        {
+            Console.WriteLine(sayi3.ToString() + ">" + sayi1.ToString() + ">" + sayi2.ToString());
+        }
+        Console.ReadKey();
+    }
+}
+    </code></pre>
+    <ul>
+        <li>
+            Çıktı aşağıda verilmştir.
+        </li>
+    </ul>
+    <div class="cikti">
+        Sayı 1 : 10<br>
+        Sayı 2 : 15<br>
+        Sayı 3 : 18<br>
+        18>15>10
+    </div>
+    </center>
+    
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js">
+    </script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-csharp.min.js">
+    </script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C#</title>
+    <link rel="shortcut icon" href="ico.png" type="image/x-icon">
+
+    <style>
+        ul{
+            list-style-type: none;
+        }
+        h1,h2,h3,h4,h5,p,font,ul,li{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .button{
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 5px;
+            transition: 0.3s;            
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+        }
+        .button:hover{
+            cursor: pointer;
+            background-color: #dddddd;
+            border: 0.5px dashed;
+            scale: 1.1;
+        }
+        .cikti{
+            background-color: black;
+            color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: left;
+        }
+        pre{
+            border-radius: 10px;
+            border: 0.5px dashed black;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+<body>
+    <h1 style="text-align: center;font-family: Arial, Helvetica, sans-serif;">C# Console</h1>
+    <p style="text-align: center;font-family: Arial, Helvetica, sans-serif;color: gray;">Öğrenmek istediğiniz konuya tıklayın</p>
+    <div style="display: flex; justify-content: center;">
+        <a href="degisken.html"><button class="button">Değişkenler</button></a>
+        <a href="ekran.html"><button class="button">Ekrana yazdırma</button></a>
+        <a href="oper.html"><button class="button">Operatörler</button></a>
+        <a href="girdi.html"><button class="button">Kullanıcıdan girdi alma</button></a>
+        <a href="if.html"><button class="button">if, else , else if Karar yapıları</button></a>
+        <a href="swi.html"><button class="button">switch case</button></a>
+        <a href="for.html"><button class="button">for</button></a>
+        <a href="whi.html"><button class="button">while, do while</button></a>
+        <a href="arr.html"><button class="button">Diziler</button></a>
+        <a href="eac.html"><button class="button">Foreach</button></a>
+        <a href="str.html"><button class="button">Yazı (string) işlemleri</button></a>
+
+       
+    </div> 
+    <div style="display: flex; justify-content: center;">
+        <a href="index.html"><button class="button">Ana sayfa</button></a>  
+    </div> 
+      <p style="color: gray;text-align: center;">
+            Bu site üzerinden öğreneceğiniz bilgiler aşırı temel düzeyde bilgilerdir. Bu bilgiler sizi profesyonel yapmaz, bu bilgileri bilerek C# biliyorum diyemezsiniz.
+        </p>
+    </div>
+    <center>
+    <h3>Switch Case</h3>
+    <ul>
+        <li>
+            Switch Case yapısı, sabit değerlerle çalışır. Yani <b>if</b>, <b>else</b>, <b>else if</b> de olduğu gibi karşılaştırma yapılamaz. <b>switch(){}</b>, <b>case:</b>, <b>break;</b>, <b>defualt:</b> kullanılır.
+            <ul>
+                <br>
+                <li>
+                    <b>switch(){}</b> : Parantezin arasına kontrol edilecek değer girilir. Süslü parantezin içine ise diğer işlemler yazılır.
+                </li>
+                <br>
+                <li>
+                    <b>case:</b> : <b>switch</b> in parantezine girilen değeri <b>case</b> kontrol eder. Eğer true döndürse yani <b>case</b> e girilen değer elde edilirse altındaki kodlar çalışır.
+                </li>
+                <br>
+                <li>
+                    <b>break;</b> : <b>case:</b> in altına yazılan komutlar çalıştıktan sonra <b>break;</b> komutu ile durdurulur. <b>break;</b> döngüleri ve bunun gibi olayları sonlandırmak için kullanılır.
+                </li>
+                <br>
+                <li>
+                    <b>defualt:</b> : Belirtilen değerlerden hiç biri eşleşmezse çalışacak kodlar altına yazılır.
+                </li>
+            </ul>
+        </li>
+        <br>
+        <li>
+            Kullanım şekilleri aşağıda verilmiştir.
+        </li>
+    </ul>
+    <pre style="background-color: whitesmoke;max-width: 900px;font-size: 12px;"><code class="language-csharp">    
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Lütfen bir gün numarası girin (1-7 arası):");
+        int gunNo = Convert.ToInt32(Console.ReadLine());
+
+        string gunAdi;
+        switch (gunNo)
+        {
+            case 1:
+                gunAdi = "Pazartesi";
+                break;
+            case 2:
+                gunAdi = "Salı";
+                break;
+            case 3:
+                gunAdi = "Çarşamba";
+                break;
+            case 4:
+                gunAdi = "Perşembe";
+                break;
+            case 5:
+                gunAdi = "Cuma";
+                break;
+            case 6:
+                gunAdi = "Cumartesi";
+                break;
+            case 7:
+                gunAdi = "Pazar";
+                break;
+            default:
+                gunAdi = "Geçersiz gün numarası!";
+                break;
+        }
+
+        Console.WriteLine("Girilen gün numarasının karşılığı: " + gunAdi);
+        Console.ReadKey();
+    }
+}
+    </code></pre>
+    <ul>
+        <li>
+            Çıktı aşağıda verilmiştir.
+        </li>
+    </ul>
+    <div class="cikti">
+        Lütfen bir gün numarası girin (1-7 arası):1<br>
+        Girilen gün numarasının karşılığı: Pazartesi
+    </div>
+    </center>
+    
+</body>
+</html>

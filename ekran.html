@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js">
+    </script> <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-csharp.min.js">
+    </script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C#</title>
+    <link rel="shortcut icon" href="ico.png" type="image/x-icon">
+
+    <style>
+        ul{
+            list-style-type: none;
+        }
+        h1,h2,h3,h4,h5,p,font,ul,li{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .button{
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 5px;
+            transition: 0.3s;            
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+        }
+        .button:hover{
+            cursor: pointer;
+            background-color: #dddddd;
+            border: 0.5px dashed;
+            scale: 1.1;
+        }
+        .cikti{
+            background-color: black;
+            color: white;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: left;
+        }
+        pre{
+            border-radius: 10px;
+            border: 0.5px dashed black;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+</head>
+<body>
+    <h1 style="text-align: center;font-family: Arial, Helvetica, sans-serif;">C# Console</h1>
+    <p style="text-align: center;font-family: Arial, Helvetica, sans-serif;color: gray;">Öğrenmek istediğiniz konuya tıklayın</p>
+    <div style="display: flex; justify-content: center;">
+        <a href="degisken.html"><button class="button">Değişkenler</button></a>
+        <a href="ekran.html"><button class="button">Ekrana yazdırma</button></a>
+        <a href="oper.html"><button class="button">Operatörler</button></a>
+        <a href="girdi.html"><button class="button">Kullanıcıdan girdi alma</button></a>
+        <a href="if.html"><button class="button">if, else , else if Karar yapıları</button></a>
+        <a href="swi.html"><button class="button">switch case</button></a>
+        <a href="for.html"><button class="button">for</button></a>
+        <a href="whi.html"><button class="button">while, do while</button></a>
+        <a href="arr.html"><button class="button">Diziler</button></a>
+        <a href="eac.html"><button class="button">Foreach</button></a>
+        <a href="str.html"><button class="button">Yazı (string) işlemleri</button></a>
+
+       
+    </div>  
+    <div style="display: flex; justify-content: center;">
+        <a href="index.html"><button class="button">Ana sayfa</button></a>  
+    </div>
+      <p style="color: gray;text-align: center;">
+            Bu site üzerinden öğreneceğiniz bilgiler aşırı temel düzeyde bilgilerdir. Bu bilgiler sizi profesyonel yapmaz, bu bilgileri bilerek C# biliyorum diyemezsiniz.
+        </p>
+    </div>
+    <center>
+    <h3>Ekrana Yazdırma</h3>
+    <ul>
+        <li>
+            C# da console ekranına yazı yazdırmak için 2 method kullanılır. Bunlar : <b>Console.Write();</b>, <b>Console.WriteLine();</b>
+            <ul>
+                <br>
+                <li>
+                    <b>Console.Write();</b> : Alt alta yazıldığında çıktı yan yana olur. Bu durumu bitirmek için yan yana yazım işlemi bittiğinde sonuncu yazıyı <b>Console.WriteLine();</b> kullanarak yazarız.
+                </li>
+                <br>
+                <li>
+                    <b>Console.WriteLine();</b> : Alt alta yazıldığında çıktı da alt alta olur. <b>Console.Write();</b> methodunun etkisini bitirmek içinde kullanılır.
+                </li>
+            </ul>
+        </li>
+        <br>
+        <li>
+            Kullanım şekilleri aşağıda verilmiştir.
+        </li>
+    </ul>
+    <pre style="background-color: whitesmoke;max-width: 900px;font-size: 12px;"><code class="language-csharp">    
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Yazi yazdırma (string)
+
+        string yazi1 = "Merhaba ";
+        string yazi2 = "Dunya ";
+
+        // Write methodu ile yan yana yazdırıp,
+
+        Console.Write(yazi1);
+        Console.Write(yazi2);
+
+        // WriteLine methodu ile yan yana yazdırmayı kapattık aynı işlem aşağıdada uygulanmıştır.
+
+        Console.WriteLine("!");
+
+        Console.Write(yazi1);
+        Console.WriteLine(" Ekleme");
+
+        // Yazi yazdırma (char)
+        // Ekrana harf yazdırmanın yazı yazdırmaktan bir farkı yoktur.
+
+        char harf = 'A';
+
+        Console.Write(harf);
+
+        Console.WriteLine('A')
+
+        // Sayi yazdırma
+
+        // Ekrana sayı yazdırmak için  2 yöntem vardır
+        // İlk yöntem direkt sayı yazdırma  
+
+        Console.WriteLine(1);
+
+        // İkinci yöntem ise değişken tanımlayıp yazdırma
+
+        int a = 1;
+        Console.WriteLine(a.ToString());
+
+        // Eğer bu şekilde yaparsanız '.ToString()' ifadesini kullanmak zorundasınız yoksa hata alırsınız.
+
+        Console.ReadKey();
+
+        // Bu ifadeyi kullanmazsanız program çalıştığı gibi kapanır çünkü ; tüm kodlar çalıştıktan sonra çalışacak başka kod kalmaz. 'Console.ReadKey();' methodu tuş olaylarını dinler.
+        // Yani bir tuşa basana kadar bekler. Tuşa bastıktan sonra başka kod kalmayacağı için program kapanır. 
+    }
+}
+    </code></pre>
+    <ul>
+        <li>
+            Çıktı aşağıda verilmştir.
+        </li>
+    </ul>
+    <div class="cikti">
+        Merhaba Dunya!<br>
+        AA<br>
+        Merhaba Ekleme<br>
+        1<br>
+        1
+    </div>
+    </center>
+    
+</body>
+</html>
