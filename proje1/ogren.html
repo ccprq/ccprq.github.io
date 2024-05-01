@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML5 Öğren</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="shortcut icon" href="htmlico.png" type="image/x-icon">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+  <style>
+     .progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+
+    z-index: 9999;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    width: 0;
+    transition: width 0.2s ease; 
+  }
+    *{
+        user-select: none;
+    }
+    .card:hover{
+        transition: 0.3s all;
+        scale: 1.1;
+        box-shadow: 2px 2px  50px gray;
+    }
+    .btn{
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(0px);
+  }
+}
+
+  </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar">
+        </div>
+      </div>
+      <script>
+        window.onload = function() {
+          window.addEventListener('scroll', function() {
+            var totalHeight = document.body.scrollHeight - window.innerHeight;
+            var progress = (window.pageYOffset / totalHeight) * 100;
+            document.getElementById('myBar').style.width = progress + "%";
+          });
+      
+          window.addEventListener('scroll', function() {
+            var progressContainer = document.querySelector('.progress-container');
+            if (window.pageYOffset > progressContainer.offsetTop) {
+              progressContainer.classList.add('sticky');
+            } else {
+              progressContainer.classList.remove('sticky');
+            }
+          });
+        };
+      </script>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="index.html"><img src="htmlico.png" width="50px" alt="">&nbsp; htmlogren.com</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Ana Sayfa</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron jumbotron-fluid text-center bg-warning">
+  <div class="container">
+    <h1 class="display-4">Etiketleri Öğrenmeye Başla!</h1>
+    <p class="lead">
+        Aşağıdaki mavi butonlara tıklayarak ilgili etiketi detaylı bir şekşilde öğrenebilirsiniz.
+    </p>
+  </div>
+</div>
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">H1-H6 Başlık Etiketleri</h5>
+            <p class="card-text">Önem derecesi 1 den 6 ya kadar olan başlıklar.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('h1-h6')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">p Etiketi</h5>
+            <p class="card-text">Bunun gibi paragraflar yazmayı sağlayan etiket.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('p')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">video Etiketi</h5>
+            <p class="card-text">Sayfaya harici video eklemek için kullanılan etiket.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('video')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">img Etiketi</h5>
+            <p class="card-text">Sayfaya harici resim eklemek için kullanılan etiket.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('img')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">table, tr, th, td Etiketleri</h5>
+            <p class="card-text">Tablolar oluşturmak için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('table')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">form ve input Etiketleri</h5>
+            <p class="card-text">Formlar oluşturmak için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('form')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">a Etiketi</h5>
+            <p class="card-text">Bağlantıları oluşturmak için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('a')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">div Etiketi</h5>
+            <p class="card-text">Sayfayı bölümlere ayırmak için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('div')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">span Etiketi</h5>
+            <p class="card-text">Metin içinde küçük bir alan oluşturmak için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('span')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">strong ve em Etiketleri</h5>
+            <p class="card-text">Metinleri kalın veya italik yapmak için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('strong-em')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">blockquote Etiketi</h5>
+            <p class="card-text">Uzun alıntılar için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('blockquote')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">iframe Etiketi</h5>
+            <p class="card-text">Başka bir web sayfasını gömmek için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('iframe')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">abbr ve acronym Etiketleri</h5>
+            <p class="card-text">Kısaltmaları tanımlamak için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('abbr-acronym')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">button Etiketi</h5>
+            <p class="card-text">Buton oluşturmak için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('button')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">hr Etiketi</h5>
+            <p class="card-text">Yatay çizgi eklemek için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('hr')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">meta Etiketi</h5>
+            <p class="card-text">Web sayfasının meta bilgilerini tanımlar.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('meta')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">script Etiketi</h5>
+            <p class="card-text">Javascript kodlarını eklemek için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('script')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">style Etiketi</h5>
+            <p class="card-text">CSS stilleri eklemek için kullanılır.</p>
+            <a href="#" class="btn btn-primary" onclick="showNotification('style')">Daha Fazla</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+     var cards = document.querySelectorAll('.card');
+    cards.forEach(function(card, index) {
+        setTimeout(function() {
+            card.style.transition = '0.3s all';
+            card.style.transform = 'scale(1.1)';
+            card.style.boxShadow = '2px 2px 50px gray';
+            setTimeout(function() {
+                card.style.transform = '';
+                card.style.boxShadow = '';
+            }, 1000);
+        }, index * 2000); 
+    });
+  </script>
+  <script>
+    function showNotification(tagName) {
+        var notificationContent = '';
+        switch (tagName) {
+            case 'h1-h6':
+                notificationContent = '<h5 class="mt-0">H1-H6 Başlık Etiketleri</h5>' +
+                                      '<p>Önem derecesi 1 den 6 ya kadar olan başlıklar.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br>' +
+                                      '<span>&lt;h1&gt;</span> etiketi birinci seviye başlık (en büyük) oluşturur. Bu başlık genellikle sayfanın ana başlığını içerir ve diğer başlıklardan daha büyük ve belirgin olarak gösterilir. Diğer başlık seviyeleri de sayfadaki alt başlıkları temsil eder, sırasıyla <span>&lt;h2&gt;</span> (ikinci seviye), <span>&lt;h3&gt;</span> (üçüncü seviye), <span>&lt;h4&gt;</span> (dördüncü seviye), <span>&lt;h5&gt;</span> (beşinci seviye) ve <span>&lt;h6&gt;</span> (altıncı seviye) şeklindedir.</p>';
+                break;
+            case 'p':
+                notificationContent = '<h5 class="mt-0">p Etiketi</h5>' +
+                                      '<p>Bunun gibi paragraflar yazmayı sağlayan etiket.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;p&gt;</span> etiketi bir paragraf oluşturur. Paragraflar, metin içeriğini düzenlemek için kullanılır ve genellikle sayfanın ana içeriğini oluştururlar. HTML içeriğinde metinlerin düzenlenmesi ve görsel olarak ayrılması için önemlidirler.</p>';
+                break;
+            case 'video':
+                notificationContent = '<h5 class="mt-0">video Etiketi</h5>' +
+                                      '<p>Sayfaya harici video eklemek için kullanılan etiket.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;video&gt;</span> etiketi, web sayfalarına video eklemek için kullanılır. <span>&lt;source&gt;</span> etiketi içinde belirtilen video dosyasının URLsi <span>&lt;video&gt;</span> etiketi içine eklenir. Kontrolleri göstermek için <span>controls</span> özelliği kullanılır. Örneğin: <span>&lt;video src="video.mp4" controls&gt;&lt;/video&gt;</span></p>';
+                break;
+            case 'img':
+                notificationContent = '<h5 class="mt-0">img Etiketi</h5>' +
+                                      '<p>Sayfaya harici resim eklemek için kullanılan etiket.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;img&gt;</span> etiketi, web sayfalarına resim eklemek için kullanılır. Resmin URLsi <span>src</span> özelliği içine eklenir ve isteğe bağlı olarak <span>alt</span> özelliği ile resmin alternatif metni belirtilebilir. Örneğin: <span>&lt;img src="resim.jpg" alt="Resim açıklaması"&gt;</span></p>';
+                break;
+            case 'table':
+                notificationContent = '<h5 class="mt-0">table, tr, th, td Etiketleri</h5>' +
+                                      '<p>Tablolar oluşturmak için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;table&gt;</span> etiketi bir tablo oluşturur. Tablolar, verileri düzenlemek ve görsel olarak sunmak için kullanılır. <span>&lt;tr&gt;</span> etiketi bir satırı belirtir, <span>&lt;th&gt;</span> etiketi bir başlığı belirtir ve <span>&lt;td&gt;</span> etiketi bir hücreyi belirtir. Örneğin: <span>&lt;table&gt;&lt;tr&gt;&lt;th&gt;Başlık 1&lt;/th&gt;&lt;th&gt;Başlık 2&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Hücre 1&lt;/td&gt;&lt;td&gt;Hücre 2&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</span></p>';
+                break;
+            case 'form':
+                notificationContent = '<h5 class="mt-0">form ve input Etiketleri</h5>' +
+                                      '<p>Formlar oluşturmak için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;form&gt;</span> etiketi bir formu belirtir. Formlar, kullanıcıdan bilgi toplamak için kullanılır ve genellikle butonlar veya alanlar içerir. Formdaki her bir giriş alanı için <span>&lt;input&gt;</span> etiketi kullanılır. Örneğin: <span>&lt;form action="/submit" method="post"&gt;&lt;label for="fname"&gt;İsim:&lt;/label&gt;&lt;br&gt;&lt;input type="text" id="fname" name="fname"&gt;&lt;br&gt;&lt;input type="submit" value="Gönder"&gt;&lt;/form&gt;</span></p>';
+                break;
+            case 'a':
+                notificationContent = '<h5 class="mt-0">a Etiketi</h5>' +
+                                      '<p>Bağlantıları oluşturmak için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;a&gt;</span> etiketi bir bağlantı oluşturur. Bağlantılar, kullanıcıları farklı sayfalara veya kaynaklara yönlendirmek için kullanılır. Bağlantının hedefi <span>href</span> özelliği ile belirtilir. Örneğin: <span>&lt;a href="#"&gt;Bağlantı Metni&lt;/a&gt;</span></p>';
+                break;
+            case 'div':
+                notificationContent = '<h5 class="mt-0">div Etiketi</h5>' +
+                                      '<p>Sayfayı bölümlere ayırmak için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;div&gt;</span> etiketi bir sayfayı bölümlere ayırmak için kullanılır. Genellikle CSS ile biçimlendirilir ve farklı içerik parçalarını gruplamak için kullanılır. Örneğin: <span>&lt;div&gt;Sayfa İçeriği&lt;/div&gt;</span></p>';
+                break;
+            case 'span':
+                notificationContent = '<h5 class="mt-0">span Etiketi</h5>' +
+                                      '<p>Metin içinde küçük bir alan oluşturmak için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;span&gt;</span> etiketi, metnin belirli bir bölümünü stillemek veya işlemek için kullanılır. Genellikle CSS ile birlikte kullanılır. Örneğin: <span>&lt;span&gt;Metin İçeriği&lt;/span&gt;</span></p>';
+                break;
+            case 'strong-em':
+                notificationContent = '<h5 class="mt-0">strong ve em Etiketleri</h5>' +
+                                      '<p>Metinleri kalın veya italik yapmak için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;strong&gt;</span> ve <span>&lt;em&gt;</span> etiketleri metinleri vurgulamak için kullanılır. <span>&lt;strong&gt;</span>, metni kalın yapar, <span>&lt;em&gt;</span> ise metni italik yapar. Örneğin: <span>&lt;strong&gt;Kalın Metin&lt;/strong&gt;&lt;em&gt;İtalik Metin&lt;/em&gt;</span></p>';
+                break;
+            case 'blockquote':
+                notificationContent = '<h5 class="mt-0">blockquote Etiketi</h5>' +
+                                      '<p>Uzun alıntılar için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;blockquote&gt;</span> etiketi uzun alıntılar için kullanılır. Bu, genellikle metnin diğer bölümlerinden farklı bir biçimde gösterilir. Örneğin: <span>&lt;blockquote&gt;Alıntı Metni&lt;/blockquote&gt;</span></p>';
+                break;
+            case 'iframe':
+                notificationContent = '<h5 class="mt-0">iframe Etiketi</h5>' +
+                                      '<p>Başka bir web sayfasını gömmek için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;iframe&gt;</span> etiketi, bir web sayfasını başka bir web sayfasına gömmek için kullanılır. <span>src</span> özelliği içine gömülecek web sayfasının URLsi belirtilir. Örneğin: <span>&lt;iframe src="https://www.example.com"&gt;&lt;/iframe&gt;</span></p>';
+                break;
+            case 'abbr-acronym':
+                notificationContent = '<h5 class="mt-0">abbr ve acronym Etiketleri</h5>' +
+                                      '<p>Kısaltmaları tanımlamak için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;abbr&gt;</span> ve <span>&lt;acronym&gt;</span> etiketleri kısaltmaları tanımlamak için kullanılır. <span>title</span> özelliği ile kısaltmanın açılımı belirtilir. Örneğin: <span>&lt;abbr title="World Wide Web"&gt;WWW&lt;/abbr&gt;</span></p>';
+                break;
+            case 'button':
+                notificationContent = '<h5 class="mt-0">button Etiketi</h5>' +
+                                      '<p>Buton oluşturmak için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;button&gt;</span> etiketi bir buton oluşturur. Butonlar, kullanıcıların etkileşime geçebileceği bir öğe sağlamak için kullanılır. Örneğin: <span>&lt;button&gt;Tıkla&lt;/button&gt;</span></p>';
+                break;
+            case 'hr':
+                notificationContent = '<h5 class="mt-0">hr Etiketi</h5>' +
+                                      '<p>Yatay çizgi eklemek için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;hr&gt;</span> etiketi bir yatay çizgi ekler. Bu çizgi, sayfadaki bölümleri veya içerikleri ayırmak için kullanılabilir. Örneğin: <span>&lt;hr&gt;</span></p>';
+                break;
+            case 'meta':
+                notificationContent = '<h5 class="mt-0">meta Etiketi</h5>' +
+                                      '<p>Web sayfasının meta bilgilerini tanımlar.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;meta&gt;</span> etiketi, bir web sayfasının meta bilgilerini tanımlamak için kullanılır. Meta bilgiler, tarayıcılar tarafından okunur ve web sayfasının açıklamasını, anahtar kelimelerini, karakter setini vb. içerir. Örneğin: <span>&lt;meta name="description" content="Web sitesi açıklaması"&gt;</span></p>';
+                break;
+            case 'style':
+                notificationContent = '<h5 class="mt-0">style Etiketi</h5>' +
+                                      '<p>CSS stilleri eklemek için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;style&gt;</span> etiketi, bir web sayfasına CSS stilleri eklemek için kullanılır. Bu etiketin içine CSS kuralları yazılır ve tarayıcı bu kuralları sayfanın stilini belirlemek için kullanır. Örneğin: <span>&lt;style&gt;p { color: blue; }&lt;/style&gt;</span></p>';
+                break;
+            case 'script':
+                notificationContent = '<h5 class="mt-0">script Etiketi</h5>' +
+                                      '<p>Javascript kodlarını eklemek için kullanılır.</p>' +
+                                      '<p><strong>Nasıl Kullanılır?</strong><br> <span>&lt;script&gt;</span> etiketi, bir web sayfasına JavaScript kodları eklemek için kullanılır. Bu etiketin içine JavaScript kodları yazılır ve tarayıcı bu kodları sayfanın davranışını belirlemek için kullanır. Örneğin: <span>&lt;script&gt;alert("Merhaba Dünya!");&lt;/script&gt;</span></p>';
+                break;
+            default:
+                notificationContent = 'Bilgi bulunamadı.';
+        }
+        var notification = '<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
+                          '<div class="modal-dialog" role="document">' +
+                            '<div class="modal-content">' +
+                              '<div class="modal-header">' +
+                                '<h5 class="modal-title" id="exampleModalLabel">Etiket Kullanımı</h5>' +
+                                '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+                                  '<span aria-hidden="true">&times;</span>' +
+                                '</button>' +
+                              '</div>' +
+                              '<div class="modal-body">' +
+                                notificationContent +
+                              '</div>' +
+                              '<div class="modal-footer">' +
+                                '<button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>' +
+                              '</div>' +
+                            '</div>' +
+                          '</div>' +
+                        '</div>';
+
+      $('body').append(notification);
+      $('#exampleModal').modal('show');
+      $('#exampleModal').on('hidden.bs.modal', function () {
+        $(this).remove();
+      });
+    }
+</script>
+<footer class="bg-dark text-white text-center py-4">
+  <p>© 2024 Yasin Kara</p>
+</footer>
+</body>
+</html>
