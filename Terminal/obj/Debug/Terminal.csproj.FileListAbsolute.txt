@@ -1,0 +1,12 @@
+C:\Users\suley\source\repos\Terminal\Terminal\bin\Debug\Terminal.dll
+C:\Users\suley\source\repos\Terminal\Terminal\bin\Debug\Terminal.pdb
+C:\Users\suley\source\repos\Terminal\Terminal\obj\Debug\Terminal.csproj.AssemblyReference.cache
+C:\Users\suley\source\repos\Terminal\Terminal\obj\Debug\Terminal.csproj.CoreCompileInputs.cache
+C:\Users\suley\source\repos\Terminal\Terminal\obj\Debug\Terminal.dll
+C:\Users\suley\source\repos\Terminal\Terminal\obj\Debug\Terminal.pdb
+C:\Users\suley\source\repos\Terminal\Terminal\bin\Debug\System.IO.Pipelines.dll
+C:\Users\suley\source\repos\Terminal\Terminal\bin\Debug\System.Memory.dll
+C:\Users\suley\source\repos\Terminal\Terminal\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\suley\source\repos\Terminal\Terminal\bin\Debug\System.Buffers.dll
+C:\Users\suley\source\repos\Terminal\Terminal\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\suley\source\repos\Terminal\Terminal\obj\Debug\Terminal.csproj.CopyComplete
