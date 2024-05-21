@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Tanıtım</title>
+   <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+  <style>
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(89, 84, 92);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #2B3035;
+}
+      body {
+      padding-top: 56px;
+      background-color: #2B3035;
+    }
+    .main-content {
+      margin-left: 0; 
+      padding: 20px;
+      color:#908F9A;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      animation: fall 2s ease forwards;
+    }
+    .uzer:hover{
+        scale: 1.1;
+        transition: all 0.3s;
+    }
+    @keyframes fall {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+.ani{
+    animation: fall 2s ease forwards;
+}
+.card {
+    border: none;
+    border-radius: 10px;
+    background-color: #212529;
+    color: #908F9A;
+}
+
+.c-details span {
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    background-color: #eee;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 39px;
+}
+
+.badge span {
+    background-color: #ffc800;
+    width: 60px;
+    height: 25px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    display: flex;
+    color: #000000;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress {
+    height: 10px;
+    border-radius: 10px;
+}
+
+.progress div {
+    background-color: #6F2CF5;
+}
+
+.text1 {
+    font-size: 14px;
+    font-weight: 60;
+}
+
+.text2 {
+    color: #a5aec0
+}
+.overflow-box {
+      width: 300px;
+      overflow-x: auto;
+      white-space: nowrap;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light  fixed-top" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;background-color: #6F2CF5">
+  <a class="navbar-brand" href="#"><img src="logo.png" alt="" width="50px" class="uzer"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#" style="color: white;">Anasayfa</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" style="color: white;">Örnekler</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" style="color: white;">Temalar</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<div class="main-content">
+    <h1 style="text-align: center;font-family: Arial, Helvetica, sans-serif;color: white;position: relative;top: 25px;font-family: Arial, Helvetica, sans-serif;font-size: 60px;">Bootstrap</h1>
+    <p style="position: relative;top: 10px;">Güçlü, genişletilebilir ve özelliklerle dolu ön uç araç seti.</p>
+    <p>Sass ile oluşturun ve özelleştirin, önceden oluşturulmuş ızgara sistemi ve bileşenlerinden yararlanın ve güçlü JavaScript eklentileriyle projelere hayat verin.</p>   
+</div>
+<div class="ani">
+    <div class="container mt-5 mb-3 text-center">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card p-3 mb-2">
+                    <div class="d-flex justify-content-between">                   
+                        <div class="badge"> <span>CSS</span> </div>
+                    </div>
+                    <div class="mt-5">
+                        <h3 class="heading" style="font-size: 17px;"> <pre><code class="language-html"> &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"&gt;</h3></pre></code>
+                        <div class="mt-5">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 mb-2">
+                    <div class="d-flex justify-content-between">
+                        <div class="badge"> <span>JavaScript</span> </div>
+                    </div>
+                    <div class="mt-5">
+                         <h3 class="heading" style="font-size: 17px;"> <pre><code class="language-html"> &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"&gt;&lt;/script&gt;</h3></pre></code>
+                        <div class="mt-5">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width:100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-content">
+    <p style="position: relative;top: 10px;">Üst kısımdaki linkleri projenize ekleyerek Bootstrap kullanabilirsiniz!</p>
+    <p style="position: relative;top: 10px;">Nasıl kullanıcağınızı öğrenmek için üst menüden <font style="color: aqua;">Örnekler</font> sekmesine gidebilirsiniz.</p>
+    <p style="position: relative;top: 10px;">Temalar hakkında bilgi almak için üst menüden <font style="color: aqua;">Temalar</font> sekmesine gidebilirsiniz.</p>
+    <div style="background-color: #6F2CF5;height: 1px;border-radius: 20px;position: relative;top: 30px;"></div>
+</div>
+<center style="position: relative;top: 30px;">
+    <div style="width: 350px;">
+        <h1 style="color: #ffc800;">
+            Bootstrap: İnternetin Tasarımını Değiştiren Bir Araç
+        </h1>
+        <p style="position: relative;top: 10px; color:#908F9A;
+        text-align: center;">
+    
+    İnternetin bugünkü halini düşündüğümüzde, kullanıcı deneyimini artıran ve web tasarımını kolaylaştıran birçok araç ve teknoloji olduğunu görüyoruz. Bu araçlardan biri de Bootstrap'tur. Bootstrap, web geliştiricilerin ve tasarımcıların kullanımını kolaylaştıran, hızlı ve duyarlı web siteleri oluşturmalarına olanak tanıyan bir açık kaynaklı front-end framework'tür.
+    
+    Bootstrap'un hikayesi Twitter'ın içinde başladı. Twitter'ın mühendisleri Mark Otto ve Jacob Thornton, Twitter'ın arayüzünü standartlaştırmak ve geliştirmek için bir araç arayışındaydılar. Bu doğrultuda, 2010 yılında Twitter için bir iç proje olarak "Twitter Blueprint" adında bir CSS framework oluşturdular. Bu proje, Twitter'ın kullanıcı arayüzünü hızlıca geliştirmelerini sağladı ve Twitter'ın kendisine büyük fayda sağladı.
+    
+    Twitter Blueprint'in ardından, 2011 yılında Mark Otto ve Jacob Thornton, bu framework'ü daha geniş bir kitleye sunmak için Bootstrap'u oluşturdu. Twitter'ın resmi olarak desteklediği bu açık kaynak proje, web tasarımcılarının ve geliştiricilerin web sitelerini daha hızlı ve kolay bir şekilde oluşturmalarını sağladı.
+    
+    Bootstrap'un çıkışı, web tasarım dünyasında bir devrim niteliği taşıdı. Özellikle responsive web tasarımın ön plana çıkmasıyla, Bootstrap'un grid sistemine dayalı yapısı ve hazır bileşenleri, web sitelerinin farklı ekran boyutlarına uyumlu olmasını kolaylaştırdı. Ayrıca, Bootstrap'un sunduğu önceden tasarlanmış stiller ve bileşenler, web tasarımcılarının ve geliştiricilerin tasarım sürecini hızlandırdı ve kod tekrarını azalttı.
+    
+    Bootstrap'un hızla popüler hale gelmesiyle birlikte, birçok büyük şirket ve proje tarafından kullanılmaya başlandı. Bootstrap'un sürekli olarak güncellenmesi ve geliştirilmesi, kullanıcıların ihtiyaçlarına uygun çözümler sunmaya devam etmesini sağladı.
+    
+    Bugün, Bootstrap internetin dört bir yanındaki web sitelerinde ve uygulamalarında yaygın olarak kullanılmaktadır. Yeni başlayanlar için kolaylık sağlaması ve deneyimli geliştiriciler için esneklik sunması, onu web tasarımının vazgeçilmez araçlarından biri haline getirmiştir. Bootstrap, internetin tasarımını değiştiren bir araç olmanın ötesinde, web geliştirme sürecini daha erişilebilir hale getirerek, herkesin etkileyici web deneyimleri oluşturmasına olanak tanımaktadır.
+        </p>
+    </div>
+</center>
+
+
+<script>Prism.highlightAll();</script>
+</body>
+</html>
