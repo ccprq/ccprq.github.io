@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickFix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        .example {
+            background-color: #e8f4f8;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .explanation {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .command {
+            font-weight: bold;
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <img src="qflogo.png" alt="">
+    <a href="QuickFixLang.rar">
+        <button>
+            Complier
+        </button>
+    </a>
+
+    <a href="test.html">
+        <button>
+            test.qf
+        </button>
+    </a>
+    <h1>QuickFix Programming Language Comprehensive Guide</h1>
+    
+    <p>QuickFix is a versatile programming language designed for quick scripting and automation tasks. This guide covers all the commands and features of QuickFix with examples and explanations.</p>
+
+    <h2>1. Variables and Data Types</h2>
+    <p>QuickFix supports three main data types: strings, integers, and booleans.</p>
+
+    <div class="example">
+        <pre>
+*myString "Hello, World!"
+*myNumber 42
+*myBoolean true
+        </pre>
+        <div class="explanation">
+            Variables in QuickFix are prefixed with an asterisk (*).
+        </div>
+    </div>
+
+    <h2>2. Output Commands</h2>
+
+    <h3>2.1 <span class="command">print</span></h3>
+    <div class="example">
+        <pre>
+print -l -s "Hello, World!"
+print -d -i *myNumber
+print -l -b *myBoolean
+        </pre>
+        <div class="explanation">
+            <code>-l</code>: print with a new line, <code>-d</code>: print without a new line<br>
+            <code>-s</code>: string, <code>-i</code>: integer, <code>-b</code>: boolean
+        </div>
+    </div>
+
+    <h3>2.2 <span class="command">beep</span></h3>
+    <div class="example">
+        <pre>
+beep[1000;500]
+        </pre>
+        <div class="explanation">
+            Produces a beep sound. Parameters: frequency (Hz) and duration (ms).
+        </div>
+    </div>
+
+    <h2>3. Input Commands</h2>
+
+    <h3>3.1 <span class="command">read</span></h3>
+    <div class="example">
+        <pre>
+read *userInput
+        </pre>
+        <div class="explanation">
+            Reads user input and stores it in the specified variable.
+        </div>
+    </div>
+
+    <h2>4. Control Flow</h2>
+
+    <h3>4.1 <span class="command">if, else if, else</span></h3>
+    <div class="example">
+        <pre>
+if[*age > 18]
+    print -l -s "Adult"
+else if[*age == 18]
+    print -l -s "Just turned 18"
+else
+    print -l -s "Minor"
+fi
+        </pre>
+    </div>
+
+    <h3>4.2 <span class="command">for</span></h3>
+    <div class="example">
+        <pre>
+for[*i;0 < 5;++]
+    print -l -i *i
+rof
+        </pre>
+    </div>
+
+    <h3>4.3 <span class="command">loop (while)</span></h3>
+    <div class="example">
+        <pre>
+*counter 0
+loop
+    print -l -i *counter
+    add 1 to *counter
+    if[*counter == 5]
+        break
+    fi
+end
+        </pre>
+    </div>
+
+    <h2>5. File and Directory Operations</h2>
+
+    <h3>5.1 <span class="command">mkfil</span> (Create File)</h3>
+    <div class="example">
+        <pre>
+mkfil "example.txt"
+        </pre>
+    </div>
+
+    <h3>5.2 <span class="command">mkdir</span> (Create Directory)</h3>
+    <div class="example">
+        <pre>
+mkdir "new_folder"
+        </pre>
+    </div>
+
+    <h3>5.3 <span class="command">rfil</span> (Read File)</h3>
+    <div class="example">
+        <pre>
+rfil "example.txt" to []*fileContent
+        </pre>
+    </div>
+
+    <h3>5.4 <span class="command">del</span> (Delete File or Directory)</h3>
+    <div class="example">
+        <pre>
+del "example.txt"
+        </pre>
+    </div>
+
+    <h3>5.5 <span class="command">mfil</span> (Move File)</h3>
+    <div class="example">
+        <pre>
+mfil "source.txt" to "destination.txt"
+        </pre>
+    </div>
+
+    <h3>5.6 <span class="command">mdir</span> (Move Directory)</h3>
+    <div class="example">
+        <pre>
+mdir "source_folder" to "destination_folder"
+        </pre>
+    </div>
+
+    <h2>6. Array Operations</h2>
+
+    <h3>6.1 <span class="command">add</span> (Add to Array)</h3>
+    <div class="example">
+        <pre>
+[]*numbers
+add 42 to *numbers
+        </pre>
+    </div>
+
+    <h3>6.2 Array Access</h3>
+    <div class="example">
+        <pre>
+print -l -i *numbers{0}
+        </pre>
+    </div>
+
+    <h2>7. String Operations</h2>
+
+    <h3>7.1 String Concatenation</h3>
+    <div class="example">
+        <pre>
+*fullName *firstName + " " + *lastName
+        </pre>
+    </div>
+
+    <h3>7.2 <span class="command">len</span> (String Length)</h3>
+    <div class="example">
+        <pre>
+*strLength *myString.len
+        </pre>
+    </div>
+
+    <h2>8. System Commands</h2>
+
+    <h3>8.1 <span class="command">cmd</span> (Execute Command)</h3>
+    <div class="example">
+        <pre>
+cmd["dir"] *result
+        </pre>
+    </div>
+
+    <h3>8.2 <span class="command">beroot</span> (Run as Administrator)</h3>
+    <div class="example">
+        <pre>
+beroot
+        </pre>
+    </div>
+
+    <h2>9. Console Manipulation</h2>
+
+    <h3>9.1 <span class="command">clear</span> (Clear Console)</h3>
+    <div class="example">
+        <pre>
+clear
+        </pre>
+    </div>
+
+    <h3>9.2 <span class="command">title</span> (Set Console Title)</h3>
+    <div class="example">
+        <pre>
+title "My QuickFix Program"
+        </pre>
+    </div>
+
+    <h3>9.3 <span class="command">icon</span> (Set Console Icon)</h3>
+    <div class="example">
+        <pre>
+icon "path/to/icon.ico"
+        </pre>
+    </div>
+
+    <h3>9.4 <span class="command">cursor</span> (Set Cursor Position)</h3>
+    <div class="example">
+        <pre>
+cursor[10;5]
+        </pre>
+    </div>
+
+    <h3>9.5 <span class="command">windowsize</span> (Set Window Size)</h3>
+    <div class="example">
+        <pre>
+windowsize[80;24]
+        </pre>
+    </div>
+
+    <h2>10. Miscellaneous Commands</h2>
+
+    <h3>10.1 <span class="command">import</span> (Import Script)</h3>
+    <div class="example">
+        <pre>
+import "other_script.qf"
+        </pre>
+    </div>
+
+    <h3>10.2 <span class="command">delay</span> (Pause Execution)</h3>
+    <div class="example">
+        <pre>
+delay 1000
+        </pre>
+    </div>
+
+    <h3>10.3 <span class="command">convert</span> (Type Conversion)</h3>
+    <div class="example">
+        <pre>
+convert *myVar to -i
+        </pre>
+    </div>
+
+    <h3>10.4 <span class="command">thread</span> (Create Thread)</h3>
+    <div class="example">
+        <pre>
+thread myThread
+    print -l -s "This runs in a separate thread"
+endt
+
+t.myThread.start
+        </pre>
+    </div>
+    <h2>Conclusion</h2>
+    <p>This comprehensive guide covers the main commands and features of the QuickFix programming language. As you become more familiar with the language, you can combine these commands to create powerful scripts and applications. Remember to refer to the official documentation for the most up-to-date information and any additional features not covered in this guide.</p>
+</body>
+</html>
