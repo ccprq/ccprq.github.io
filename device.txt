@@ -1,0 +1,29 @@
+What Are Network Devices?
+Network devices are communication tools that are essential for interaction between hardware on a computer network. These devices facilitate the transmission and reception of data securely and efficiently.
+
+They play a crucial role in enabling seamless communication among internet-compatible electronic devices, such as fax machines, computers, printers, etc.
+
+Some examples of network devices include hubs, routers, bridges, repeaters, switches, gateways, load balancers, and modems.
+
+Functions of Network Devices
+Each networking device has a specific feature or role, contributing to the overall efficiency and functionality of the network and its segments.
+
+Here are three critical functions of network devices:
+
+Managing Traffic: Network devices like routers and firewalls manage and control traffic flow, allowing administrators to block unauthorized connection requests and maintain a secure network environment.
+
+Device Connectivity: Devices like routers and gateways play a crucial role in connecting different networks, using unique protocols, and enabling communication between diverse systems with data format translation.
+
+Network Segmentation: Network devices enable the segmentation of networks into distinct zones or subnets, helping administrators reduce the impact of cyberattacks by limiting unauthorized movement within the network.
+
+Types of Network Devices
+The following are some of the types of network devices:
+
+1. Hub
+A hub is a simple connectivity device that connects cables, forming a network segment. It serves as a repeater for long-distance data and retransmits without filtering. It handles both digital and analog data when configured appropriately.
+
+2. Switch
+A switch is more advanced than a hub. It intelligently forwards data based on hardware addresses. Switches enhance network efficiency and security by making forwarding decisions using TCP/IP protocol headers. Additionally, multilayer switches can function as both a switch and a router.
+
+3. Router
+Routers can filter and forward data using logical addresses like IP addresses. They store network information, act as packet-filtering firewalls, and play a vital role in controlling and optimizing network traffic.
