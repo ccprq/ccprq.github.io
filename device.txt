@@ -27,3 +27,34 @@ A switch is more advanced than a hub. It intelligently forwards data based on ha
 
 3. Router
 Routers can filter and forward data using logical addresses like IP addresses. They store network information, act as packet-filtering firewalls, and play a vital role in controlling and optimizing network traffic.
+
+
+Ağ Aygıtları Nelerdir?
+Ağ aygıtları, bir bilgisayar ağındaki donanımlar arasındaki etkileşim için gerekli olan iletişim araçlarıdır. Bu aygıtlar, verilerin güvenli ve verimli bir şekilde iletilmesini ve alınmasını kolaylaştırır.
+
+Faks makineleri, bilgisayarlar, yazıcılar vb. gibi internet uyumlu elektronik aygıtlar arasında kesintisiz iletişimi sağlamada önemli bir rol oynarlar.
+
+Ağ aygıtlarına örnek olarak hub'lar, yönlendiriciler, köprüler, tekrarlayıcılar, anahtarlar, ağ geçitleri, yük dengeleyiciler ve modemler verilebilir.
+
+Ağ Aygıtlarının İşlevleri
+Her ağ aygıtının, ağın ve segmentlerinin genel verimliliğine ve işlevselliğine katkıda bulunan belirli bir özelliği veya rolü vardır.
+
+Ağ aygıtlarının üç kritik işlevi şunlardır:
+
+Trafiği Yönetme: Yönlendiriciler ve güvenlik duvarları gibi ağ aygıtları, trafik akışını yönetir ve kontrol eder, yöneticilerin yetkisiz bağlantı isteklerini engellemesine ve güvenli bir ağ ortamını korumasına olanak tanır.
+
+Aygıt Bağlantısı: Yönlendiriciler ve ağ geçitleri gibi aygıtlar, benzersiz protokoller kullanarak farklı ağları birbirine bağlamada ve veri formatı çevirisiyle çeşitli sistemler arasında iletişimi sağlamada önemli bir rol oynar.
+
+Ağ Bölümlendirme: Ağ cihazları, ağların farklı bölgelere veya alt ağlara bölünmesini sağlayarak yöneticilerin ağ içindeki yetkisiz hareketleri sınırlayarak siber saldırıların etkisini azaltmalarına yardımcı olur.
+
+Ağ Cihazı Türleri
+Aşağıda bazı ağ cihazı türleri verilmiştir:
+
+1. Hub
+Hub, kabloları birbirine bağlayarak bir ağ segmenti oluşturan basit bir bağlantı cihazıdır. Uzun mesafeli veriler için tekrarlayıcı görevi görür ve filtrelemeden yeniden iletir. Uygun şekilde yapılandırıldığında hem dijital hem de analog verileri işler.
+
+2. Anahtar
+Anahtar, hub'dan daha gelişmiştir. Donanım adreslerine göre verileri akıllıca iletir. Anahtarlar, TCP/IP protokol başlıklarını kullanarak iletme kararları alarak ağ verimliliğini ve güvenliğini artırır. Ayrıca, çok katmanlı anahtarlar hem anahtar hem de yönlendirici olarak işlev görebilir.
+
+3. Yönlendirici
+Yönlendiriciler, IP adresleri gibi mantıksal adresleri kullanarak verileri filtreleyebilir ve iletebilir. Ağ bilgilerini depolar, paket filtreleme güvenlik duvarları gibi davranır ve ağ trafiğini kontrol etmede ve optimize etmede hayati bir rol oynar.
