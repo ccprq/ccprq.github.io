@@ -1,0 +1,19 @@
+2.1.4. Ağ Ekipmanı
+Sunucu, kaynakları paylaşan ve ağı yöneten merkezi bilgisayardır.
+İstemci, kaynakları kullanan ve sunucu tarafından yönetilen bilgisayardır.
+NIC (Ağ Arabirim Kartı), bilgisayarı ağa dahil etmek için kullanılır.
+NIC'deki (Ağ Arabirim Kartı) her kartın benzersiz bir MAC (Medya Erişim
+Kontrol) numarası vardır. Bilgisayarların ağda iletişim kurabilmeleri için benzersiz bir
+IP (İnternet Protokolü) adresine ve bir MAC (Medya Erişim
+Kontrol) adresine ihtiyaçları vardır. İki veya daha fazla bilgisayardan oluşan bir ağ kurmak için kullanılan en eski
+elemana hub denir. Hub, ağ trafiğini çok fazla engellediği için yerini anahtar adı verilen cihazlara bırakmıştır. Erişim Noktası cihazı, kablosuz ağ bağlantılarında sinyal gücünü artırmak için kullanılır. Erişim Noktası cihazları, kablolu bir bağlantıyı kablosuz bir bağlantıya dönüştürmek, tekrarlayıcı özelliğiyle sinyali daha uzun mesafeye taşımak ve Köprü Modu özelliğiyle iki ağı kablosuz olarak bağlamak için kullanılabilir. Bir yönlendirici, iki veya daha fazla LAN'ı birbirine bağlamak için kullanılır. Güvenlik duvarı aygıtları otomatik olarak
+sahte, yetkisiz, şüpheli veya bilinmeyen bir kaynaktan gelen ağ trafiğini engellemek ve
+saldırılardan korumak için kullanılır.
+TCP/IP protokolü internet üzerinden iletişim kurmak için kullanılır. TCP/IP protokolünde, iletişimde iki
+protokol kullanılır, güvenilmez UDP (Kullanıcı Datagram Protokolü)
+ses ve video iletimi içindir ve TCP (İletim Kontrol Protokolü)
+internet üzerinden kayıpsız veri iletimi içindir.
+2.1.5. Ağ Aygıtları
+Ağ Arabirim Kartı (NIC), Ortam Erişim Kontrolü (MAC), İnternet Protokolü (IP),
+Hub, Anahtar, Erişim Noktası, Köprü, Yönlendirici, Güvenlik Duvarı, İletim Kontrol Protokolü
+(TCP), UDP (Kullanıcı Datagram Protokolü)
