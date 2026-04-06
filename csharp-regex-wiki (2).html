@@ -1,0 +1,3335 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C# Regex — Kapsamlı Referans Kılavuzu | Regular Expressions .NET</title>
+<meta name="description" content="C# .NET Regular Expressions (Regex) tam referans kılavuzu. \w, \d, \s, anchors, quantifiers, groups, lookahead, lookbehind, named groups ve daha fazlası. Canlı test aracı dahil.">
+<meta name="keywords" content="C# regex, .NET regular expressions, csharp regex tutorial, regex pattern, \w \d \s, regex anchors, regex quantifiers, System.Text.RegularExpressions">
+<meta property="og:title" content="C# Regex — Kapsamlı Referans Kılavuzu">
+<meta property="og:description" content="C# .NET Regular Expressions tam referans. \w, \d, \s ve tüm pattern'ler detaylı örneklerle.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://csharp-regex.wiki/">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Linux+Libertine+Display:ital,wght@0,400;0,700;1,400&family=Linux+Biolinum:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #f8f9fa;
+  --bg-white:     #ffffff;
+  --border:       #a2a9b1;
+  --border-light: #c8ccd1;
+  --border-table: #a2a9b1;
+  --link:         #0645ad;
+  --link-visited: #0b0080;
+  --link-hover:   #3366cc;
+  --text:         #202122;
+  --text-muted:   #54595d;
+  --text-light:   #72777d;
+  --heading-bb:   #a2a9b1;
+  --toc-bg:       #f8f9fa;
+  --code-inline-bg: #f8f9fa;
+  --code-inline-border: #ddd;
+  --code-inline-color: #c7254e;
+  --pre-bg:       #1e1e2e;
+  --pre-fg:       #cdd6f4;
+  --table-head:   #eaecf0;
+  --table-stripe: #f8f9fa;
+  --infobox-head: #cee0f2;
+  --note-bg:      #eaf3fb;
+  --note-border:  #3366cc;
+  --warn-bg:      #fef6e7;
+  --warn-border:  #f0c040;
+  --tip-bg:       #e6f3e6;
+  --tip-border:   #4caf50;
+  --danger-bg:    #fde8e8;
+  --danger-border:#c00;
+  --match-hl:     #ffe082;
+  --match-group:  #b3e5fc;
+  --sidebar-w:    190px;
+  --content-max:  960px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Linux Libertine Display', Georgia, 'Times New Roman', serif;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+a { color: var(--link); text-decoration: none; }
+a:visited { color: var(--link-visited); }
+a:hover { text-decoration: underline; color: var(--link-hover); }
+
+p { margin: 0 0 .75em; }
+ul, ol { padding-left: 1.6em; margin: .4em 0 .75em; }
+li { margin: .25em 0; }
+strong, b { font-weight: 700; }
+em, i { font-style: italic; }
+abbr { text-decoration: underline dotted; cursor: help; }
+sup { font-size: .75em; vertical-align: super; }
+
+/* ═══════════════════════════════════════════════════
+   TOP HEADER BAR (Wikipedia-style)
+══════════════════════════════════════════════════════ */
+.wiki-header {
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border-light);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 50px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.wiki-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.wiki-header-logo .globe-svg {
+  width: 40px;
+  height: 40px;
+}
+
+.wiki-header-logo .site-text {
+  font-family: 'Linux Libertine Display', serif;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.wiki-header-logo .site-text small {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: 'Linux Biolinum', sans-serif;
+}
+
+.wiki-search-bar {
+  flex: 1;
+  max-width: 500px;
+  margin-left: auto;
+  position: relative;
+}
+
+.wiki-search-bar input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 5px 32px 5px 10px;
+  font-size: 13px;
+  font-family: 'Linux Biolinum', sans-serif;
+  background: var(--bg-white);
+  color: var(--text);
+  outline: none;
+}
+
+.wiki-search-bar input:focus { border-color: #3366cc; box-shadow: 0 0 0 2px rgba(51,102,204,.15); }
+
+.wiki-search-bar .search-icon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.wiki-header-nav {
+  display: flex;
+  gap: 0;
+  margin-left: 8px;
+}
+
+.wiki-header-nav a {
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 12.5px;
+  padding: 4px 8px;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+}
+
+.wiki-header-nav a:hover { color: var(--link); text-decoration: none; }
+
+/* ═══════════════════════════════════════════════════
+   PAGE TABS (Article / Talk / Read / History)
+══════════════════════════════════════════════════════ */
+.page-tabs {
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 16px 0 calc(var(--sidebar-w) + 16px);
+  gap: 0;
+  min-height: 32px;
+}
+
+.page-tab {
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 12.5px;
+  padding: 6px 12px 5px;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  border-bottom: none;
+  margin-bottom: -1px;
+  cursor: pointer;
+  background: none;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.page-tab:hover { color: var(--link); text-decoration: none; }
+
+.page-tab.active {
+  color: var(--text);
+  background: var(--bg-white);
+  border-color: var(--border);
+  border-bottom-color: var(--bg-white);
+  border-radius: 3px 3px 0 0;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════
+   MAIN LAYOUT
+══════════════════════════════════════════════════════ */
+.wiki-body {
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  min-height: calc(100vh - 83px);
+}
+
+/* LEFT SIDEBAR */
+.wiki-sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  border-right: 1px solid var(--border-light);
+  background: var(--bg-white);
+  padding: 16px 0;
+  position: sticky;
+  top: 83px;
+  height: calc(100vh - 83px);
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 8px;
+}
+
+.sidebar-section-title {
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  padding: 0 12px;
+  margin-bottom: 4px;
+}
+
+.sidebar-link {
+  display: block;
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 12.5px;
+  color: var(--link);
+  padding: 3px 12px;
+  border-left: 3px solid transparent;
+  transition: border-color .1s, background .1s;
+}
+
+.sidebar-link:hover {
+  border-left-color: var(--link);
+  background: rgba(51,102,204,.06);
+  text-decoration: none;
+}
+
+.sidebar-link.active {
+  border-left-color: #36c;
+  background: rgba(51,102,204,.08);
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* MAIN CONTENT */
+.wiki-main {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg-white);
+  padding: 20px 28px 40px;
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE TITLE
+══════════════════════════════════════════════════════ */
+.page-title-block {
+  margin-bottom: 6px;
+}
+
+.page-title {
+  font-family: 'Linux Libertine Display', serif;
+  font-size: 30px;
+  font-weight: 400;
+  border-bottom: 1px solid var(--heading-bb);
+  padding-bottom: 4px;
+  line-height: 1.2;
+}
+
+.page-meta {
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.page-meta a { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════════════════
+   INFOBOX (floating right)
+══════════════════════════════════════════════════════ */
+.infobox {
+  float: right;
+  clear: right;
+  margin: 0 0 16px 20px;
+  width: 270px;
+  border: 1px solid var(--border);
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 12.5px;
+  background: var(--bg-white);
+}
+
+.infobox-title {
+  background: var(--infobox-head);
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Linux Libertine Display', serif;
+}
+
+.infobox-img {
+  text-align: center;
+  padding: 8px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 40px;
+  background: var(--bg);
+}
+
+.infobox table { width: 100%; border-collapse: collapse; }
+.infobox td {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top;
+}
+.infobox td:first-child {
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 100px;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════════
+   TOC
+══════════════════════════════════════════════════════ */
+.toc {
+  float: left;
+  clear: left;
+  margin: 0 20px 16px 0;
+  padding: 10px 16px 12px;
+  border: 1px solid var(--border);
+  background: var(--toc-bg);
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 12.5px;
+  min-width: 200px;
+  max-width: 310px;
+}
+
+.toc-title {
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toc-toggle {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--link);
+  cursor: pointer;
+}
+
+.toc ol { padding-left: 18px; }
+.toc li { margin: 3px 0; }
+.toc a { color: var(--link); }
+.toc a:hover { text-decoration: underline; }
+
+.toc > ol > li { font-weight: 700; }
+.toc > ol > li > ol { font-weight: 400; font-size: 11.5px; margin-top: 2px; }
+
+/* ═══════════════════════════════════════════════════
+   HEADINGS
+══════════════════════════════════════════════════════ */
+h2 {
+  font-family: 'Linux Libertine Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  border-bottom: 1px solid var(--heading-bb);
+  margin: 30px 0 12px;
+  padding-bottom: 4px;
+  clear: both;
+}
+
+h3 {
+  font-family: 'Linux Libertine Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 20px 0 8px;
+}
+
+h4 {
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  margin: 16px 0 6px;
+  color: #333;
+}
+
+h5 {
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 12px 0 4px;
+  color: #444;
+}
+
+/* ═══════════════════════════════════════════════════
+   CODE
+══════════════════════════════════════════════════════ */
+code {
+  font-family: 'Source Code Pro', 'Consolas', monospace;
+  font-size: 12.5px;
+  background: var(--code-inline-bg);
+  border: 1px solid var(--code-inline-border);
+  color: var(--code-inline-color);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+pre {
+  font-family: 'Source Code Pro', 'Consolas', monospace;
+  font-size: 12.5px;
+  background: var(--pre-bg);
+  color: var(--pre-fg);
+  border: 1px solid #313244;
+  border-left: 4px solid #585b70;
+  padding: 14px 18px;
+  border-radius: 0 4px 4px 0;
+  overflow-x: auto;
+  margin: 10px 0 14px;
+  line-height: 1.7;
+  tab-size: 4;
+}
+
+/* Syntax highlight tokens */
+pre .kw  { color: #cba6f7; }   /* keyword */
+pre .typ { color: #89b4fa; }   /* type */
+pre .str { color: #a6e3a1; }   /* string */
+pre .cmt { color: #6c7086; font-style: italic; } /* comment */
+pre .num { color: #fab387; }   /* number */
+pre .met { color: #89dceb; }   /* method */
+pre .var { color: #cdd6f4; }   /* variable */
+pre .reg { color: #f38ba8; font-weight: 600; }   /* regex pattern */
+pre .op  { color: #89b4fa; }   /* operator */
+pre .ann { color: #f9e2af; }   /* attribute */
+pre .boo { color: #fab387; }   /* bool/null */
+
+/* ═══════════════════════════════════════════════════
+   TABLES
+══════════════════════════════════════════════════════ */
+.wiki-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 14px;
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 13px;
+}
+
+.wiki-table th {
+  background: var(--table-head);
+  border: 1px solid var(--border-table);
+  padding: 7px 11px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.wiki-table td {
+  border: 1px solid var(--border-table);
+  padding: 6px 11px;
+  vertical-align: top;
+}
+
+.wiki-table tr:nth-child(even) td { background: var(--table-stripe); }
+.wiki-table code { font-size: 12px; }
+
+.sortable th { cursor: pointer; user-select: none; }
+.sortable th:hover { background: #dde0e5; }
+
+/* ═══════════════════════════════════════════════════
+   CALLOUT BOXES
+══════════════════════════════════════════════════════ */
+.callout {
+  border-left: 4px solid;
+  padding: 9px 13px;
+  margin: 12px 0;
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 13px;
+  border-radius: 0 3px 3px 0;
+}
+
+.callout strong { display: block; margin-bottom: 3px; font-size: 13.5px; }
+
+.callout-note    { background: var(--note-bg);   border-color: var(--note-border); }
+.callout-warn    { background: var(--warn-bg);   border-color: var(--warn-border); }
+.callout-tip     { background: var(--tip-bg);    border-color: var(--tip-border); }
+.callout-danger  { background: var(--danger-bg); border-color: var(--danger-border); }
+
+/* ═══════════════════════════════════════════════════
+   EXAMPLE CARDS (the main feature)
+══════════════════════════════════════════════════════ */
+.ex-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 14px;
+  margin: 14px 0;
+}
+
+.ex-card {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 13px;
+  background: var(--bg-white);
+  transition: box-shadow .15s;
+}
+
+.ex-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+.ex-card-head {
+  background: var(--table-head);
+  padding: 7px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ex-card-head .pattern {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 15px;
+  color: #c7254e;
+  font-weight: 600;
+}
+
+.ex-card-head .badge {
+  font-size: 10.5px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1px 7px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.ex-card-body { padding: 10px 12px; }
+.ex-card-desc { margin-bottom: 8px; line-height: 1.5; }
+
+.ex-block {
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: 2px;
+  padding: 8px 10px;
+  margin-top: 6px;
+}
+
+.ex-block-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+
+.ex-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.ex-row:last-child { border-bottom: none; }
+
+.ex-row .icon { width: 14px; flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+.ex-row .txt { flex: 1; font-family: 'Source Code Pro', monospace; font-size: 12px; word-break: break-all; }
+.ex-row .note { font-size: 11px; color: var(--text-muted); margin-left: 4px; white-space: nowrap; }
+
+.m { background: #ffe082; border-radius: 2px; padding: 0 2px; font-weight: 700; }
+.mg { background: #b3e5fc; border-radius: 2px; padding: 0 2px; }
+.ok { color: #2d8a00; }
+.no { color: #c00; }
+
+/* Compare cards (greedy vs lazy etc.) */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.compare-card {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 13px;
+}
+
+.compare-head {
+  padding: 7px 12px;
+  font-weight: 700;
+  font-size: 12.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-head.green { background: #d4edda; color: #155724; }
+.compare-head.red   { background: #f8d7da; color: #721c24; }
+.compare-head.blue  { background: #cce5ff; color: #004085; }
+.compare-head.gray  { background: var(--table-head); }
+
+.compare-body { padding: 10px 12px; }
+
+/* ═══════════════════════════════════════════════════
+   INTERACTIVE DEMO
+══════════════════════════════════════════════════════ */
+.demo-widget {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 16px 0;
+  font-family: 'Linux Biolinum', sans-serif;
+}
+
+.demo-widget-head {
+  background: var(--table-head);
+  padding: 9px 15px;
+  font-weight: 700;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.demo-widget-body { padding: 16px; }
+
+.demo-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.demo-field label {
+  font-size: 12.5px;
+  font-weight: 700;
+  min-width: 90px;
+  color: var(--text-muted);
+}
+
+.demo-field input,
+.demo-field select,
+.demo-field textarea {
+  flex: 1;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 2px;
+  background: var(--bg-white);
+  color: var(--text);
+  outline: none;
+  transition: border-color .15s;
+}
+
+.demo-field input:focus,
+.demo-field select:focus,
+.demo-field textarea:focus {
+  border-color: #36c;
+  box-shadow: 0 0 0 2px rgba(51,102,204,.15);
+}
+
+.demo-field select { font-family: 'Linux Biolinum', sans-serif; }
+
+.demo-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 12px 100px;
+}
+
+.demo-option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+}
+
+.demo-option input[type=checkbox] { margin: 0; }
+
+.demo-btn-row { display: flex; gap: 8px; margin: 10px 0; }
+
+.demo-btn {
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 20px;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.demo-btn-primary { background: #36c; color: white; }
+.demo-btn-primary:hover { background: #2a5ebf; }
+.demo-btn-secondary { background: var(--table-head); color: var(--text); border: 1px solid var(--border); }
+.demo-btn-secondary:hover { background: #dde0e5; }
+
+.demo-result {
+  background: var(--bg);
+  border: 1px solid var(--border-light);
+  border-radius: 2px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  min-height: 60px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.demo-match-line { font-family: 'Source Code Pro', monospace; font-size: 12.5px; word-break: break-all; }
+.demo-match-item { background: #f5f5f5; border: 1px solid var(--border-light); padding: 4px 8px; margin: 3px 0; border-radius: 2px; font-family: 'Source Code Pro', monospace; font-size: 12px; }
+
+.result-ok   { color: #2d8a00; font-weight: 700; }
+.result-none { color: #c00; font-weight: 700; }
+.result-err  { color: #c00; }
+
+.quick-insert {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.qi-btn {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 11.5px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  border-radius: 2px;
+  cursor: pointer;
+  color: #c7254e;
+  transition: background .1s;
+}
+
+.qi-btn:hover { background: #fff0f3; border-color: #c7254e; }
+
+/* ═══════════════════════════════════════════════════
+   REFERENCE TABLE WITH ANCHOR COLUMNS
+══════════════════════════════════════════════════════ */
+.ref-section {
+  margin: 8px 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════ */
+.wiki-footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border-light);
+  padding: 20px 28px;
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.wiki-footer a { color: var(--text-muted); }
+.wiki-footer a:hover { color: var(--link); }
+
+/* ═══════════════════════════════════════════════════
+   UTILITY
+══════════════════════════════════════════════════════ */
+.clearfix::after { content: ''; display: table; clear: both; }
+.clear { clear: both; }
+hr.section-rule { border: none; border-top: 1px solid var(--border-light); margin: 24px 0; clear: both; }
+
+.tag {
+  display: inline-block;
+  font-family: 'Linux Biolinum', sans-serif;
+  font-size: 11px;
+  background: var(--table-head);
+  border: 1px solid var(--border-light);
+  border-radius: 2px;
+  padding: 0 5px;
+  color: var(--text-muted);
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.tag-new   { background: #dff0d8; border-color: #4caf50; color: #2d6a1f; }
+.tag-perf  { background: #cce5ff; border-color: #36c; color: #004085; }
+.tag-adv   { background: #fde8e8; border-color: #c00; color: #7b0000; }
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .wiki-sidebar { display: none; }
+  .page-tabs { padding-left: 16px; }
+  .infobox { float: none; width: 100%; margin: 0 0 16px; }
+  .toc { float: none; max-width: 100%; margin: 0 0 16px; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .ex-cards { grid-template-columns: 1fr; }
+  .demo-field { flex-direction: column; align-items: flex-start; }
+  .demo-field label { min-width: auto; }
+  .demo-options { margin-left: 0; }
+  .wiki-header-nav { display: none; }
+}
+
+@media (max-width: 600px) {
+  .wiki-main { padding: 12px 14px 30px; }
+  .page-title { font-size: 22px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   THEME TOGGLE BUTTON  (Wiki mode = default)
+══════════════════════════════════════════════════════ */
+#themeToggle {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  background: #1c1c1e;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,.35);
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+  outline: none;
+}
+#themeToggle:hover { transform: scale(1.12); box-shadow: 0 8px 28px rgba(0,0,0,.45); }
+#themeToggle .t-wiki { display: block; }
+#themeToggle .t-mod  { display: none; }
+
+/* ── TRANSITION overlay ── */
+#themeOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8888;
+  pointer-events: none;
+  opacity: 0;
+  display: none;
+  background: #f0f0f5;
+}
+
+/* ═══════════════════════════════════════════════════
+   macOS THEME  (class: body.modern)
+══════════════════════════════════════════════════════ */
+body.modern {
+  /* SF Pro–like system font stack */
+  font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: #f0f0f5;
+  color: #1d1d1f;
+
+  --bg:           #f0f0f5;
+  --bg-white:     rgba(255,255,255,0.72);
+  --border:       rgba(0,0,0,.12);
+  --border-light: rgba(0,0,0,.07);
+  --border-table: rgba(0,0,0,.1);
+  --link:         #0071e3;
+  --link-visited: #5e5ce6;
+  --link-hover:   #0077ed;
+  --text:         #1d1d1f;
+  --text-muted:   #6e6e73;
+  --text-light:   #aeaeb2;
+  --heading-bb:   rgba(0,0,0,.1);
+  --toc-bg:       rgba(255,255,255,.6);
+  --code-inline-bg:     rgba(0,0,0,.055);
+  --code-inline-border: rgba(0,0,0,.09);
+  --code-inline-color:  #c0392b;
+  --pre-bg:       #1e1e1e;
+  --pre-fg:       #d4d4d4;
+  --table-head:   rgba(0,0,0,.05);
+  --table-stripe: rgba(0,0,0,.025);
+  --infobox-head: rgba(0,113,227,.1);
+  --note-bg:      rgba(0,113,227,.07);
+  --note-border:  #0071e3;
+  --warn-bg:      rgba(255,159,10,.1);
+  --warn-border:  #ff9f0a;
+  --tip-bg:       rgba(48,209,88,.08);
+  --tip-border:   #30d158;
+  --danger-bg:    rgba(255,59,48,.07);
+  --danger-border:#ff3b30;
+  --match-hl:     rgba(255,204,0,.4);
+  --match-group:  rgba(0,122,255,.15);
+}
+
+/* ── macOS wallpaper background ── */
+body.modern {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(132,210,255,.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(191,148,255,.25) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255,204,102,.15) 0%, transparent 70%),
+    linear-gradient(160deg, #dce8f5 0%, #e8e4f0 40%, #f0e8e8 70%, #eef4f0 100%);
+  background-attachment: fixed;
+}
+
+/* Subtle noise grain */
+body.modern::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+/* ── macOS Menu Bar ── */
+body.modern .wiki-header {
+  background: rgba(236,236,240,.82);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 1px 6px rgba(0,0,0,.06);
+  height: 52px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 100;
+}
+
+/* Apple logo in menu bar */
+body.modern .wiki-header-logo .globe-svg { display: none; }
+body.modern .wiki-header-logo::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 22px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 68'%3E%3Cpath d='M54.8 49.2c-1.4 3.1-2.1 4.5-3.9 7.2-2.5 3.8-6 8.5-10.4 8.5-3.9.1-4.9-2.5-10.2-2.5-5.3 0-6.4 2.6-10.3 2.5-4.3-.1-7.7-4.3-10.2-8.1C3.1 48.6 1.4 39.4 4.7 33.1c2.3-4.4 6.6-7 11.2-7 4.1 0 6.7 2.6 10.1 2.6 3.3 0 5.3-2.6 10.1-2.6 4.1 0 8.1 2.2 10.4 6-9.1 5-7.6 18.1 8.3 17.1zM38.5 17.2c2-2.6 3.5-6.2 2.9-9.9-3.3.2-7.1 2.3-9.3 5-2 2.4-3.7 6.1-3 9.7 3.6.1 7.3-2 9.4-4.8z' fill='%231d1d1f'/%3E%3C/svg%3E") center/contain no-repeat;
+  margin-right: 10px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+body.modern .wiki-header-logo .site-text {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1d1d1f;
+  letter-spacing: -.01em;
+  -webkit-text-fill-color: unset;
+  background: none;
+}
+body.modern .wiki-header-logo .site-text small {
+  display: none; /* macOS menu bar: no subtitle */
+}
+
+body.modern .wiki-search-bar input {
+  background: rgba(0,0,0,.07);
+  border: 1px solid rgba(0,0,0,.1);
+  color: #1d1d1f;
+  border-radius: 8px;
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  padding: 5px 10px 5px 28px;
+}
+body.modern .wiki-search-bar {
+  position: relative;
+}
+body.modern .wiki-search-bar::before {
+  content: '⌘';
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #6e6e73;
+  pointer-events: none;
+  z-index: 1;
+}
+body.modern .wiki-search-bar .search-icon { display: none; }
+body.modern .wiki-search-bar input::placeholder { color: #aeaeb2; }
+body.modern .wiki-search-bar input:focus {
+  background: rgba(255,255,255,.9);
+  border-color: #0071e3;
+  box-shadow: 0 0 0 3px rgba(0,113,227,.2);
+  outline: none;
+}
+
+body.modern .wiki-header-nav a {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #1d1d1f;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+body.modern .wiki-header-nav a:hover {
+  background: rgba(0,0,0,.07);
+  text-decoration: none;
+  color: #1d1d1f;
+}
+
+/* ── Page tabs — macOS segment style ── */
+body.modern .page-tabs {
+  background: rgba(228,228,235,.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  padding-left: calc(var(--sidebar-w) + 20px);
+}
+body.modern .page-tab {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: #6e6e73;
+  border-color: transparent;
+  padding: 6px 14px 5px;
+}
+body.modern .page-tab.active {
+  background: rgba(255,255,255,.82);
+  backdrop-filter: blur(8px);
+  color: #1d1d1f;
+  font-weight: 500;
+  border-color: rgba(0,0,0,.12);
+  border-bottom-color: rgba(255,255,255,.82);
+  border-radius: 6px 6px 0 0;
+}
+
+/* ── Sidebar — macOS sidebar (Finder-like) ── */
+body.modern .wiki-sidebar {
+  background: rgba(236,236,240,.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-right: 1px solid rgba(0,0,0,.1);
+  position: relative;
+  z-index: 1;
+}
+body.modern .sidebar-section-title {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #8e8e93;
+}
+body.modern .sidebar-link {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 12.5px;
+  color: #3a3a3c;
+  border-left: 2px solid transparent;
+  border-radius: 0 6px 6px 0;
+  margin: 1px 6px 1px 0;
+  padding: 4px 10px;
+  transition: background .1s;
+}
+body.modern .sidebar-link:hover {
+  background: rgba(0,0,0,.06);
+  border-left-color: transparent;
+  color: #1d1d1f;
+  text-decoration: none;
+}
+body.modern .sidebar-link.active {
+  background: rgba(0,113,227,.12);
+  border-left-color: #0071e3;
+  color: #0071e3;
+  font-weight: 500;
+}
+
+/* ── Main content ── */
+body.modern .wiki-main {
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Window chrome (Finder window feel) ── */
+body.modern .wiki-body {
+  position: relative;
+}
+
+/* ── Page title ── */
+body.modern .page-title {
+  font-family: -apple-system, 'SF Pro Display', BlinkMacSystemFont, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  color: #1d1d1f;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  background: none;
+  -webkit-text-fill-color: unset;
+  -webkit-background-clip: unset;
+}
+
+/* ── Infobox ── */
+body.modern .infobox {
+  border: 1px solid rgba(0,0,0,.1);
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.06), 0 1px 0 rgba(255,255,255,.8) inset;
+}
+body.modern .infobox-title {
+  background: rgba(0,113,227,.08);
+  color: #0071e3;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+}
+body.modern .infobox-img { background: rgba(0,0,0,.03); }
+body.modern .infobox td { border-bottom: 1px solid rgba(0,0,0,.06); }
+body.modern .infobox td:first-child { color: #0071e3; }
+
+/* ── TOC ── */
+body.modern .toc {
+  background: rgba(255,255,255,.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05);
+}
+body.modern .toc-title {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+body.modern .toc-toggle { color: #0071e3; }
+body.modern .toc a { color: #0071e3; }
+body.modern .toc a:hover { color: #0077ed; text-decoration: underline; }
+
+/* ── Headings ── */
+body.modern h2 {
+  font-family: -apple-system, 'SF Pro Display', BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: #1d1d1f;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+  padding-left: 0;
+}
+body.modern h2::before { display: none; }
+body.modern h3 {
+  font-family: -apple-system, 'SF Pro Display', BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  color: #1d1d1f;
+  font-size: 16px;
+}
+body.modern h4 {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
+  color: #3a3a3c;
+}
+
+/* ── Body text ── */
+body.modern p, body.modern li {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1d1d1f;
+}
+
+/* ── Code inline ── */
+body.modern code {
+  font-family: 'SF Mono', 'Fira Code', 'Menlo', monospace;
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.09);
+  color: #c0392b;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+/* ── Pre blocks — Terminal.app feel ── */
+body.modern pre {
+  font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+  font-size: 12.5px;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border: 1px solid rgba(0,0,0,.2);
+  border-left: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.18), 0 1px 0 rgba(255,255,255,.06) inset;
+  position: relative;
+  padding-top: 36px;
+}
+/* Terminal traffic lights */
+body.modern pre::before {
+  content: '● ● ●';
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  font-size: 10px;
+  letter-spacing: 4px;
+  background: linear-gradient(90deg,
+    #ff5f57 0 1ch, transparent 1ch 2ch,
+    #febc2e 2ch 3ch, transparent 3ch 4ch,
+    #28c840 4ch 5ch);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+/* ── Tables — macOS list view ── */
+body.modern .wiki-table th {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  background: rgba(0,0,0,.05);
+  border: 1px solid rgba(0,0,0,.08);
+  color: #3a3a3c;
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: -.01em;
+}
+body.modern .wiki-table td {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  border: 1px solid rgba(0,0,0,.07);
+  font-size: 13.5px;
+}
+body.modern .wiki-table tr:nth-child(even) td { background: rgba(0,0,0,.025); }
+body.modern .wiki-table tr:hover td { background: rgba(0,113,227,.05); }
+
+/* ── Example cards — macOS widget cards ── */
+body.modern .ex-card {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 0 rgba(255,255,255,.8) inset;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+}
+body.modern .ex-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 8px 28px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.9) inset;
+}
+body.modern .ex-card-head {
+  background: rgba(0,0,0,.03);
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  border-radius: 16px 16px 0 0;
+}
+body.modern .ex-card-head .pattern {
+  font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+  color: #c0392b;
+}
+body.modern .ex-card-head .badge {
+  background: rgba(0,113,227,.1);
+  border: none;
+  color: #0071e3;
+  border-radius: 99px;
+  font-weight: 500;
+}
+body.modern .ex-block {
+  background: rgba(0,0,0,.03);
+  border: 1px solid rgba(0,0,0,.07);
+  border-radius: 10px;
+}
+body.modern .ex-block-label {
+  color: #8e8e93;
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+}
+body.modern .ex-row {
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+}
+body.modern .ok { color: #30d158; }
+body.modern .no { color: #ff3b30; }
+body.modern .m  { background: rgba(255,204,0,.35); color: #3a3a3c; border-radius: 3px; font-weight: 600; }
+body.modern .mg { background: rgba(0,122,255,.15);  color: #1d1d1f; border-radius: 3px; }
+
+/* ── Compare cards ── */
+body.modern .compare-card {
+  background: rgba(255,255,255,.7);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+body.modern .compare-head {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+}
+body.modern .compare-head.red   { background: rgba(255,59,48,.1);   color: #c0392b; border-bottom: 1px solid rgba(255,59,48,.12); }
+body.modern .compare-head.green { background: rgba(48,209,88,.1);   color: #1a8f3a; border-bottom: 1px solid rgba(48,209,88,.12); }
+body.modern .compare-head.blue  { background: rgba(0,113,227,.08);  color: #0058b9; border-bottom: 1px solid rgba(0,113,227,.12); }
+
+/* ── Callouts ── */
+body.modern .callout {
+  border-radius: 0 12px 12px 0;
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+}
+body.modern .callout-note   { background: rgba(0,113,227,.06);    border-left-color: #0071e3; }
+body.modern .callout-warn   { background: rgba(255,159,10,.08);   border-left-color: #ff9f0a; }
+body.modern .callout-tip    { background: rgba(48,209,88,.07);    border-left-color: #30d158; }
+body.modern .callout-danger { background: rgba(255,59,48,.06);    border-left-color: #ff3b30; }
+
+/* ── Demo widget — System Preferences panel feel ── */
+body.modern .demo-widget {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.08), 0 1px 0 rgba(255,255,255,.9) inset;
+}
+body.modern .demo-widget-head {
+  background: rgba(0,0,0,.04);
+  border-bottom: 1px solid rgba(0,0,0,.09);
+  color: #1d1d1f;
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+}
+body.modern .demo-field label {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 12.5px;
+  color: #6e6e73;
+}
+body.modern .demo-field input,
+body.modern .demo-field select {
+  font-family: 'SF Mono', 'Menlo', monospace;
+  background: rgba(255,255,255,.85);
+  border: 1px solid rgba(0,0,0,.15);
+  color: #1d1d1f;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06) inset;
+}
+body.modern .demo-field input:focus,
+body.modern .demo-field select:focus {
+  border-color: #0071e3;
+  box-shadow: 0 0 0 3px rgba(0,113,227,.2), 0 1px 3px rgba(0,0,0,.06) inset;
+}
+body.modern .demo-field select {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  -webkit-appearance: auto;
+}
+body.modern .demo-btn-primary {
+  background: #0071e3;
+  border-radius: 8px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.3) inset, 0 2px 6px rgba(0,113,227,.3);
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  transition: all .15s;
+}
+body.modern .demo-btn-primary:hover {
+  background: #0077ed;
+  transform: none;
+  box-shadow: 0 1px 0 rgba(255,255,255,.3) inset, 0 3px 10px rgba(0,113,227,.4);
+}
+body.modern .demo-btn-secondary {
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.12);
+  color: #1d1d1f;
+  border-radius: 8px;
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
+}
+body.modern .demo-btn-secondary:hover { background: rgba(0,0,0,.1); }
+body.modern .demo-result {
+  background: rgba(0,0,0,.03);
+  border: 1px solid rgba(0,0,0,.07);
+  border-radius: 10px;
+  color: #1d1d1f;
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+}
+body.modern .demo-match-item {
+  background: rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 8px;
+  color: #1d1d1f;
+}
+body.modern .qi-btn {
+  font-family: 'SF Mono', 'Menlo', monospace;
+  background: rgba(0,0,0,.05);
+  border: 1px solid rgba(0,0,0,.1);
+  color: #c0392b;
+  border-radius: 6px;
+  font-size: 11px;
+}
+body.modern .qi-btn:hover { background: rgba(0,113,227,.08); border-color: #0071e3; color: #0071e3; }
+body.modern .demo-option {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 12.5px;
+  color: #3a3a3c;
+}
+
+/* ── Tags ── */
+body.modern .tag      { background: rgba(0,0,0,.06); border-color: rgba(0,0,0,.1); color: #3a3a3c; border-radius: 5px; }
+body.modern .tag-new  { background: rgba(48,209,88,.1);  border-color: rgba(48,209,88,.2);  color: #1a8f3a; }
+body.modern .tag-adv  { background: rgba(255,59,48,.08); border-color: rgba(255,59,48,.2);  color: #c0392b; }
+body.modern .tag-perf { background: rgba(0,113,227,.08); border-color: rgba(0,113,227,.2);  color: #0058b9; }
+
+/* ── Links ── */
+body.modern a { color: #0071e3; }
+body.modern a:visited { color: #5e5ce6; }
+body.modern a:hover { color: #0077ed; }
+
+/* ── Page meta ── */
+body.modern .page-meta {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  color: #8e8e93;
+}
+body.modern .page-meta a { color: #0071e3; }
+
+/* ── Footer ── */
+body.modern .wiki-footer {
+  background: rgba(236,236,240,.7);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(0,0,0,.09);
+  color: #8e8e93;
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+}
+body.modern .wiki-footer a { color: #8e8e93; }
+body.modern .wiki-footer a:hover { color: #0071e3; }
+
+/* ── Section rule ── */
+body.modern hr.section-rule { border-color: rgba(0,0,0,.08); }
+
+/* ── Scrollbar — macOS thin ── */
+body.modern ::-webkit-scrollbar { width: 8px; height: 8px; }
+body.modern ::-webkit-scrollbar-track { background: transparent; }
+body.modern ::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.18);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+body.modern ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,.3); background-clip: padding-box; }
+
+/* ── Search results dropdown ── */
+body.modern #searchResults {
+  background: rgba(248,248,252,.92) !important;
+  border: 1px solid rgba(0,0,0,.12) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,.12) !important;
+  backdrop-filter: blur(20px) !important;
+  overflow: hidden;
+}
+body.modern #searchResults a {
+  color: #1d1d1f !important;
+  border-bottom: 1px solid rgba(0,0,0,.06) !important;
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif !important;
+  text-decoration: none;
+  font-size: 13px !important;
+}
+body.modern #searchResults a:hover {
+  background: rgba(0,113,227,.1) !important;
+  color: #0071e3 !important;
+}
+
+/* ── Toggle button in macOS mode ── */
+body.modern #themeToggle {
+  background: rgba(255,255,255,.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 2px 12px rgba(0,0,0,.12), 0 1px 0 rgba(255,255,255,.9) inset;
+  color: #1d1d1f;
+}
+body.modern #themeToggle:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,.18), 0 1px 0 rgba(255,255,255,.9) inset;
+}
+body.modern #themeToggle .t-wiki { display: none; }
+body.modern #themeToggle .t-mod  { display: block; font-size: 22px; }
+
+/* ── Entry animation ── */
+body.modern .wiki-main > * {
+  animation: macFadeIn .35s ease both;
+}
+@keyframes macFadeIn {
+  from { opacity: 0; transform: scale(.97) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+body.modern .wiki-main > *:nth-child(1) { animation-delay: .02s; }
+body.modern .wiki-main > *:nth-child(2) { animation-delay: .06s; }
+body.modern .wiki-main > *:nth-child(3) { animation-delay: .10s; }
+body.modern .wiki-main > *:nth-child(4) { animation-delay: .14s; }
+
+/* ── macOS Dock ── */
+#macos-dock {
+  display: none;
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9990;
+  background: rgba(255,255,255,.28);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255,255,255,.5);
+  border-radius: 22px;
+  padding: 8px 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.18), 0 1px 0 rgba(255,255,255,.6) inset;
+  gap: 6px;
+  align-items: flex-end;
+}
+body.modern #macos-dock { display: flex; }
+
+.dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1);
+}
+.dock-item:hover { transform: translateY(-12px) scale(1.28); }
+.dock-item:hover .dock-label { opacity: 1; transform: translateY(0); }
+
+.dock-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.18);
+  transition: transform .12s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Individual dock icon backgrounds */
+.dock-icon.di-home     { background: linear-gradient(145deg, #3b82f6, #1d4ed8); }
+.dock-icon.di-search   { background: linear-gradient(145deg, #f97316, #ea580c); }
+.dock-icon.di-test     { background: linear-gradient(145deg, #10b981, #059669); }
+.dock-icon.di-cheat    { background: linear-gradient(145deg, #8b5cf6, #6d28d9); }
+.dock-icon.di-anchors  { background: linear-gradient(145deg, #06b6d4, #0891b2); }
+.dock-icon.di-quant    { background: linear-gradient(145deg, #f59e0b, #d97706); }
+.dock-icon.di-groups   { background: linear-gradient(145deg, #ec4899, #db2777); }
+.dock-icon.di-look     { background: linear-gradient(145deg, #84cc16, #65a30d); }
+
+/* Shine overlay on dock icons */
+.dock-icon::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 55%;
+  background: linear-gradient(180deg, rgba(255,255,255,.3) 0%, transparent 100%);
+  border-radius: 13px 13px 0 0;
+  pointer-events: none;
+}
+
+.dock-label {
+  font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,.9);
+  background: rgba(0,0,0,.55);
+  padding: 2px 7px;
+  border-radius: 5px;
+  white-space: nowrap;
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  opacity: 0;
+  transition: opacity .15s, transform .15s;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+}
+
+.dock-separator {
+  width: 1px;
+  height: 36px;
+  background: rgba(0,0,0,.15);
+  margin: 0 4px;
+  align-self: center;
+}
+
+.dock-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.4);
+  margin-top: 2px;
+}
+
+/* Hide dock + particles in wiki mode */
+.particle { display: none; }
+body.modern .particle { display: none; } /* we don't use particles in macOS mode */
+
+/* ── Notification badge style for themeToggle ── */
+body.modern #themeToggle::after {
+  content: 'Wiki';
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #ff3b30;
+  color: white;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 10px;
+  font-family: -apple-system, sans-serif;
+  letter-spacing: 0;
+}
+#themeToggle { position: relative; }
+#themeToggle::after { display: none; }
+body.modern #themeToggle::after { display: block; }
+</style>
+</head>
+<body>
+
+<!-- ── Theme overlay ── -->
+<div id="themeOverlay"></div>
+
+<!-- (particles removed in macOS theme) -->
+
+<!-- ── Theme toggle button ── -->
+<button id="themeToggle" onclick="toggleTheme(event)" title="Temayı değiştir">
+  <span class="t-wiki">🍎</span>
+  <span class="t-mod">📖</span>
+</button>
+
+<!-- ── macOS Dock ── -->
+<div id="macos-dock">
+  <div class="dock-item" onclick="scrollTo('#intro')">
+    <div class="dock-icon di-home">🏠</div>
+    <div class="dock-label">Giriş</div>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="scrollTo('#anchors')">
+    <div class="dock-icon di-anchors">⚓</div>
+    <div class="dock-label">Çapalar</div>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="scrollTo('#shorthand')">
+    <div class="dock-icon di-quant" style="font-size:22px;font-weight:700;font-family:'SF Mono','Menlo',monospace;color:white;">\\w</div>
+    <div class="dock-label">Kısaltmalar</div>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="scrollTo('#quantifiers')">
+    <div class="dock-icon di-groups" style="font-size:20px;font-weight:700;font-family:'SF Mono','Menlo',monospace;color:white;">+?</div>
+    <div class="dock-label">Niceleyiciler</div>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="scrollTo('#lookaround')">
+    <div class="dock-icon di-look" style="font-size:18px;font-weight:700;font-family:'SF Mono','Menlo',monospace;color:white;">(?=)</div>
+    <div class="dock-label">Lookahead</div>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-separator"></div>
+  <div class="dock-item" onclick="scrollTo('#tester')">
+    <div class="dock-icon di-test">🧪</div>
+    <div class="dock-label">Canlı Test</div>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-item" onclick="scrollTo('#cheatsheet')">
+    <div class="dock-icon di-cheat">📋</div>
+    <div class="dock-label">Cheat Sheet</div>
+    <div class="dock-dot"></div>
+  </div>
+  <div class="dock-separator"></div>
+  <div class="dock-item" onclick="document.getElementById('siteSearch').focus()">
+    <div class="dock-icon di-search">🔍</div>
+    <div class="dock-label">Ara</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     TOP HEADER
+══════════════════════════════ -->
+<header class="wiki-header">
+  <a href="#" class="wiki-header-logo">
+    <svg class="globe-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="18" stroke="#a2a9b1" stroke-width="1.5" fill="#f8f9fa"/>
+      <ellipse cx="20" cy="20" rx="9" ry="18" stroke="#a2a9b1" stroke-width="1.2" fill="none"/>
+      <line x1="2" y1="20" x2="38" y2="20" stroke="#a2a9b1" stroke-width="1.2"/>
+      <line x1="20" y1="2" x2="20" y2="38" stroke="#a2a9b1" stroke-width="1.2"/>
+      <ellipse cx="20" cy="20" rx="18" ry="6" stroke="#a2a9b1" stroke-width="1.2" fill="none"/>
+    </svg>
+    <span class="site-text">C# Regex Wiki<small>Kapsamlı Referans</small></span>
+  </a>
+  <div class="wiki-search-bar">
+    <input type="text" placeholder="C# regex'te ara..." id="siteSearch" oninput="siteSearch(this.value)">
+    <span class="search-icon">🔍</span>
+    <div id="searchResults" style="display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #a2a9b1;z-index:200;max-height:280px;overflow-y:auto;border-radius:0 0 3px 3px;"></div>
+  </div>
+  <nav class="wiki-header-nav">
+    <a href="#tester">Canlı Test</a>
+    <a href="#cheatsheet">Cheat Sheet</a>
+    <a href="#patterns">Örnekler</a>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════
+     PAGE TABS
+══════════════════════════════ -->
+<div class="page-tabs">
+  <a class="page-tab active" href="#">Makale</a>
+  <a class="page-tab" href="#tester">Sandbox</a>
+  <a class="page-tab" href="#cheatsheet">Hızlı Başvuru</a>
+</div>
+
+<!-- ══════════════════════════════
+     BODY
+══════════════════════════════ -->
+<div class="wiki-body">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="wiki-sidebar" id="wikiSidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Kategoriler</div>
+      <a class="sidebar-link" href="#intro">Giriş & Sınıflar</a>
+      <a class="sidebar-link" href="#anchors">Çapalar</a>
+      <a class="sidebar-link" href="#charclass">Karakter Sınıfları</a>
+      <a class="sidebar-link" href="#shorthand">— Kısaltmalar</a>
+      <a class="sidebar-link" href="#quantifiers">Niceleyiciler</a>
+      <a class="sidebar-link" href="#greedy-lazy">— Greedy vs Lazy</a>
+      <a class="sidebar-link" href="#groups">Gruplar</a>
+      <a class="sidebar-link" href="#lookaround">Lookahead/behind</a>
+      <a class="sidebar-link" href="#alternation">Alternasyon</a>
+      <a class="sidebar-link" href="#backrefs">Geri Referanslar</a>
+      <a class="sidebar-link" href="#flags">Bayraklar</a>
+      <a class="sidebar-link" href="#named">İsimli Gruplar</a>
+      <a class="sidebar-link" href="#replace">Replace</a>
+      <a class="sidebar-link" href="#atomic">Atomic Grup</a>
+      <a class="sidebar-link" href="#balancing">Balancing Grup</a>
+      <a class="sidebar-link" href="#unicode">Unicode</a>
+      <a class="sidebar-link" href="#performance">Performans</a>
+      <a class="sidebar-link" href="#patterns">Hazır Desenler</a>
+      <a class="sidebar-link" href="#tester">🧪 Canlı Test</a>
+      <a class="sidebar-link" href="#cheatsheet">📋 Cheat Sheet</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Hızlı Erişim</div>
+      <a class="sidebar-link" href="#shorthand">\w — kelime</a>
+      <a class="sidebar-link" href="#shorthand">\d — rakam</a>
+      <a class="sidebar-link" href="#shorthand">\s — boşluk</a>
+      <a class="sidebar-link" href="#anchors">\b — sınır</a>
+      <a class="sidebar-link" href="#quantifiers">+ * ? {n}</a>
+      <a class="sidebar-link" href="#lookaround">(?=) (?!) (?&lt;=)</a>
+    </div>
+    <div style="padding:8px 12px;font-size:11px;color:var(--text-muted);font-family:'Linux Biolinum',sans-serif;">
+      .NET 6+ &nbsp;·&nbsp; C# 10+<br>System.Text.RegularExpressions
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="wiki-main" id="wikiMain">
+
+    <!-- PAGE TITLE -->
+    <div class="page-title-block">
+      <h1 class="page-title">C# — Regular Expressions (Regex)</h1>
+      <div class="page-meta">
+        Bu sayfa <code>System.Text.RegularExpressions</code> namespace'ini kapsar.
+        &nbsp;·&nbsp; <a href="#tester">Canlı Test Aracı</a>
+        &nbsp;·&nbsp; Son güncelleme: 2025
+      </div>
+    </div>
+
+    <!-- INFOBOX -->
+    <div class="infobox">
+      <div class="infobox-title">C# Regex — Hızlı Bilgi</div>
+      <div class="infobox-img">⚙️ <code style="font-size:13px;border:none;background:none;color:#555;">/pattern/flags</code></div>
+      <table>
+        <tr><td>Namespace</td><td><code>System.Text<br>.RegularExpressions</code></td></tr>
+        <tr><td>Motor</td><td>NFA (backtracking)</td></tr>
+        <tr><td>Standart</td><td>Perl-uyumlu PCRE</td></tr>
+        <tr><td>Unicode</td><td>Tam Unicode 15+</td></tr>
+        <tr><td>Thread safe</td><td>Evet (Regex nesnesi)</td></tr>
+        <tr><td>Timeout</td><td>Ayarlanabilir</td></tr>
+        <tr><td>Compiled</td><td>MSIL ile derleme</td></tr>
+        <tr><td>.NET 7+</td><td>NonBacktracking modu</td></tr>
+        <tr><td>.NET 7+</td><td>Source Generator</td></tr>
+        <tr><td>Verbatim</td><td><code>@"..."</code> kullan</td></tr>
+      </table>
+    </div>
+
+    <!-- TOC -->
+    <div class="toc" id="toc">
+      <div class="toc-title">
+        İçindekiler
+        <span class="toc-toggle" onclick="toggleToc()">[gizle]</span>
+      </div>
+      <ol id="tocList">
+        <li><a href="#intro">Giriş & Temel API</a>
+          <ol>
+            <li><a href="#classes">Temel Sınıflar</a></li>
+            <li><a href="#basic-usage">Temel Kullanım</a></li>
+          </ol>
+        </li>
+        <li><a href="#anchors">Çapalar (Anchors)</a></li>
+        <li><a href="#charclass">Karakter Sınıfları</a>
+          <ol>
+            <li><a href="#shorthand">Kısaltmalar (\w, \d, \s…)</a></li>
+            <li><a href="#bracket">Köşeli Parantez []</a></li>
+            <li><a href="#unicode">Unicode Kategorileri</a></li>
+          </ol>
+        </li>
+        <li><a href="#quantifiers">Niceleyiciler</a>
+          <ol>
+            <li><a href="#greedy-lazy">Greedy vs Lazy</a></li>
+            <li><a href="#possessive">Atomic / Possessive</a></li>
+          </ol>
+        </li>
+        <li><a href="#groups">Gruplar & Yakalama</a></li>
+        <li><a href="#lookaround">Lookahead & Lookbehind</a></li>
+        <li><a href="#alternation">Alternasyon (|)</a></li>
+        <li><a href="#backrefs">Geri Referanslar</a></li>
+        <li><a href="#flags">Bayraklar (RegexOptions)</a></li>
+        <li><a href="#named">İsimli Gruplar</a></li>
+        <li><a href="#replace">Replace & MatchEvaluator</a></li>
+        <li><a href="#atomic">Atomic Gruplar</a></li>
+        <li><a href="#balancing">Balancing Gruplar</a></li>
+        <li><a href="#performance">Performans & ReDoS</a></li>
+        <li><a href="#patterns">Hazır Desenler</a></li>
+        <li><a href="#tester">Canlı Test Aracı</a></li>
+        <li><a href="#cheatsheet">Cheat Sheet</a></li>
+      </ol>
+    </div>
+
+    <p><strong>Regular Expression</strong> (kısaca <strong>Regex</strong> veya <strong>Regexp</strong>), metin içindeki kalıpları tanımlamaya yarayan özel bir dildir. C# dilinde <code>System.Text.RegularExpressions</code> namespace'i altında gelir ve NFA (Nondeterministic Finite Automaton) tabanlı bir motor kullanır. 1951'de matematikçi Stephen Cole Kleene'nin resmi dil teorisiyle temellenen bu yapı, günümüzde metin doğrulama, arama, ayrıştırma ve dönüştürme işlemlerinin vazgeçilmezi hâline gelmiştir.</p>
+
+    <p>C# regex motoru <strong>Perl uyumlu</strong> (PCRE benzeri) olup lookahead, lookbehind, isimli gruplar, atomic gruplar ve balancing gruplar gibi ileri düzey özellikleri destekler.</p>
+
+    <div class="callout callout-note">
+      <strong>📌 Verbatim String Zorunluluğu</strong>
+      C#'ta ters eğik çizgi (<code>\</code>) hem string escape hem de regex escape karakteridir. <code>\d</code> yazmak için normal string'de <code>"\\d"</code> yazmanız gerekir. Bu karışıklığı önlemek için daima <code>@"\d"</code> verbatim string sözdizimini kullanın.
+    </div>
+
+    <div class="clear"></div>
+
+    <!-- ══════════════════════════════
+         1. GİRİŞ
+    ══════════════════════════════ -->
+    <h2 id="intro">1. Giriş & Temel API</h2>
+
+    <h3 id="classes">1.1 Temel Sınıflar</h3>
+    <table class="wiki-table">
+      <tr><th>Sınıf</th><th>Açıklama</th><th>Önemli Üyeler</th></tr>
+      <tr><td><code>Regex</code></td><td>Ana sınıf; pattern'i derler ve eşleşme işlemleri yapar</td><td><code>IsMatch</code>, <code>Match</code>, <code>Matches</code>, <code>Replace</code>, <code>Split</code></td></tr>
+      <tr><td><code>Match</code></td><td>Tek bir eşleşme sonucu</td><td><code>Value</code>, <code>Index</code>, <code>Length</code>, <code>Groups</code>, <code>NextMatch()</code></td></tr>
+      <tr><td><code>MatchCollection</code></td><td>Tüm eşleşmelerin koleksiyonu</td><td><code>Count</code>, indeksleyici, foreach</td></tr>
+      <tr><td><code>Group</code></td><td>Bir yakalama grubunun sonucu</td><td><code>Value</code>, <code>Index</code>, <code>Success</code>, <code>Captures</code></td></tr>
+      <tr><td><code>GroupCollection</code></td><td>Match içindeki tüm gruplar</td><td>Sayı veya isimle erişim</td></tr>
+      <tr><td><code>Capture</code></td><td>Bir grubun tek bir yakaladığı değer</td><td><code>Value</code>, <code>Index</code></td></tr>
+    </table>
+
+    <h3 id="basic-usage">1.2 Temel Kullanım Örnekleri</h3>
+
+    <pre><span class="kw">using</span> <span class="typ">System.Text.RegularExpressions</span>;
+
+<span class="cmt">// ──────────────────────────────────────────
+// 1. IsMatch — Eşleşme var mı? (bool döner)
+// ──────────────────────────────────────────</span>
+<span class="typ">bool</span> <span class="var">ok</span> = <span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"hello world"</span>, <span class="str">@"\bworld\b"</span>);  <span class="cmt">// true</span>
+
+<span class="cmt">// ──────────────────────────────────────────
+// 2. Match — İlk eşleşmeyi bul
+// ──────────────────────────────────────────</span>
+<span class="typ">Match</span> <span class="var">m</span> = <span class="typ">Regex</span>.<span class="met">Match</span>(<span class="str">"abc123def"</span>, <span class="str">@"\d+"</span>);
+<span class="kw">if</span> (<span class="var">m</span>.Success)
+{
+    <span class="var">m</span>.Value   <span class="cmt">// "123"</span>
+    <span class="var">m</span>.Index   <span class="cmt">// 3  (string içindeki başlangıç konumu)</span>
+    <span class="var">m</span>.Length  <span class="cmt">// 3  (kaç karakter uzunluk)</span>
+}
+
+<span class="cmt">// ──────────────────────────────────────────
+// 3. Matches — Tüm eşleşmeleri bul
+// ──────────────────────────────────────────</span>
+<span class="kw">foreach</span> (<span class="typ">Match</span> <span class="var">match</span> <span class="kw">in</span> <span class="typ">Regex</span>.<span class="met">Matches</span>(<span class="str">"a1 b2 c3"</span>, <span class="str">@"\d"</span>))
+    <span class="typ">Console</span>.<span class="met">WriteLine</span>(<span class="var">match</span>.Value);  <span class="cmt">// "1", "2", "3" (sırayla)</span>
+
+<span class="cmt">// ──────────────────────────────────────────
+// 4. Replace — Değiştir
+// ──────────────────────────────────────────</span>
+<span class="typ">string</span> <span class="var">r1</span> = <span class="typ">Regex</span>.<span class="met">Replace</span>(<span class="str">"foo   bar"</span>, <span class="str">@"\s+"</span>, <span class="str">" "</span>);  <span class="cmt">// "foo bar"</span>
+
+<span class="cmt">// ──────────────────────────────────────────
+// 5. Split — Böl
+// ──────────────────────────────────────────</span>
+<span class="typ">string</span>[] <span class="var">parts</span> = <span class="typ">Regex</span>.<span class="met">Split</span>(<span class="str">"a,b;c d"</span>, <span class="str">@"[,;\s]+"</span>);
+<span class="cmt">// ["a", "b", "c", "d"]</span>
+
+<span class="cmt">// ──────────────────────────────────────────
+// 6. Compiled — Performans için önceden derle
+// ──────────────────────────────────────────</span>
+<span class="kw">var</span> <span class="var">rx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"\d+"</span>, <span class="typ">RegexOptions</span>.Compiled);
+
+<span class="cmt">// ──────────────────────────────────────────
+// 7. Timeout — ReDoS koruması
+// ──────────────────────────────────────────</span>
+<span class="kw">var</span> <span class="var">safe</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@".+"</span>, <span class="typ">RegexOptions</span>.None,
+    <span class="typ">TimeSpan</span>.<span class="met">FromMilliseconds</span>(<span class="num">200</span>));
+
+<span class="cmt">// ──────────────────────────────────────────
+// 8. .NET 7+ Source Generator (en hızlı)
+// ──────────────────────────────────────────</span>
+[<span class="ann">GeneratedRegex</span>(<span class="str">@"\d+"</span>, <span class="typ">RegexOptions</span>.Compiled)]
+<span class="kw">private static partial</span> <span class="typ">Regex</span> <span class="met">DigitRegex</span>();</pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         2. ÇAPALAR
+    ══════════════════════════════ -->
+    <h2 id="anchors">2. Çapalar (Anchors)</h2>
+
+    <p>Çapalar herhangi bir karakteri <em>yutmaz</em>; yalnızca string içindeki belirli bir <strong>konumu</strong> doğrularlar. Bir regex motorunun "nereden bakacağını" belirler.</p>
+
+    <div class="ex-cards">
+
+      <!-- ^ -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">^</span>
+          <span class="badge">Anchor</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Satır / string başı.</strong> Varsayılanda string'in en başını işaret eder.
+            <code>Multiline</code> modunda her satır başını da yakalar.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>^Merhaba</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">Merhaba</span> dünya</span><span class="note">Başta</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">Dünya Merhaba</span><span class="note">Başta değil</span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">satır1\n<span class="m">Merhaba</span></span><span class="note">Multiline ile</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- $ -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">$</span>
+          <span class="badge">Anchor</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Satır / string sonu.</strong> Varsayılanda string sonunu işaret eder. Son <code>\n</code> öncesine de eşleşebilir.
+            <code>Multiline</code> modunda her satır sonunu da yakalar.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>dünya$</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">Merhaba <span class="m">dünya</span></span><span class="note">Sonda</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">dünya barış</span><span class="note">Sonda değil</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \b -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\b</span>
+          <span class="badge">Anchor</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Kelime sınırı.</strong> <code>\w</code> (kelime karakteri) ile <code>\W</code> (kelime dışı) arasındaki sıfır-genişlikli geçiş noktasını işaret eder. String başı/sonu da kelime sınırı sayılır.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\bcat\b</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">I have a <span class="m">cat</span></span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">cat</span> sat</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">concatenate</span><span class="note">"cat" kelime ortasında</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">bobcat</span><span class="note">Solunda \w var</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \B -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\B</span>
+          <span class="badge">Anchor</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Kelime sınırı değil.</strong> <code>\b</code>'nin tam tersidir. İki kelime karakteri arasındaki ya da iki kelime-dışı karakter arasındaki konumu işaret eder.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\Bcat\B</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">con<span class="m">cat</span>enate</span><span class="note">Her iki yanı \w</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">I have a cat</span><span class="note">Kelime sınırı var</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \A -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\A</span>
+          <span class="badge">Anchor</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Mutlak string başı.</strong> <code>^</code>'dan farklı olarak <code>Multiline</code> modunda bile yalnızca string'in başını işaret eder. Satır başına uymaz.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\AStart</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">Start</span>\nother</span><span class="note">String başı</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">line\nStart</span><span class="note">Multiline'da bile eşleşmez</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \Z -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\Z &nbsp; \z</span>
+          <span class="badge">Anchor</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Mutlak string sonu.</strong> <code>\Z</code>: string sonu veya son satır sonlandırıcısından önce. <code>\z</code>: kesinlikle en son karakter konumu.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>end\Z</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">the <span class="m">end</span></span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">the <span class="m">end</span>\n</span><span class="note">\Z için son \n öncesi</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">the <span>end</span>\nmore</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \G -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\G</span>
+          <span class="badge">Anchor</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Önceki eşleşme sonu.</strong> <code>Matches()</code> veya ardışık çağrılarda, son eşleşmenin bittiği konumdan başlamayı zorlar. Tokenizer yazarken çok kullanışlıdır.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\G\d+</code> üzerinde "123abc456"</div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">123</span>abc456</span><span class="note">İlk eşleşme</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">123abc<span>456</span></span><span class="note">Araya harf girdiği için durur</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /ex-cards anchors -->
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         3. KARAKTER SINIFLARI
+    ══════════════════════════════ -->
+    <h2 id="charclass">3. Karakter Sınıfları</h2>
+
+    <h3 id="shorthand">3.1 Kısaltma Sınıfları — \w, \d, \s ve Büyük Halleri</h3>
+
+    <p>Kısaltma sınıfları (shorthand character classes), tek bir sembolle çok sayıda karakteri temsil eder. C# regex'in en sık kullanılan yapı taşlarıdır.</p>
+
+    <div class="ex-cards">
+
+      <!-- \w -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\w</span>
+          <span class="badge">Kelime Karakteri</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Word character.</strong> <code>[a-zA-Z0-9_]</code>'ye eşdeğerdir. Unicode modunda tüm dillerin harfleri ve rakamları da dahildir (ğ, ü, ş, 汉, Ä gibi).
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\w+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">hello</span></span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">_private</span></span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">abc123</span></span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">!@#$</span><span class="note">Noktalama karakterleri</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">Karşılaştırma: \w vs \w+</div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\w</code> → tek karakter: "<span class="m">h</span>ello"</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\w+</code> → bir veya daha fazla: "<span class="m">hello</span>"</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\w*</code> → sıfır veya daha fazla: "" de eşleşir</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\w{3}</code> → tam 3 karakter: "<span class="m">hel</span>lo"</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \W -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\W</span>
+          <span class="badge">Kelime Dışı</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>\w'nin tam tersi.</strong> Harf, rakam veya alt çizgi olmayan her karakteri eşler: boşluk, noktalama, özel karakterler vb.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\W+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">hello<span class="m">, </span>world</span><span class="note">Virgül + boşluk</span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">foo<span class="m">!</span>bar</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">helloworld</span><span class="note">Hepsi \w</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">Kullanım: Kelimeleri ayır</div>
+            <div class="ex-row"><span class="icon">💡</span><span class="txt"><code>Regex.Split("a, b; c", @"\W+")</code><br>→ ["a", "b", "c"]</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \d -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\d</span>
+          <span class="badge">Rakam</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Digit.</strong> <code>[0-9]</code>'a eşdeğerdir. Unicode modunda tüm dillerin rakamları da dahildir (Arapça ٣, Hint rakamları ३ vb).
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\d+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">abc<span class="m">123</span>def</span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">0</span></span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">abc</span><span class="note">Rakam yok</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">Karşılaştırma: \d vs \d+</div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\d</code> → tek rakam: "abc<span class="m">1</span>23"</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\d+</code> → tam sayı: "abc<span class="m">123</span>"</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\d{4}</code> → 4 haneli: "<span class="m">2024</span>-01"</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\d{2,4}</code> → 2-4 hane: "<span class="m">24</span>", "<span class="m">2024</span>"</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \D -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\D</span>
+          <span class="badge">Rakam Dışı</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>\d'nin tam tersi.</strong> Rakam olmayan her karakteri eşler: harfler, boşluklar, noktalamalar vb.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\D+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">abc</span>123</span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">123<span class="m">def</span></span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">12345</span><span class="note">Tümü rakam</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">Kullanım: Sadece rakamları elde et</div>
+            <div class="ex-row"><span class="icon">💡</span><span class="txt"><code>Regex.Replace("Tel: 0532-111", @"\D", "")</code><br>→ "0532111"</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \s -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\s</span>
+          <span class="badge">Boşluk</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Whitespace.</strong> Boşluk karakterlerini eşler: space (<code>' '</code>), tab (<code>\t</code>), newline (<code>\n</code>), carriage return (<code>\r</code>), form feed (<code>\f</code>), vertical tab (<code>\v</code>).
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\s+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">foo<span class="m">   </span>bar</span><span class="note">Çoklu boşluk</span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">line1<span class="m">\n</span>line2</span><span class="note">Newline</span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">col1<span class="m">\t</span>col2</span><span class="note">Tab</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">nospace</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">Kullanım: Boşlukları normalize et</div>
+            <div class="ex-row"><span class="icon">💡</span><span class="txt"><code>Regex.Replace("a  b\tc", @"\s+", " ")</code><br>→ "a b c"</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- \S -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">\S</span>
+          <span class="badge">Boşluk Dışı</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>\s'nin tam tersi.</strong> Boşluk olmayan her karakteri eşler. Genellikle bir token'ı (sözcük, etiket, değer) yakalamak için kullanılır.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\S+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">hello</span> world</span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">  <span class="m">trimmed</span>  </span><span class="note">Boşlukları atlar</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">   </span><span class="note">Sadece boşluk</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- . (dot) -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">.</span>
+          <span class="badge">Herhangi Karakter</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Nokta (wildcard).</strong> Newline (<code>\n</code>) HARİÇ herhangi bir karakteri eşler. <code>Singleline</code> bayrağıyla newline'ı da eşler.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>a.b</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">aXb</span></span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">a b</span></span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">a1b</span></span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">a\nb</span><span class="note">Varsayılanda newline eşleşmez</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">. vs .+ vs .*</div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>.</code> → tam olarak 1 karakter</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>.+</code> → 1 veya daha fazla (boş eşleşmez)</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>.*</code> → 0 veya daha fazla (boş da eşleşir)</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /shorthand cards -->
+
+    <div class="callout callout-tip">
+      <strong>💡 Büyük harf = ters anlam kuralı</strong>
+      C# regex'te bir kısaltmanın büyük harfi, daima onun tersini temsil eder: <code>\w</code> kelime karakteri ↔ <code>\W</code> kelime dışı. <code>\d</code> rakam ↔ <code>\D</code> rakam dışı. <code>\s</code> boşluk ↔ <code>\S</code> boşluk dışı.
+    </div>
+
+    <h3 id="bracket">3.2 Köşeli Parantez Sınıfları [ ]</h3>
+
+    <table class="wiki-table">
+      <tr><th>Sözdizim</th><th>Açıklama</th><th>Örnek</th><th>Eşleşir</th></tr>
+      <tr><td><code>[abc]</code></td><td>a, b veya c'den biri</td><td><code>[aeiou]</code></td><td>"h<span class="m">e</span>llo"</td></tr>
+      <tr><td><code>[^abc]</code></td><td>a, b, c HARİÇ herhangi biri</td><td><code>[^aeiou]</code></td><td>"<span class="m">h</span>ello"</td></tr>
+      <tr><td><code>[a-z]</code></td><td>a'dan z'ye aralık</td><td><code>[a-z]</code></td><td>herhangi küçük harf</td></tr>
+      <tr><td><code>[A-Z0-9]</code></td><td>Büyük VEYA rakam</td><td><code>[A-Z0-9]+</code></td><td>"<span class="m">ABC123</span>"</td></tr>
+      <tr><td><code>[\w\s]</code></td><td>Kelime karakteri VEYA boşluk</td><td><code>[\w\s]+</code></td><td>"hello world"</td></tr>
+      <tr><td><code>[a\-z]</code></td><td>a, tire veya z (tire escape'li)</td><td><code>[a\-z]</code></td><td>"a", "-", "z"</td></tr>
+      <tr><td><code>[\u0041-\u005A]</code></td><td>Unicode aralığı (A-Z)</td><td><code>[\u00C0-\u00FF]</code></td><td>Latin Extended karakterler</td></tr>
+    </table>
+
+    <pre><span class="cmt">// Türkçe harfleri yakalamak (ğ, ü, ş, ö, ı, ç büyük/küçük)</span>
+<span class="kw">var</span> <span class="var">trPattern</span> = <span class="str">@"[a-zA-ZğüşöıçĞÜŞÖIÇ]+"</span>;
+
+<span class="cmt">// Veya Unicode kategorisi ile</span>
+<span class="kw">var</span> <span class="var">letterPattern</span> = <span class="str">@"\p{L}+"</span>;  <span class="cmt">// tüm dillerin harfleri</span>
+
+<span class="cmt">// Onaltılık sayı (hex)</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"0x1A3F"</span>, <span class="str">@"^0x[0-9A-Fa-f]+$"</span>);  <span class="cmt">// true</span></pre>
+
+    <h3 id="unicode">3.3 Unicode Kategorileri (\p{...})</h3>
+
+    <table class="wiki-table">
+      <tr><th>Kategori</th><th>Açıklama</th><th>Örnek</th></tr>
+      <tr><td><code>\p{L}</code></td><td>Herhangi bir harf (Letter)</td><td>a, ğ, 汉, Ä</td></tr>
+      <tr><td><code>\p{Lu}</code></td><td>Büyük harf (Uppercase Letter)</td><td>A, G, Ü</td></tr>
+      <tr><td><code>\p{Ll}</code></td><td>Küçük harf (Lowercase Letter)</td><td>a, g, ü</td></tr>
+      <tr><td><code>\p{N}</code></td><td>Herhangi bir rakam (Number)</td><td>0-9, ٣, ३</td></tr>
+      <tr><td><code>\p{Nd}</code></td><td>Ondalık rakam (Decimal digit)</td><td>0-9</td></tr>
+      <tr><td><code>\p{P}</code></td><td>Noktalama (Punctuation)</td><td>. , ! ? ' "</td></tr>
+      <tr><td><code>\p{Z}</code></td><td>Separator (boşluklar)</td><td>space, non-breaking space</td></tr>
+      <tr><td><code>\p{S}</code></td><td>Symbol (semboller)</td><td>+, &lt;, =, $, ©</td></tr>
+      <tr><td><code>\p{C}</code></td><td>Control karakterleri</td><td>\t, \n, \r</td></tr>
+      <tr><td><code>\P{L}</code></td><td>Harf olmayan (büyük P = ters)</td><td>Her karakter ama harf değil</td></tr>
+    </table>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         4. NİCELEYİCİLER
+    ══════════════════════════════ -->
+    <h2 id="quantifiers">4. Niceleyiciler (Quantifiers)</h2>
+
+    <p>Niceleyiciler, önündeki öğenin <strong>kaç kez</strong> tekrarlanacağını belirtir. Varsayılan olarak <strong>greedy</strong> (açgözlü) çalışırlar.</p>
+
+    <table class="wiki-table">
+      <tr><th>Sembol</th><th>Anlamı</th><th>Eşdeğeri</th><th>Lazy Hali</th><th>Örnek</th></tr>
+      <tr><td><code>*</code></td><td>0 veya daha fazla</td><td><code>{0,}</code></td><td><code>*?</code></td><td><code>ab*</code> → "a", "ab", "abbb"</td></tr>
+      <tr><td><code>+</code></td><td>1 veya daha fazla</td><td><code>{1,}</code></td><td><code>+?</code></td><td><code>ab+</code> → "ab", "abbb"</td></tr>
+      <tr><td><code>?</code></td><td>0 veya 1 (opsiyonel)</td><td><code>{0,1}</code></td><td><code>??</code></td><td><code>colou?r</code> → "color", "colour"</td></tr>
+      <tr><td><code>{n}</code></td><td>Tam n kez</td><td>—</td><td>—</td><td><code>\d{4}</code> → "2024"</td></tr>
+      <tr><td><code>{n,}</code></td><td>En az n kez</td><td>—</td><td><code>{n,}?</code></td><td><code>\w{3,}</code> → "abc", "hello"</td></tr>
+      <tr><td><code>{n,m}</code></td><td>n ile m arasında</td><td>—</td><td><code>{n,m}?</code></td><td><code>\d{2,4}</code> → "12","123","1234"</td></tr>
+    </table>
+
+    <h3 id="greedy-lazy">4.1 Greedy vs Lazy — En Kritik Fark</h3>
+
+    <p>Bu farkı anlamak, regex yazarken en çok hata yapılan konudur.</p>
+
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="compare-head red">🐊 Greedy (Açgözlü) — Varsayılan</div>
+        <div class="compare-body">
+          <p>Mümkün olan en uzun metni yakalar. Motor önce her şeyi alır, sonra gerekirse geri bırakır (backtrack).</p>
+          <div class="ex-block">
+            <div class="ex-block-label">String: <code>&lt;b&gt;bold&lt;/b&gt; ve &lt;i&gt;italic&lt;/i&gt;</code></div>
+            <div class="ex-row"><span class="icon">🎯</span><span class="txt">Desen: <code>&lt;.+&gt;</code></span></div>
+            <div class="ex-row"><span class="icon no">⚠️</span><span class="txt">Eşleşme: <span class="m">&lt;b&gt;bold&lt;/b&gt; ve &lt;i&gt;italic&lt;/i&gt;</span></span></div>
+            <div class="ex-row"><span class="icon">💬</span><span class="txt">Tüm string'i yuttu!</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="compare-head green">🌿 Lazy (Tembel) — ? Ekle</div>
+        <div class="compare-body">
+          <p>Mümkün olan en kısa metni yakalar. Gereken minimum kadar alır.</p>
+          <div class="ex-block">
+            <div class="ex-block-label">String: <code>&lt;b&gt;bold&lt;/b&gt; ve &lt;i&gt;italic&lt;/i&gt;</code></div>
+            <div class="ex-row"><span class="icon">🎯</span><span class="txt">Desen: <code>&lt;.+?&gt;</code></span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">1. eşleşme: <span class="m">&lt;b&gt;</span></span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">2. eşleşme: <span class="m">&lt;/b&gt;</span></span></div>
+            <div class="ex-row"><span class="icon">💬</span><span class="txt">Her tag ayrı ayrı yakalandı!</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="compare-head blue">🔢 + ile +? Karşılaştırması</div>
+        <div class="compare-body">
+          <div class="ex-block">
+            <div class="ex-block-label">String: "aaa bbb"</div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\w+</code> → <span class="m">aaa</span> (greedy, max al)</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\w+?</code> → <span class="m">a</span> (lazy, min al)</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="compare-head blue">🔢 * ile *? Karşılaştırması</div>
+        <div class="compare-body">
+          <div class="ex-block">
+            <div class="ex-block-label">String: "((abc))"</div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\(.*\)</code> → <span class="m">((abc))</span> (dış)</span></div>
+            <div class="ex-row"><span class="icon">📍</span><span class="txt"><code>\(.*?\)</code> → <span class="m">(abc)</span> (iç)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <pre><span class="cmt">// Pratik örnek: JSON değeri çekme</span>
+<span class="typ">string</span> <span class="var">json</span> = <span class="str">@"{""name"":""Ali"",""city"":""Istanbul""}"</span>;
+
+<span class="cmt">// GREEDY — Yanlış sonuç!</span>
+<span class="typ">Regex</span>.<span class="met">Match</span>(<span class="var">json</span>, <span class="str">@""".*"""</span>).Value
+<span class="cmt">// → "name":"Ali","city":"Istanbul" (fazla yuttu)</span>
+
+<span class="cmt">// LAZY — Doğru sonuç</span>
+<span class="typ">Regex</span>.<span class="met">Match</span>(<span class="var">json</span>, <span class="str">@""".*?"""</span>).Value
+<span class="cmt">// → "name" (ilk key)</span>
+
+<span class="kw">foreach</span> (<span class="typ">Match</span> <span class="var">m</span> <span class="kw">in</span> <span class="typ">Regex</span>.<span class="met">Matches</span>(<span class="var">json</span>, <span class="str">@"""(.*?)"""</span>))
+    <span class="typ">Console</span>.<span class="met">WriteLine</span>(<span class="var">m</span>.Groups[<span class="num">1</span>].Value);
+<span class="cmt">// name, Ali, city, Istanbul</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         5. GRUPLAR
+    ══════════════════════════════ -->
+    <h2 id="groups">5. Gruplar & Yakalama</h2>
+
+    <table class="wiki-table">
+      <tr><th>Sözdizim</th><th>Tür</th><th>Açıklama</th></tr>
+      <tr><td><code>(abc)</code></td><td>Yakalama grubu</td><td>Eşleşmeyi yakalar ve numaralandırır. <code>Groups[1]</code>, <code>[2]</code>… ile erişilir.</td></tr>
+      <tr><td><code>(?:abc)</code></td><td>Non-capturing</td><td>Gruplar ama yakalamaz. Gruplama için performanslı yol.</td></tr>
+      <tr><td><code>(?&lt;name&gt;abc)</code></td><td>İsimli grup</td><td>Gruba isim verir. <code>Groups["name"]</code> ile erişilir.</td></tr>
+      <tr><td><code>(?&gt;abc)</code></td><td>Atomic grup</td><td>Backtracking'i önler. Performans ve doğruluk için.</td></tr>
+      <tr><td><code>(?&lt;A&gt;-(?&lt;B&gt;))+</code></td><td>Balancing grup</td><td>Nested parantez/tag dengeleme için özgün .NET özelliği.</td></tr>
+    </table>
+
+    <pre><span class="cmt">// Yakalama grubu — tarih ayrıştırma</span>
+<span class="typ">Match</span> <span class="var">m</span> = <span class="typ">Regex</span>.<span class="met">Match</span>(<span class="str">"2024-03-28"</span>, <span class="str">@"(\d{4})-(\d{2})-(\d{2})"</span>);
+<span class="var">m</span>.Groups[<span class="num">0</span>].Value  <span class="cmt">// "2024-03-28" — tüm eşleşme (her zaman Group[0])</span>
+<span class="var">m</span>.Groups[<span class="num">1</span>].Value  <span class="cmt">// "2024" — yıl</span>
+<span class="var">m</span>.Groups[<span class="num">2</span>].Value  <span class="cmt">// "03"   — ay</span>
+<span class="var">m</span>.Groups[<span class="num">3</span>].Value  <span class="cmt">// "28"   — gün</span>
+
+<span class="cmt">// Non-capturing grup — yakalamadan gruplama</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"colour"</span>, <span class="str">@"colo(?:u)?r"</span>); <span class="cmt">// true, u opsiyonel ama kaydedilmez</span>
+
+<span class="cmt">// İsimli grup — okunabilir yakalama</span>
+<span class="typ">Match</span> <span class="var">n</span> = <span class="typ">Regex</span>.<span class="met">Match</span>(<span class="str">"2024-03-28"</span>,
+    <span class="str">@"(?&lt;year&gt;\d{4})-(?&lt;month&gt;\d{2})-(?&lt;day&gt;\d{2})"</span>);
+<span class="var">n</span>.Groups[<span class="str">"year"</span>].Value   <span class="cmt">// "2024"</span>
+<span class="var">n</span>.Groups[<span class="str">"month"</span>].Value  <span class="cmt">// "03"</span>
+<span class="var">n</span>.Groups[<span class="str">"day"</span>].Value    <span class="cmt">// "28"</span>
+
+<span class="cmt">// Grup isimlerini listele</span>
+<span class="kw">string</span>[] <span class="var">names</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"(?&lt;year&gt;\d{4})"</span>).<span class="met">GetGroupNames</span>();
+<span class="cmt">// ["0", "year"]</span>
+
+<span class="cmt">// Tekrarlayan gruplarda CaptureCollection</span>
+<span class="typ">Match</span> <span class="var">rep</span> = <span class="typ">Regex</span>.<span class="met">Match</span>(<span class="str">"aababc"</span>, <span class="str">@"(a(b)?)*"</span>);
+<span class="kw">foreach</span> (<span class="typ">Capture</span> <span class="var">c</span> <span class="kw">in</span> <span class="var">rep</span>.Groups[<span class="num">1</span>].Captures)
+    <span class="typ">Console</span>.<span class="met">Write</span>(<span class="var">c</span>.Value + <span class="str">" "</span>);  <span class="cmt">// a ab ab</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         6. LOOKAROUND
+    ══════════════════════════════ -->
+    <h2 id="lookaround">6. Lookahead & Lookbehind</h2>
+
+    <p>Lookaround yapıları, eşleşme noktasının önünde (<em>lookahead</em>) veya arkasında (<em>lookbehind</em>) ne olduğunu <strong>karakterleri yutmadan</strong> kontrol eder. Bu nedenle <strong>sıfır genişlikli doğrulamalar</strong> (zero-width assertions) olarak da bilinirler.</p>
+
+    <div class="ex-cards">
+
+      <!-- Positive Lookahead -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">(?=...)</span>
+          <span class="badge">Positive Lookahead</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Sağından belirtilen gelmeli.</strong> Eşleşme konumunun sağında verilen desen bulunmalıdır, ama o desen yakalanmaz.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>\d+(?= TL)</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">fiyat: <span class="m">150</span> TL</span><span class="note">"TL" yakalanmaz</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">fiyat: 150 EUR</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">Desen: <code>\w+(?=ing)</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">swim</span>ming</span></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">run</span>ning</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Negative Lookahead -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">(?!...)</span>
+          <span class="badge">Negative Lookahead</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Sağından belirtilen gelmemeli.</strong> Eşleşme noktasının sağında verilen desen <em>bulunmamalıdır</em>.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>foo(?!bar)</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">foo</span>XYZ</span><span class="note">bar gelmiyor</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">foobar</span><span class="note">bar geliyor</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">Desen: <code>\b(?!un)\w+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">happy</span></span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">unhappy</span><span class="note">"un" ile başlıyor</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Positive Lookbehind -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">(?&lt;=...)</span>
+          <span class="badge">Positive Lookbehind</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Solundan belirtilen gelmiş olmalı.</strong> Eşleşme noktasının solunda verilen desen mevcut olmalıdır, ama yakalanmaz.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>(?&lt;=\$)\d+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">$<span class="m">500</span></span><span class="note">$ yakalanmaz</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">€500</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">Desen: <code>(?&lt;=\bfoo)\w+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">foo<span class="m">bar</span></span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">barfoo</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Negative Lookbehind -->
+      <div class="ex-card">
+        <div class="ex-card-head">
+          <span class="pattern">(?&lt;!...)</span>
+          <span class="badge">Negative Lookbehind</span>
+        </div>
+        <div class="ex-card-body">
+          <div class="ex-card-desc">
+            <strong>Solundan belirtilen gelmemiş olmalı.</strong> Eşleşme noktasının solunda verilen desen <em>bulunmamalıdır</em>.
+          </div>
+          <div class="ex-block">
+            <div class="ex-block-label">Desen: <code>(?&lt;!\d)\d+</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt">abc<span class="m">123</span></span><span class="note">Başı sayı değil</span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">1234</span><span class="note">Önünde rakam var</span></div>
+          </div>
+          <div class="ex-block" style="margin-top:6px;">
+            <div class="ex-block-label">Desen: <code>(?&lt;!un)\w+happy</code></div>
+            <div class="ex-row"><span class="icon ok">✅</span><span class="txt"><span class="m">happy</span></span></div>
+            <div class="ex-row"><span class="icon no">❌</span><span class="txt">unhappy</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <pre><span class="cmt">// Güçlü şifre doğrulama (tüm lookahead'ler birlikte)</span>
+<span class="typ">string</span> <span class="var">pwPattern</span> = <span class="str">@"^
+    (?=.*[A-Z])          # En az bir büyük harf
+    (?=.*[a-z])          # En az bir küçük harf
+    (?=.*\d)             # En az bir rakam
+    (?=.*[!@#$%^&*])     # En az bir özel karakter
+    .{8,}                # Minimum 8 karakter
+$"</span>;
+<span class="kw">var</span> <span class="var">rx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="var">pwPattern</span>, <span class="typ">RegexOptions</span>.IgnorePatternWhitespace);
+<span class="var">rx</span>.<span class="met">IsMatch</span>(<span class="str">"MyP@ssw0rd"</span>);   <span class="cmt">// true</span>
+<span class="var">rx</span>.<span class="met">IsMatch</span>(<span class="str">"password"</span>);     <span class="cmt">// false (büyük harf yok, özel karakter yok)</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         7. ALTERNASYON
+    ══════════════════════════════ -->
+    <h2 id="alternation">7. Alternasyon (|)</h2>
+
+    <p><code>|</code> operatörü regex'te OR (veya) mantığı gibi çalışır. Motor soldan sağa sırayla dener; ilk eşleşende durur. Bu nedenle sıralama önemlidir.</p>
+
+    <div class="callout callout-warn">
+      <strong>⚠️ Sıralama Kuralı</strong>
+      Alternatiflerin uzundan kısaya doğru sıralanması gerekir. <code>ab|abc</code> yazdığınızda "ab" bulununca durur ve "abc" hiç denenmez. Doğrusu: <code>abc|ab</code>.
+    </div>
+
+    <pre><span class="cmt">// Temel alternasyon</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"cat"</span>, <span class="str">@"cat|dog|bird"</span>);   <span class="cmt">// true</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"fish"</span>, <span class="str">@"cat|dog|bird"</span>);  <span class="cmt">// false</span>
+
+<span class="cmt">// Grupla sınırlı alternasyon</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"color"</span>,  <span class="str">@"colo(?:u|)r"</span>);  <span class="cmt">// true</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"colour"</span>, <span class="str">@"colo(?:u|)r"</span>);  <span class="cmt">// true</span>
+
+<span class="cmt">// Dosya uzantısı doğrulama</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"photo.JPEG"</span>,
+    <span class="str">@"(?i)\.(jpg|jpeg|png|gif|webp|svg)$"</span>);  <span class="cmt">// true</span>
+
+<span class="cmt">// HTTP durum kodları</span>
+<span class="kw">var</span> <span class="var">rx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"^(200|201|204|301|302|400|401|403|404|500)$"</span>);
+<span class="var">rx</span>.<span class="met">IsMatch</span>(<span class="str">"404"</span>);  <span class="cmt">// true</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         8. GERİ REFERANSLAR
+    ══════════════════════════════ -->
+    <h2 id="backrefs">8. Geri Referanslar (Backreferences)</h2>
+
+    <p>Geri referanslar, daha önce yakalanmış bir grubu <strong>aynı metni tekrar eşleştirmek</strong> için kullanır. Belge doğrulama ve tutarlılık kontrollerinde çok güçlüdür.</p>
+
+    <table class="wiki-table">
+      <tr><th>Sözdizim</th><th>Referans Türü</th><th>Örnek</th></tr>
+      <tr><td><code>\1</code>, <code>\2</code>…</td><td>Numaralı grup referansı</td><td><code>(\w+)\s\1</code> → "the the"</td></tr>
+      <tr><td><code>\k&lt;name&gt;</code></td><td>İsimli grup referansı</td><td><code>(?&lt;w&gt;\w+)\s\k&lt;w&gt;</code></td></tr>
+      <tr><td><code>$1</code>, <code>$2</code>…</td><td>Replace içinde numara</td><td><code>Regex.Replace(s, p, "$2-$1")</code></td></tr>
+      <tr><td><code>${name}</code></td><td>Replace içinde isim</td><td><code>Regex.Replace(s, p, "${day}/${month}")</code></td></tr>
+    </table>
+
+    <pre><span class="cmt">// Tekrarlanan kelime bulma</span>
+<span class="kw">var</span> <span class="var">doubled</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"\b(\w+)\s+\1\b"</span>, <span class="typ">RegexOptions</span>.IgnoreCase);
+<span class="var">doubled</span>.<span class="met">IsMatch</span>(<span class="str">"the the"</span>);     <span class="cmt">// true</span>
+<span class="var">doubled</span>.<span class="met">IsMatch</span>(<span class="str">"The THE"</span>);     <span class="cmt">// true (IgnoreCase)</span>
+<span class="var">doubled</span>.<span class="met">IsMatch</span>(<span class="str">"the cat"</span>);     <span class="cmt">// false</span>
+
+<span class="cmt">// HTML eşleşen tag kontrolü — açılış = kapanış</span>
+<span class="typ">string</span> <span class="var">tagPat</span> = <span class="str">@"&lt;(?&lt;tag&gt;\w+)&gt;.*?&lt;/\k&lt;tag&gt;&gt;"</span>;
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"&lt;b&gt;bold&lt;/b&gt;"</span>, <span class="var">tagPat</span>);   <span class="cmt">// true</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"&lt;b&gt;bold&lt;/i&gt;"</span>, <span class="var">tagPat</span>);   <span class="cmt">// false! (b ≠ i)</span>
+
+<span class="cmt">// Tırnak içindeki string eşleştirme (tek veya çift tırnak)</span>
+<span class="typ">string</span> <span class="var">quotePat</span> = <span class="str">@"(['""]).*?\1"</span>;
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"'hello'"</span>, <span class="var">quotePat</span>);  <span class="cmt">// true (tek tırnak)</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"""world"""</span>, <span class="var">quotePat</span>);  <span class="cmt">// true (çift tırnak)</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"'mixed\""</span>, <span class="var">quotePat</span>);  <span class="cmt">// false (farklı tırnak)</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         9. BAYRAKLAR
+    ══════════════════════════════ -->
+    <h2 id="flags">9. Bayraklar (RegexOptions)</h2>
+
+    <table class="wiki-table">
+      <tr><th>Bayrak</th><th>Inline</th><th>Açıklama</th></tr>
+      <tr><td><code>RegexOptions.IgnoreCase</code></td><td><code>(?i)</code></td><td>Büyük/küçük harf duyarsız. "abc" ile "ABC" eşleşir.</td></tr>
+      <tr><td><code>RegexOptions.Multiline</code></td><td><code>(?m)</code></td><td><code>^</code> ve <code>$</code> her satır başı/sonu için çalışır.</td></tr>
+      <tr><td><code>RegexOptions.Singleline</code></td><td><code>(?s)</code></td><td><code>.</code> newline'ı da kapsar.</td></tr>
+      <tr><td><code>RegexOptions.IgnorePatternWhitespace</code></td><td><code>(?x)</code></td><td>Pattern içinde boşluk ve # yorum yazılabilir (okunabilir regex).</td></tr>
+      <tr><td><code>RegexOptions.ExplicitCapture</code></td><td><code>(?n)</code></td><td>Yalnızca <code>(?&lt;name&gt;...)</code> isimli gruplar yakalanır.</td></tr>
+      <tr><td><code>RegexOptions.Compiled</code></td><td>—</td><td>MSIL'e derler; ilk çalıştırma yavaş ama tekrarlarda çok hızlı.</td></tr>
+      <tr><td><code>RegexOptions.RightToLeft</code></td><td>—</td><td>Sağdan sola arar (RTL dil desteği için).</td></tr>
+      <tr><td><code>RegexOptions.CultureInvariant</code></td><td>—</td><td>Kültür bağımsız karşılaştırma. Sunucu-side kod için önerilir.</td></tr>
+      <tr><td><code>RegexOptions.NonBacktracking</code><span class="tag tag-new">.NET 7+</span></td><td>—</td><td>Lineer O(n) zaman garantisi. ReDoS'a karşı tam koruma.</td></tr>
+    </table>
+
+    <pre><span class="cmt">// Birden fazla bayrak birleştirme (| operatörü)</span>
+<span class="kw">var</span> <span class="var">rx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"\bhello\b"</span>,
+    <span class="typ">RegexOptions</span>.IgnoreCase |
+    <span class="typ">RegexOptions</span>.Multiline  |
+    <span class="typ">RegexOptions</span>.Compiled);
+
+<span class="cmt">// IgnorePatternWhitespace ile okunabilir regex</span>
+<span class="kw">var</span> <span class="var">dateRx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"
+    (?&lt;year&gt;  \d{4})   # 4 haneli yıl
+    -                   # ayraç
+    (?&lt;month&gt; \d{2})   # 2 haneli ay
+    -                   # ayraç
+    (?&lt;day&gt;   \d{2})   # 2 haneli gün
+"</span>, <span class="typ">RegexOptions</span>.IgnorePatternWhitespace);
+
+<span class="cmt">// Multiline — her satır başını ^ ile yakala</span>
+<span class="typ">string</span> <span class="var">text</span> = <span class="str">"line1\nline2\nline3"</span>;
+<span class="kw">var</span> <span class="var">starts</span> = <span class="typ">Regex</span>.<span class="met">Matches</span>(<span class="var">text</span>, <span class="str">@"^\w+"</span>, <span class="typ">RegexOptions</span>.Multiline);
+<span class="cmt">// "line1", "line2", "line3"</span>
+
+<span class="cmt">// NonBacktracking — güvenli kullanıcı girdisi için (.NET 7+)</span>
+<span class="kw">var</span> <span class="var">safe</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"^(\w+\s?)*$"</span>, <span class="typ">RegexOptions</span>.NonBacktracking);
+<span class="cmt">// Kötü pattern ama backtracking olmadığı için güvenli</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         10. İSİMLİ GRUPLAR
+    ══════════════════════════════ -->
+    <h2 id="named">10. İsimli Gruplar & Gelişmiş Yakalama</h2>
+
+    <pre><span class="cmt">// E-posta ayrıştırma</span>
+<span class="kw">var</span> <span class="var">emailRx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(
+    <span class="str">@"(?&lt;user&gt;[\w.+-]+)@(?&lt;domain&gt;[\w-]+)\.(?&lt;tld&gt;[a-z]{2,})"</span>,
+    <span class="typ">RegexOptions</span>.IgnoreCase);
+
+<span class="typ">Match</span> <span class="var">m</span> = <span class="var">emailRx</span>.<span class="met">Match</span>(<span class="str">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9dfcf1f4b3ebf8f1f4ddf8e5fcf0edf1f8b3fef2f0b3e9ef">[email&#160;protected]</a>"</span>);
+<span class="var">m</span>.Groups[<span class="str">"user"</span>].Value    <span class="cmt">// "ali.veli"</span>
+<span class="var">m</span>.Groups[<span class="str">"domain"</span>].Value  <span class="cmt">// "example"</span>
+<span class="var">m</span>.Groups[<span class="str">"tld"</span>].Value     <span class="cmt">// "com" (ilk TLD)</span>
+
+<span class="cmt">// Tüm eşleşmeleri anonim nesneye aktarma</span>
+<span class="kw">var</span> <span class="var">logRx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(
+    <span class="str">@"(?&lt;date&gt;\d{4}-\d{2}-\d{2}) (?&lt;level&gt;ERROR|WARN|INFO) (?&lt;msg&gt;.+)"</span>);
+
+<span class="kw">var</span> <span class="var">entries</span> = <span class="typ">Regex</span>.<span class="met">Matches</span>(<span class="var">logText</span>, <span class="var">logRx</span>.ToString())
+    .<span class="met">Select</span>(<span class="var">m</span> => <span class="kw">new</span> {
+        Date    = <span class="var">m</span>.Groups[<span class="str">"date"</span>].Value,
+        Level   = <span class="var">m</span>.Groups[<span class="str">"level"</span>].Value,
+        Message = <span class="var">m</span>.Groups[<span class="str">"msg"</span>].Value
+    });
+
+<span class="cmt">// Conditional group (?( cond )yes|no)</span>
+<span class="cmt">// Koşullu gruplar — grup eşleşmediyse alternatif</span>
+<span class="typ">string</span> <span class="var">condPat</span> = <span class="str">@"(?&lt;open&gt;\()?\d+(?(open)\)|)"</span>;
+<span class="cmt">// Parantez açıldıysa kapatılmalı: (123) ya da 123</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         11. REPLACE
+    ══════════════════════════════ -->
+    <h2 id="replace">11. Replace & MatchEvaluator</h2>
+
+    <table class="wiki-table">
+      <tr><th>Replace İfadesi</th><th>Açıklama</th><th>Örnek</th></tr>
+      <tr><td><code>$0</code></td><td>Tüm eşleşme</td><td><code>"[$0]"</code> → "[eşleşme]"</td></tr>
+      <tr><td><code>$1</code>, <code>$2</code>…</td><td>Numaralı grup</td><td><code>"$2-$1"</code></td></tr>
+      <tr><td><code>${name}</code></td><td>İsimli grup</td><td><code>"${day}/${month}/${year}"</code></td></tr>
+      <tr><td><code>$`</code></td><td>Eşleşmeden önceki metin</td><td>Nadiren kullanılır</td></tr>
+      <tr><td><code>$'</code></td><td>Eşleşmeden sonraki metin</td><td>Nadiren kullanılır</td></tr>
+      <tr><td><code>$$</code></td><td>Literal $ işareti</td><td><code>"$$"</code> → "$"</td></tr>
+    </table>
+
+    <pre><span class="cmt">// Tarih formatı değiştirme (YYYY-MM-DD → DD/MM/YYYY)</span>
+<span class="typ">string</span> <span class="var">r1</span> = <span class="typ">Regex</span>.<span class="met">Replace</span>(
+    <span class="str">"Tarih: 2024-03-28"</span>,
+    <span class="str">@"(?&lt;y&gt;\d{4})-(?&lt;m&gt;\d{2})-(?&lt;d&gt;\d{2})"</span>,
+    <span class="str">"${d}/${m}/${y}"</span>);
+<span class="cmt">// "Tarih: 28/03/2024"</span>
+
+<span class="cmt">// MatchEvaluator ile dinamik değiştirme</span>
+<span class="typ">string</span> <span class="var">text</span> = <span class="str">"kargo: 150 TL, vergi: 30 TL"</span>;
+<span class="typ">string</span> <span class="var">doubled</span> = <span class="typ">Regex</span>.<span class="met">Replace</span>(<span class="var">text</span>, <span class="str">@"\d+"</span>, <span class="var">m</span> => {
+    <span class="typ">int</span> <span class="var">val</span> = <span class="typ">int</span>.<span class="met">Parse</span>(<span class="var">m</span>.Value);
+    <span class="kw">return</span> (<span class="var">val</span> * <span class="num">2</span>).ToString();
+});
+<span class="cmt">// "kargo: 300 TL, vergi: 60 TL"</span>
+
+<span class="cmt">// CamelCase'i snake_case'e çevirme</span>
+<span class="typ">string</span> <span class="var">snake</span> = <span class="typ">Regex</span>.<span class="met">Replace</span>(<span class="str">"helloWorldFooBar"</span>,
+    <span class="str">@"(?&lt;=[a-z])(?=[A-Z])"</span>, <span class="str">"_"</span>).<span class="met">ToLower</span>();
+<span class="cmt">// "hello_world_foo_bar"</span>
+
+<span class="cmt">// Markdown bold → HTML</span>
+<span class="typ">string</span> <span class="var">html</span> = <span class="typ">Regex</span>.<span class="met">Replace</span>(<span class="str">"**bold text**"</span>,
+    <span class="str">@"\*\*(.+?)\*\*"</span>, <span class="str">"&lt;strong&gt;$1&lt;/strong&gt;"</span>);
+<span class="cmt">// "&lt;strong&gt;bold text&lt;/strong&gt;"</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         12. ATOMIC
+    ══════════════════════════════ -->
+    <h2 id="atomic">12. Atomic Gruplar (?&gt;...)</h2>
+
+    <p>Atomic gruplar, motor bir kez eşleştikten sonra o kısma geri dönmesini (backtrack) engeller. Bu hem performansı artırır hem de istenmeyen backtracking davranışlarını önler.</p>
+
+    <pre><span class="cmt">// Normal grup — backtracking yapar</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"aab"</span>, <span class="str">@"(a+)b"</span>);
+<span class="cmt">// (a+) önce "aa" alır, b bulamaz, backtrack: "a" alır, b bulur → true</span>
+
+<span class="cmt">// Atomic grup — backtracking yapmaz</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"aab"</span>, <span class="str">@"(?&gt;a+)b"</span>);
+<span class="cmt">// (?&gt;a+) "aa" alır, b bulamaz, backtrack YAPMAZ → false</span>
+
+<span class="cmt">// Pratik: Anahtar kelime ardından zorunlu token</span>
+<span class="typ">string</span> <span class="var">pat</span> = <span class="str">@"(?&gt;\w+)\s*="</span>;
+<span class="cmt">// Kelimeyi bir bütün olarak alır, sonra = arar; daha hızlı</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         13. BALANCING
+    ══════════════════════════════ -->
+    <h2 id="balancing">13. Balancing Gruplar <span class="tag tag-adv">İleri Düzey</span></h2>
+
+    <p>.NET regex motorunun kendine özgü özelliğidir. İç içe geçmiş yapıları (parantezler, etiketler) saymak ve dengelemek için kullanılır. Diğer regex motorlarında yoktur.</p>
+
+    <pre><span class="cmt">// Dengeli parantezleri eşleştirme</span>
+<span class="typ">string</span> <span class="var">balanced</span> = <span class="str">@"
+    ^                   # Baştan başla
+    [^()]*              # Parantez olmayan karakterler
+    (?:
+        (?&lt;open&gt; \()    # Açılan parantez → stack'e ekle
+        [^()]*
+        |
+        (?&lt;-open&gt; \))   # Kapanan parantez → stack'ten çıkar
+        [^()]*
+    )*
+    (?(open)(?!))       # Stack boş olmalı (hâlâ açık parantez var mı?)
+    $                   # Sona kadar
+"</span>;
+
+<span class="kw">var</span> <span class="var">rx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="var">balanced</span>, <span class="typ">RegexOptions</span>.IgnorePatternWhitespace);
+<span class="var">rx</span>.<span class="met">IsMatch</span>(<span class="str">"(a(b)c)"</span>);    <span class="cmt">// true  — dengeli</span>
+<span class="var">rx</span>.<span class="met">IsMatch</span>(<span class="str">"(a(b)c"</span>);     <span class="cmt">// false — açık parantez var</span>
+<span class="var">rx</span>.<span class="met">IsMatch</span>(<span class="str">"a)b(c"</span>);      <span class="cmt">// false — önce kapanış</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         14. PERFORMANS
+    ══════════════════════════════ -->
+    <h2 id="performance">14. Performans & ReDoS</h2>
+
+    <div class="callout callout-danger">
+      <strong>🚨 ReDoS (Regular Expression Denial of Service)</strong>
+      Kötü yazılmış regex'ler, özellikle iç içe niceleyiciler içerenler, üstel sürede çalışabilir ve uygulamayı durdurabilir. Kullanıcı girdisi üzerinde regex çalıştırırken mutlaka timeout belirleyin veya .NET 7+'da <code>NonBacktracking</code> kullanın.
+    </div>
+
+    <table class="wiki-table">
+      <tr><th>Yöntem</th><th>Ne Zaman?</th><th>Fayda</th></tr>
+      <tr><td><code>Regex.Compiled</code></td><td>Sık kullanılan pattern'ler</td><td>İlk derleme yavaş, tekrar hızlı</td></tr>
+      <tr><td><code>[GeneratedRegex]</code> <span class="tag tag-new">.NET 7+</span></td><td>Compile-time bilinen pattern'ler</td><td>En hızlı; zero-overhead</td></tr>
+      <tr><td><code>NonBacktracking</code> <span class="tag tag-new">.NET 7+</span></td><td>Kullanıcı girdisi, güvenlik</td><td>O(n) garantili, ReDoS imkânsız</td></tr>
+      <tr><td>Timeout ayarlama</td><td>Herkese açık servisler</td><td>ReDoS'u sınırlar</td></tr>
+      <tr><td>Atomic grup <code>(?&gt;...)</code></td><td>Backtracking darboğazı</td><td>Gereksiz backtrack'i önler</td></tr>
+      <tr><td>Statik <code>Regex.IsMatch</code></td><td>Nadiren kullanılan pattern</td><td>Basit ama cache kullanır</td></tr>
+    </table>
+
+    <pre><span class="cmt">// ❌ KÖTÜ — ReDoS'a açık iç içe niceleyici</span>
+<span class="kw">var</span> <span class="var">bad</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"^(\w+\s*)*$"</span>);
+
+<span class="cmt">// ✅ İYİ — Atomic grupla korunan</span>
+<span class="kw">var</span> <span class="var">good1</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"^(?&gt;\w+\s*)*$"</span>);
+
+<span class="cmt">// ✅ İYİ — NonBacktracking modu (.NET 7+)</span>
+<span class="kw">var</span> <span class="var">good2</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"^(\w+\s*)*$"</span>, <span class="typ">RegexOptions</span>.NonBacktracking);
+
+<span class="cmt">// ✅ İYİ — Source Generator (.NET 7+)</span>
+[<span class="ann">GeneratedRegex</span>(<span class="str">@"\d{4}-\d{2}-\d{2}"</span>)]
+<span class="kw">private static partial</span> <span class="typ">Regex</span> <span class="met">DatePattern</span>();
+
+<span class="cmt">// ✅ İYİ — Timeout ile güvenli kullanım</span>
+<span class="kw">try</span> {
+    <span class="kw">var</span> <span class="var">rx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="var">userPattern</span>, <span class="typ">RegexOptions</span>.None,
+        <span class="typ">TimeSpan</span>.<span class="met">FromMilliseconds</span>(<span class="num">500</span>));
+    <span class="var">rx</span>.<span class="met">IsMatch</span>(<span class="var">userInput</span>);
+} <span class="kw">catch</span> (<span class="typ">RegexMatchTimeoutException</span>) {
+    <span class="cmt">// Timeout aşıldı</span>
+}</pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         15. HAZIR DESENLER
+    ══════════════════════════════ -->
+    <h2 id="patterns">15. Hazır & Yararlı Desenler</h2>
+
+    <h3>E-posta Adresi</h3>
+    <pre><span class="cmt">// RFC 5322 uyumlu basit versiyon</span>
+<span class="kw">const string</span> <span class="var">Email</span> = <span class="str">@"^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"</span>;
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8afff9eff8caeff2ebe7fae6efa4e9e5e7">[email&#160;protected]</a>"</span>, <span class="var">Email</span>);  <span class="cmt">// true</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"user@"</span>, <span class="var">Email</span>);             <span class="cmt">// false</span></pre>
+
+    <h3>Türkiye Cep Telefonu</h3>
+    <pre><span class="cmt">// +90 ile başlayan, 0 ile başlayan veya direkt 5xx</span>
+<span class="kw">const string</span> <span class="var">TrPhone</span> = <span class="str">@"^(\+90|0)?[5][0-9]{9}$"</span>;
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"+905321234567"</span>, <span class="var">TrPhone</span>);  <span class="cmt">// true</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"05321234567"</span>, <span class="var">TrPhone</span>);    <span class="cmt">// true</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"5321234567"</span>, <span class="var">TrPhone</span>);     <span class="cmt">// true</span></pre>
+
+    <h3>TC Kimlik Numarası</h3>
+    <pre><span class="cmt">// 11 hane, ilk hane 0 olamaz</span>
+<span class="kw">const string</span> <span class="var">TCKN</span> = <span class="str">@"^[1-9]\d{10}$"</span>;
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"12345678901"</span>, <span class="var">TCKN</span>);  <span class="cmt">// true</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"01234567890"</span>, <span class="var">TCKN</span>);  <span class="cmt">// false (0 ile başlıyor)</span></pre>
+
+    <h3>URL (http/https)</h3>
+    <pre><span class="kw">const string</span> <span class="var">Url</span> = <span class="str">@"^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)$"</span>;</pre>
+
+    <h3>IPv4 Adresi</h3>
+    <pre><span class="kw">const string</span> <span class="var">IPv4</span> = <span class="str">@"^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$"</span>;
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"192.168.1.1"</span>, <span class="var">IPv4</span>);  <span class="cmt">// true</span>
+<span class="typ">Regex</span>.<span class="met">IsMatch</span>(<span class="str">"999.0.0.1"</span>, <span class="var">IPv4</span>);    <span class="cmt">// false</span></pre>
+
+    <h3>Güçlü Şifre</h3>
+    <pre><span class="cmt">// Büyük + küçük harf + rakam + özel karakter + min 8 karakter</span>
+<span class="kw">const string</span> <span class="var">StrongPw</span> = <span class="str">@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$"</span>;</pre>
+
+    <h3>HEX Renk Kodu</h3>
+    <pre><span class="kw">const string</span> <span class="var">HexColor</span> = <span class="str">@"^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$"</span>;
+<span class="cmt">// #fff, #FFFFFF, #FFFFFF80 (alfa kanallı)</span></pre>
+
+    <h3>IBAN (Türkiye)</h3>
+    <pre><span class="kw">const string</span> <span class="var">TrIBAN</span> = <span class="str">@"^TR\d{2}[0-9]{5}[0-9]{17}$"</span>;</pre>
+
+    <h3>Tekrarlayan Kelime Tespiti</h3>
+    <pre><span class="kw">var</span> <span class="var">dup</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"\b(\w+)\s+\1\b"</span>, <span class="typ">RegexOptions</span>.IgnoreCase);
+<span class="typ">string</span> <span class="var">clean</span> = <span class="var">dup</span>.<span class="met">Replace</span>(<span class="str">"bu bu bir bir test"</span>, <span class="str">"$1"</span>);
+<span class="cmt">// "bu bir test"</span></pre>
+
+    <h3>CamelCase ↔ snake_case Dönüşümü</h3>
+    <pre><span class="cmt">// camelCase → snake_case</span>
+<span class="typ">string</span> <span class="var">ToSnake</span>(<span class="typ">string</span> <span class="var">s</span>) =>
+    <span class="typ">Regex</span>.<span class="met">Replace</span>(<span class="var">s</span>, <span class="str">@"(?&lt;=[a-z])(?=[A-Z])|(?&lt;=[A-Z])(?=[A-Z][a-z])"</span>, <span class="str">"_"</span>).<span class="met">ToLower</span>();
+
+<span class="met">ToSnake</span>(<span class="str">"helloWorldFooBar"</span>);   <span class="cmt">// "hello_world_foo_bar"</span>
+<span class="met">ToSnake</span>(<span class="str">"XMLParser"</span>);          <span class="cmt">// "xml_parser"</span></pre>
+
+    <h3>Log Satırı Ayrıştırma</h3>
+    <pre><span class="typ">string</span> <span class="var">logLine</span> = <span class="str">"2024-03-28 14:22:05 ERROR [Database] Connection timeout"</span>;
+<span class="kw">var</span> <span class="var">logRx</span> = <span class="kw">new</span> <span class="typ">Regex</span>(<span class="str">@"
+    (?&lt;date&gt;\d{4}-\d{2}-\d{2})
+    \s+
+    (?&lt;time&gt;\d{2}:\d{2}:\d{2})
+    \s+
+    (?&lt;level&gt;ERROR|WARN|INFO|DEBUG)
+    \s+
+    \[(?&lt;component&gt;[^\]]+)\]
+    \s+
+    (?&lt;message&gt;.+)
+"</span>, <span class="typ">RegexOptions</span>.IgnorePatternWhitespace);
+
+<span class="typ">Match</span> <span class="var">lm</span> = <span class="var">logRx</span>.<span class="met">Match</span>(<span class="var">logLine</span>);
+<span class="cmt">// date:      "2024-03-28"</span>
+<span class="cmt">// time:      "14:22:05"</span>
+<span class="cmt">// level:     "ERROR"</span>
+<span class="cmt">// component: "Database"</span>
+<span class="cmt">// message:   "Connection timeout"</span></pre>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         16. CANLI TEST
+    ══════════════════════════════ -->
+    <h2 id="tester">16. Canlı Test Aracı</h2>
+
+    <div class="demo-widget">
+      <div class="demo-widget-head">
+        🧪 Regex Test Sandbox
+        <span style="font-size:11px;font-weight:400;color:var(--text-muted);margin-left:auto;">JavaScript motoru (C# davranışına benzer)</span>
+      </div>
+      <div class="demo-widget-body">
+        <div style="margin-bottom:8px;">
+          <div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:4px;">Hızlı Ekle:</div>
+          <div class="quick-insert">
+            <button class="qi-btn" onclick="qi('\\w+')">\w+</button>
+            <button class="qi-btn" onclick="qi('\\W+')">\W+</button>
+            <button class="qi-btn" onclick="qi('\\d+')">\d+</button>
+            <button class="qi-btn" onclick="qi('\\D+')">\D+</button>
+            <button class="qi-btn" onclick="qi('\\s+')">\s+</button>
+            <button class="qi-btn" onclick="qi('\\S+')">\S+</button>
+            <button class="qi-btn" onclick="qi('\\b\\w+\\b')">\b\w+\b</button>
+            <button class="qi-btn" onclick="qi('^\\w+')">^\w+</button>
+            <button class="qi-btn" onclick="qi('\\w+$')">\w+$</button>
+            <button class="qi-btn" onclick="qi('\\d{4}-\\d{2}-\\d{2}')">\d{4}-\d{2}-\d{2}</button>
+            <button class="qi-btn" onclick="qi('(?i)hello')">(?i)hello</button>
+            <button class="qi-btn" onclick="qi('(?=.*\\d).{6,}')">Şifre</button>
+            <button class="qi-btn" onclick="qi('[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}')">E-posta</button>
+          </div>
+        </div>
+
+        <div class="demo-field">
+          <label>Desen (Regex)</label>
+          <input type="text" id="demoPattern" value="\b\w+\b" placeholder="Regex pattern...">
+        </div>
+
+        <div class="demo-options">
+          <label class="demo-option"><input type="checkbox" id="flagI"> i (büyük/küçük duyarsız)</label>
+          <label class="demo-option"><input type="checkbox" id="flagM"> m (multiline)</label>
+          <label class="demo-option"><input type="checkbox" id="flagS"> s (singleline)</label>
+        </div>
+
+        <div class="demo-field">
+          <label>Test Metni</label>
+          <input type="text" id="demoText" value="Merhaba dünya! C# regex çok güçlü bir araçtır." placeholder="Test metni...">
+        </div>
+
+        <div class="demo-field">
+          <label>Mod</label>
+          <select id="demoMode">
+            <option value="all" selected>Tüm Eşleşmeler (Matches)</option>
+            <option value="first">İlk Eşleşme (Match)</option>
+            <option value="test">Eşleşiyor mu? (IsMatch)</option>
+            <option value="split">Böl (Split)</option>
+            <option value="replace">Değiştir (Replace)</option>
+          </select>
+        </div>
+
+        <div id="replaceField" style="display:none;" class="demo-field">
+          <label>Değiştirme</label>
+          <input type="text" id="demoReplace" value="[$0]" placeholder="Değiştirme metni...">
+        </div>
+
+        <div class="demo-btn-row">
+          <button class="demo-btn demo-btn-primary" onclick="runDemo()">▶ Çalıştır</button>
+          <button class="demo-btn demo-btn-secondary" onclick="clearDemo()">✕ Temizle</button>
+        </div>
+
+        <div class="demo-result" id="demoResult">
+          <span style="color:var(--text-muted);font-size:12.5px;">Bir desen ve metin girerek "Çalıştır"a basın.</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-rule">
+
+    <!-- ══════════════════════════════
+         17. CHEAT SHEET
+    ══════════════════════════════ -->
+    <h2 id="cheatsheet">17. Cheat Sheet — Tam Özet Tablo</h2>
+
+    <h3>Karakter Kısaltmaları</h3>
+    <table class="wiki-table">
+      <tr><th>Sembol</th><th>Açıklama</th><th>Eşdeğer</th><th>Örnek Eşleşme</th></tr>
+      <tr><td><code>\w</code></td><td>Kelime karakteri</td><td><code>[a-zA-Z0-9_]</code></td><td>a, Z, 5, _</td></tr>
+      <tr><td><code>\W</code></td><td>Kelime dışı</td><td><code>[^\w]</code></td><td>!, @, boşluk</td></tr>
+      <tr><td><code>\d</code></td><td>Rakam</td><td><code>[0-9]</code></td><td>0–9</td></tr>
+      <tr><td><code>\D</code></td><td>Rakam dışı</td><td><code>[^\d]</code></td><td>a, !, boşluk</td></tr>
+      <tr><td><code>\s</code></td><td>Boşluk</td><td><code>[ \t\n\r\f\v]</code></td><td>space, tab, newline</td></tr>
+      <tr><td><code>\S</code></td><td>Boşluk dışı</td><td><code>[^\s]</code></td><td>a, 1, !</td></tr>
+      <tr><td><code>.</code></td><td>Newline hariç her şey</td><td><code>[^\n]</code></td><td>a, 1, ! (ama \n değil)</td></tr>
+      <tr><td><code>\n</code></td><td>Newline</td><td>—</td><td>satır sonu</td></tr>
+      <tr><td><code>\t</code></td><td>Tab</td><td>—</td><td>sekme karakteri</td></tr>
+      <tr><td><code>\r</code></td><td>Carriage return</td><td>—</td><td>\r\n Windows satır sonu</td></tr>
+      <tr><td><code>\uXXXX</code></td><td>Unicode karakter</td><td>—</td><td>\u0130 = İ</td></tr>
+    </table>
+
+    <h3>Çapalar (Anchors)</h3>
+    <table class="wiki-table">
+      <tr><th>Sembol</th><th>Açıklama</th><th>Multiline Davranışı</th></tr>
+      <tr><td><code>^</code></td><td>Başlangıç</td><td>Her satır başı</td></tr>
+      <tr><td><code>$</code></td><td>Bitiş</td><td>Her satır sonu</td></tr>
+      <tr><td><code>\b</code></td><td>Kelime sınırı</td><td>Etkilenmez</td></tr>
+      <tr><td><code>\B</code></td><td>Kelime sınırı değil</td><td>Etkilenmez</td></tr>
+      <tr><td><code>\A</code></td><td>String mutlak başı</td><td>Etkilenmez</td></tr>
+      <tr><td><code>\Z</code></td><td>String sonu (son \n öncesi de)</td><td>Etkilenmez</td></tr>
+      <tr><td><code>\z</code></td><td>String mutlak sonu</td><td>Etkilenmez</td></tr>
+      <tr><td><code>\G</code></td><td>Önceki eşleşme sonu</td><td>Etkilenmez</td></tr>
+    </table>
+
+    <h3>Niceleyiciler</h3>
+    <table class="wiki-table">
+      <tr><th>Greedy</th><th>Lazy</th><th>Açıklama</th></tr>
+      <tr><td><code>*</code></td><td><code>*?</code></td><td>0 veya daha fazla</td></tr>
+      <tr><td><code>+</code></td><td><code>+?</code></td><td>1 veya daha fazla</td></tr>
+      <tr><td><code>?</code></td><td><code>??</code></td><td>0 veya 1 (opsiyonel)</td></tr>
+      <tr><td><code>{n}</code></td><td>—</td><td>Tam n kez</td></tr>
+      <tr><td><code>{n,}</code></td><td><code>{n,}?</code></td><td>En az n kez</td></tr>
+      <tr><td><code>{n,m}</code></td><td><code>{n,m}?</code></td><td>n ile m arasında</td></tr>
+    </table>
+
+    <h3>Gruplar & Lookaround</h3>
+    <table class="wiki-table">
+      <tr><th>Sözdizim</th><th>Tür</th><th>Açıklama</th></tr>
+      <tr><td><code>(...)</code></td><td>Yakalama grubu</td><td>Groups[1], [2]…</td></tr>
+      <tr><td><code>(?:...)</code></td><td>Non-capturing</td><td>Gruplar ama kaydetmez</td></tr>
+      <tr><td><code>(?&lt;name&gt;...)</code></td><td>İsimli grup</td><td>Groups["name"]</td></tr>
+      <tr><td><code>(?&gt;...)</code></td><td>Atomic grup</td><td>Backtracking yok</td></tr>
+      <tr><td><code>(?=...)</code></td><td>Positive lookahead</td><td>Sağı kontrol, yakalamaz</td></tr>
+      <tr><td><code>(?!...)</code></td><td>Negative lookahead</td><td>Sağı kontrol (olumsuz)</td></tr>
+      <tr><td><code>(?&lt;=...)</code></td><td>Positive lookbehind</td><td>Solu kontrol, yakalamaz</td></tr>
+      <tr><td><code>(?&lt;!...)</code></td><td>Negative lookbehind</td><td>Solu kontrol (olumsuz)</td></tr>
+      <tr><td><code>\1</code>, <code>\2</code></td><td>Geri referans (sayı)</td><td>Önceki grubu tekrar eşleştir</td></tr>
+      <tr><td><code>\k&lt;name&gt;</code></td><td>Geri referans (isim)</td><td>İsimli grubu tekrar eşleştir</td></tr>
+      <tr><td><code>(?(cond)yes|no)</code></td><td>Koşullu grup</td><td>Grup eşleştiyse yes, değilse no</td></tr>
+    </table>
+
+    <h3>Özel Karakterler (Escape Gerekenler)</h3>
+    <table class="wiki-table">
+      <tr><th>Karakter</th><th>Kaçış</th><th>Anlamı (kaçmadan)</th></tr>
+      <tr><td><code>.</code></td><td><code>\.</code></td><td>Herhangi bir karakter</td></tr>
+      <tr><td><code>*</code></td><td><code>\*</code></td><td>Niceleyici (0+)</td></tr>
+      <tr><td><code>+</code></td><td><code>\+</code></td><td>Niceleyici (1+)</td></tr>
+      <tr><td><code>?</code></td><td><code>\?</code></td><td>Opsiyonel / lazy</td></tr>
+      <tr><td><code>(</code> <code>)</code></td><td><code>\(</code> <code>\)</code></td><td>Grup başlangıç/bitiş</td></tr>
+      <tr><td><code>[</code> <code>]</code></td><td><code>\[</code> <code>\]</code></td><td>Karakter sınıfı</td></tr>
+      <tr><td><code>{</code> <code>}</code></td><td><code>\{</code> <code>\}</code></td><td>Niceleyici sınırı</td></tr>
+      <tr><td><code>^</code></td><td><code>\^</code></td><td>Başlangıç / olumsuz sınıf</td></tr>
+      <tr><td><code>$</code></td><td><code>\$</code></td><td>Bitiş</td></tr>
+      <tr><td><code>|</code></td><td><code>\|</code></td><td>Alternasyon</td></tr>
+      <tr><td><code>\</code></td><td><code>\\</code></td><td>Kaçış karakteri</td></tr>
+    </table>
+
+    <div class="callout callout-tip">
+      <strong>💡 Otomatik Escape</strong>
+      Bir string'i regex içinde literal olarak kullanmak istiyorsanız <code>Regex.Escape(str)</code> metodunu kullanın. Bu, tüm özel karakterleri otomatik olarak escape'ler.
+    </div>
+
+    <hr class="section-rule">
+    <p style="font-size:12px;color:var(--text-muted);font-family:'Linux Biolinum',sans-serif;text-align:center;padding:8px 0 0;">
+      Bu sayfa <a href="#intro">C# System.Text.RegularExpressions</a> referansı olarak hazırlanmıştır. &nbsp;·&nbsp; .NET 6 / 7 / 8 / 9 &nbsp;·&nbsp; C# 10+
+    </p>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer class="wiki-footer">
+  <p>C# Regex Wiki — Kapsamlı Referans Kılavuzu &nbsp;·&nbsp; <code>System.Text.RegularExpressions</code> &nbsp;·&nbsp; .NET 6+</p>
+  <p style="margin-top:4px;">Tüm örnekler C# ile doğrulanmıştır. Canlı test aracı JavaScript motoru kullanmaktadır (davranış C# ile büyük ölçüde aynıdır).</p>
+</footer>
+
+<!-- ══════════════════════════════
+     JAVASCRIPT
+══════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── TOC Toggle ──
+function toggleToc() {
+  const list = document.getElementById('tocList');
+  const btn = document.querySelector('.toc-toggle');
+  if (list.style.display === 'none') {
+    list.style.display = '';
+    btn.textContent = '[gizle]';
+  } else {
+    list.style.display = 'none';
+    btn.textContent = '[göster]';
+  }
+}
+
+// ── Active sidebar link on scroll ──
+const sideLinks = document.querySelectorAll('.sidebar-link[href^="#"]');
+const sections  = [];
+
+sideLinks.forEach(a => {
+  const id = a.getAttribute('href').slice(1);
+  const el = document.getElementById(id);
+  if (el) sections.push({ el, a });
+});
+
+window.addEventListener('scroll', () => {
+  const y = window.scrollY + 120;
+  let active = null;
+  for (const { el, a } of sections) {
+    if (el.offsetTop <= y) active = a;
+  }
+  sideLinks.forEach(a => a.classList.remove('active'));
+  if (active) active.classList.add('active');
+}, { passive: true });
+
+// ── Quick Insert ──
+function qi(p) {
+  document.getElementById('demoPattern').value = p;
+  runDemo();
+}
+
+// ── Mode toggle ──
+document.getElementById('demoMode').addEventListener('change', function () {
+  document.getElementById('replaceField').style.display =
+    this.value === 'replace' ? 'flex' : 'none';
+});
+
+// ── Demo Run ──
+function runDemo() {
+  const patternRaw = document.getElementById('demoPattern').value;
+  const text       = document.getElementById('demoText').value;
+  const mode       = document.getElementById('demoMode').value;
+  const replaceStr = document.getElementById('demoReplace').value;
+  const result     = document.getElementById('demoResult');
+
+  let flags = 'g';
+  if (document.getElementById('flagI').checked) flags += 'i';
+  if (document.getElementById('flagM').checked) flags += 'm';
+  if (document.getElementById('flagS').checked) flags += 's';
+
+  try {
+    const rx = new RegExp(patternRaw, flags);
+    const rx1 = new RegExp(patternRaw, flags.replace('g',''));
+
+    if (mode === 'test') {
+      const ok = rx1.test(text);
+      result.innerHTML = ok
+        ? `<span class="result-ok">✅ true — Eşleşme BULUNDU</span>`
+        : `<span class="result-none">❌ false — Eşleşme bulunamadı</span>`;
+      return;
+    }
+
+    if (mode === 'split') {
+      const parts = text.split(rx);
+      result.innerHTML = `<span class="result-ok">📋 ${parts.length} parça:</span><br>` +
+        parts.map((p,i) => `<div class="demo-match-item">[${i}]: <span style="color:#333">${escH(p)}</span></div>`).join('');
+      return;
+    }
+
+    if (mode === 'replace') {
+      const replaced = text.replace(rx, replaceStr);
+      result.innerHTML = `<span class="result-ok">✏️ Sonuç:</span><br>
+        <div class="demo-match-item" style="font-family:'Source Code Pro',monospace;">${escH(replaced)}</div>`;
+      return;
+    }
+
+    if (mode === 'first') {
+      const m = text.match(rx1);
+      if (!m) { result.innerHTML = `<span class="result-none">❌ Eşleşme bulunamadı</span>`; return; }
+      let out = `<span class="result-ok">✅ İlk eşleşme bulundu</span><br>`;
+      out += `<div class="demo-match-item">Değer: <span style="background:#ffe082;padding:0 3px;">${escH(m[0])}</span> <span style="color:var(--text-muted);font-size:11px;">uzunluk: ${m[0].length}</span></div>`;
+      if (m.length > 1) {
+        out += `<div style="margin-top:6px;font-size:12px;font-weight:700;color:var(--text-muted);">Gruplar:</div>`;
+        for (let i = 1; i < m.length; i++) {
+          out += `<div class="demo-match-item"><span style="color:var(--text-muted);">$${i}:</span> <span style="background:#b3e5fc;padding:0 3px;">${escH(m[i] ?? '(boş)')}</span></div>`;
+        }
+      }
+      result.innerHTML = out;
+      return;
+    }
+
+    // all matches
+    const matches = [...text.matchAll(new RegExp(patternRaw, flags))];
+    if (!matches.length) {
+      result.innerHTML = `<span class="result-none">❌ Eşleşme bulunamadı</span>`;
+      return;
+    }
+
+    // Highlight text
+    let highlighted = escH(text);
+    try {
+      const rxHL = new RegExp(patternRaw, flags);
+      highlighted = escH(text).replace(new RegExp(escRegex(patternRaw), flags),
+        s => `<span style="background:#ffe082;border-radius:2px;padding:0 2px;font-weight:700;">${s}</span>`);
+    } catch(e) {}
+
+    let out = `<span class="result-ok">✅ ${matches.length} eşleşme bulundu</span><br>`;
+    out += `<div class="demo-match-line" style="margin:8px 0;padding:6px 8px;background:var(--bg);border:1px solid var(--border-light);">${highlighted}</div>`;
+
+    matches.forEach((m, i) => {
+      out += `<div class="demo-match-item">
+        <span style="color:var(--text-muted);font-size:11px;">#${i+1} @${m.index}</span>
+        <span style="margin-left:8px;background:#ffe082;padding:0 4px;">${escH(m[0])}</span>`;
+      if (m.length > 1) {
+        out += ` <span style="color:var(--text-muted);font-size:11px;margin-left:4px;">gruplar:`;
+        for (let g = 1; g < m.length; g++) {
+          out += ` $${g}=<span style="background:#b3e5fc;padding:0 2px;">${escH(m[g] ?? '?')}</span>`;
+        }
+        out += `</span>`;
+      }
+      out += `</div>`;
+    });
+
+    result.innerHTML = out;
+
+  } catch (e) {
+    result.innerHTML = `<span class="result-err">⚠️ Geçersiz regex: ${escH(e.message)}</span>`;
+  }
+}
+
+function clearDemo() {
+  document.getElementById('demoPattern').value = '';
+  document.getElementById('demoText').value = '';
+  document.getElementById('demoResult').innerHTML = '<span style="color:var(--text-muted);font-size:12.5px;">Temizlendi.</span>';
+}
+
+function escH(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+}
+
+// ── Site Search ──
+const searchIndex = [
+  { t: 'Çapalar — ^ $ \\b \\B \\A \\Z \\G', id: 'anchors' },
+  { t: '\\w kelime karakteri — word character', id: 'shorthand' },
+  { t: '\\W kelime dışı karakter', id: 'shorthand' },
+  { t: '\\d rakam digit', id: 'shorthand' },
+  { t: '\\D rakam dışı', id: 'shorthand' },
+  { t: '\\s boşluk whitespace', id: 'shorthand' },
+  { t: '\\S boşluk dışı', id: 'shorthand' },
+  { t: '. nokta wildcard', id: 'shorthand' },
+  { t: 'Niceleyiciler * + ? {n} greedy lazy', id: 'quantifiers' },
+  { t: 'Greedy vs Lazy açgözlü tembel', id: 'greedy-lazy' },
+  { t: 'Gruplar yakalama capturing group', id: 'groups' },
+  { t: 'Non-capturing grup (?:)', id: 'groups' },
+  { t: 'Lookahead (?=) (?!) positive negative', id: 'lookaround' },
+  { t: 'Lookbehind (?<=) (?<!) positive negative', id: 'lookaround' },
+  { t: 'Alternasyon | or veya', id: 'alternation' },
+  { t: 'Geri referans backreference \\1 \\k<name>', id: 'backrefs' },
+  { t: 'Bayraklar RegexOptions IgnoreCase Multiline Compiled', id: 'flags' },
+  { t: 'İsimli gruplar named groups (?<name>)', id: 'named' },
+  { t: 'Replace MatchEvaluator değiştirme', id: 'replace' },
+  { t: 'Atomic grup (?>) backtracking', id: 'atomic' },
+  { t: 'Balancing grup dengeli parantez', id: 'balancing' },
+  { t: 'Performans ReDoS NonBacktracking', id: 'performance' },
+  { t: 'Hazır desenler email telefon URL IPv4 şifre', id: 'patterns' },
+  { t: 'E-posta doğrulama email validation', id: 'patterns' },
+  { t: 'Telefon numarası Türkiye cep', id: 'patterns' },
+  { t: 'TC Kimlik TCKN', id: 'patterns' },
+  { t: 'Canlı test sandbox', id: 'tester' },
+  { t: 'Cheat Sheet özet tablo hızlı başvuru', id: 'cheatsheet' },
+];
+
+function siteSearch(q) {
+  const box = document.getElementById('searchResults');
+  if (!q || q.length < 2) { box.style.display = 'none'; return; }
+  const ql = q.toLowerCase();
+  const hits = searchIndex.filter(x => x.t.toLowerCase().includes(ql)).slice(0, 8);
+  if (!hits.length) { box.style.display = 'none'; return; }
+  box.innerHTML = hits.map(h =>
+    `<a href="#${h.id}" onclick="document.getElementById('searchResults').style.display='none'"
+       style="display:block;padding:6px 12px;font-family:'Linux Biolinum',sans-serif;font-size:12.5px;color:var(--link);border-bottom:1px solid var(--border-light);">
+      ${escH(h.t.split(' — ')[0])}
+     </a>`
+  ).join('');
+  box.style.display = 'block';
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.wiki-search-bar'))
+    document.getElementById('searchResults').style.display = 'none';
+});
+
+// ── Smooth scroll for all # links ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ── Theme Toggle — macOS style ──
+function toggleTheme(e) {
+  const body    = document.body;
+  const overlay = document.getElementById('themeOverlay');
+  const isModern = body.classList.contains('modern');
+
+  if (!isModern) {
+    // Wiki → macOS: bright white flash then fade in
+    overlay.style.display = 'block';
+    overlay.style.transition = 'none';
+    overlay.style.opacity = '0';
+    overlay.style.background = '#f0f0f5';
+    overlay.getBoundingClientRect();
+    overlay.style.transition = 'opacity 0.22s ease';
+    overlay.style.opacity = '0.9';
+    setTimeout(() => {
+      body.classList.add('modern');
+      overlay.style.transition = 'opacity 0.35s ease';
+      overlay.style.opacity = '0';
+      setTimeout(() => { overlay.style.display = 'none'; }, 360);
+    }, 180);
+  } else {
+    // macOS → Wiki: subtle fade
+    overlay.style.display = 'block';
+    overlay.style.background = '#f8f9fa';
+    overlay.style.transition = 'none';
+    overlay.style.opacity = '0.6';
+    overlay.getBoundingClientRect();
+    body.classList.remove('modern');
+    overlay.style.transition = 'opacity 0.3s ease';
+    overlay.style.opacity = '0';
+    setTimeout(() => { overlay.style.display = 'none'; }, 320);
+  }
+
+  localStorage.setItem('regexTheme', isModern ? 'wiki' : 'modern');
+}
+
+// Dock helper
+function scrollTo(id) {
+  const el = document.querySelector(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Restore saved theme on load
+(function () {
+  const saved = localStorage.getItem('regexTheme');
+  if (saved === 'modern') document.body.classList.add('modern');
+})();
+
+</script>
+</body>
+</html>
